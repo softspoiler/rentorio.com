@@ -1,0 +1,33 @@
+.sebm-google-map-container {
+  height: 400px;
+}
+.tips{
+    width: 100%;
+    padding: 14px;
+    background: #fff;
+    border-left: 7px solid #8d83ec;
+    margin-top: 50px;
+    margin-bottom:15px;
+}
+.tips-inner{
+    margin: 5px;
+}
+
+.next{
+  float:right;
+}
+.default-btn{
+  outline: none;
+  border: none;
+  padding: 5px 10px 5px 10px;
+}
+.save-btn{
+  background: #F44336;
+  color:#fff;
+}
+
+.change-address-btn{
+  cursor:pointer;
+  display: block;
+  margin-bottom: 10px;
+}

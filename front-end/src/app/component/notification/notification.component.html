@@ -1,0 +1,36 @@
+<div *ngIf="notifications">
+  <div class="ntf-container">
+    <!-- <div class="ntf-header">
+      <span>{{'app.notifications.title' | translate }}</span>
+    </div> -->
+    <div [ngClass]="{'ntf-inner':isChild}">
+      <div (click)="notificationViewed(item.id)" [ngClass]="(item.viewed) ? 'ntf-item-viewed' : 'ntf-item-new'" *ngFor="let item of notifications"
+        class="ntf-item">
+        <i (click)="$event.stopPropagation(); removeNotification(item.id)" class="fa fa-times" aria-hidden="true"></i>
+        <div class="ntf-wrapper" (click)="notificationBLockOnClick($event)" [innerHTML]='item.message'></div>
+        <span>{{timestampToDate(item.timestamp)}}</span>
+      </div>
+      <p class="ntf-empty" *ngIf="notifications.length ===  0">{{'app.notifications.empty' | translate }}</p>
+    </div>
+  </div>
+</div>
+<div class="modal overlay" tabindex="-1" role="dialog" *ngIf="showInfo" (click)="hideEstateRecommendationModal(); $event.stopPropagation();">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideEstateRecommendationModal(); $event.stopPropagation();">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body row">
+                <!-- <div class="col-sm-2">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </div> -->
+                <new-estate-popup-ru *ngIf="translate.currentLang === 'ru'"></new-estate-popup-ru>
+                <new-estate-popup-uk *ngIf="translate.currentLang === 'uk'"></new-estate-popup-uk>
+                <div class="buttons pull-right">
+                    <button class="colored-btn" (click)="hideEstateRecommendationModal(); $event.stopPropagation();">{{'app.component.estate.navigation.modal.close' | translate}}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

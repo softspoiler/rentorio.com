@@ -1,0 +1,117 @@
+.estate-list-top{
+    padding-bottom:15px;
+    z-index: 1002;
+    padding-top: 14px;
+    background: #fff;
+}
+.action-btn{
+    color:#ddd;
+}
+.pagination-wrapper{
+    text-align: right;
+}
+.action-btn{
+    text-align: center;
+}
+.estate-body{
+    margin-top: 25px;
+}
+.icon-sm {
+    width: 30px;
+}
+.confort-property-items {
+    margin-bottom: 20px;
+}
+.icon-xs {
+    width: 25px;
+}
+.sebm-google-map-container {
+    height: 300px;
+}
+.list {
+    list-style: none;
+}
+.order {
+    width: 298px;
+    background: #fff;
+    padding: 30px 30px 15px 20px;
+    position: relative;
+    top: -6px;
+    z-index: 1000;
+}
+.price {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    width: 100%;
+    left: 0px;
+    top: -45px;
+    padding-left: 20px;
+    padding: 3px 5px 3px 20px;
+}
+.separate-line {
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+.top-offset {
+    margin-top: 20px;
+}
+.overlay{
+    background: rgba(0, 0, 0, .3);
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 1001;
+}
+.user-estates-list{
+    border: 1px solid #ddd;
+    padding: 15px 9px
+}
+.user-estates-list strong{
+    font-size: 1.3em;
+}
+.user-estates-list .status{
+    font-size: .8em;
+    border: 2px solid #ddd;
+    padding: 2px;
+    margin-right: 4px;
+}
+.user-estates-list ol{
+    margin-top: 15px;
+}
+.user-estates-list ol li{
+    margin-bottom: 13px;
+}
+@media screen and (max-width:991px) {
+    .order {
+        width: 80%;
+        margin: 0 auto;
+        position: relative;
+    }
+    .pseudo-table {
+        display: table;
+    }
+    .tables-top {
+        display: table-header-group;
+    }
+    .tables-bottom {
+        display: table-footer-group;
+    }
+    .top-offset-small-screen {
+        margin-top: 15px;
+    }
+}
+.empty-estate-list{
+    font-size: 1.5em;
+    text-align: center;
+}
+@media screen and (max-width:768px){
+    .pagination-wrapper{
+        text-align: initial;
+    }
+    .action-btn{
+        text-align: initial;
+        margin: 10px 0px 10px 0px
+    }
+}

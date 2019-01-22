@@ -1,0 +1,44 @@
+<button *ngIf="!text else inline" (click)="showSupportModal()" class="support-btn">
+  <img src="../../../assets/image/support.png" alt="support">
+</button>
+<ng-template #inline>
+  <span [ngClass]="defaultText ? 'default-inline-text' : 'inline-text'" (click)="showSupportModal()">{{text | translate}}</span>
+</ng-template>
+<div #modal class="modal">
+  <div class="modal-inner panel panel-default">
+    <div class="panel-heading">{{'app.support.title'| translate}}
+      <i (click)="hideSupportModal()" class="fa fa-times"></i>
+    </div>
+    <div class="panel-body">
+      <form [formGroup]="form">
+        <div *ngIf="!((session$ | async)?.isAuthenticated)">
+          <div class="form-group">
+            <label>{{'app.support.form.name.label'| translate}}</label>
+            <input [ngClass]="(form.get('firstName').invalid && hasError) ? 'has-error' : {'correct':(form.get('firstName').dirty && form.get('firstName').valid)}" formControlName="firstName"
+              placeholder="{{'app.support.form.name.placeholder'| translate}}" maxlength="300" class="form-control" type="text">
+          </div>
+          <div class="form-group">
+            <label>{{'app.support.form.email.label'| translate}}</label>
+            <input [ngClass]="(form.get('email').invalid && hasError) ? 'has-error' : {'correct':form.get('email').dirty && form.get('email').valid}"
+              formControlName="email" placeholder="{{'app.support.form.email.placeholder'| translate}}" maxlength="250" class="form-control"
+              type="text">
+          </div>
+        </div>
+        <div class="radio"><label><input (click)="setSupportInquiryType(problemType1)" #problemType1 value="PROBLEM" type="radio" name="problem">{{'app.support.form.type.1'| translate}}</label></div>
+        <div class="radio"><label><input (click)="setSupportInquiryType(problemType2)" #problemType2 value="QUESTION" type="radio" name="problem">{{'app.support.form.type.2'| translate}}</label></div>
+        <div class="radio"><label><input (click)="setSupportInquiryType(problemType3)" #problemType3 value="LACK_OF_FUNCTIONALITY" type="radio" name="problem">{{'app.support.form.type.3'| translate}}</label></div>
+        <div class="radio"><label><input (click)="setSupportInquiryType(problemType4)" #problemType4 value="OTHER" type="radio" name="problem">{{'app.support.form.type.4'| translate}}</label></div>
+        <textarea [ngClass]="(form.get('message').invalid && hasError) ? 'has-error' : {'correct':(form.get('message').dirty && form.get('message').valid)}" placeholder="{{'app.support.form.question'| translate}}"
+          formControlName="message" class="form-control" name="message" id="" rows="5" maxlength="1000"></textarea>
+        <button *ngIf="!((session$ | async)?.isAuthenticated)" (click)="executeRecaptcha()" class="submit-btn">{{'app.support.form.submitBtn'| translate}}</button>
+        <button *ngIf="((session$ | async)?.isAuthenticated)" (click)="onSubmit()" class="submit-btn">{{'app.support.form.submitBtn'| translate}}</button>
+        <p class="form-error" *ngIf="hasError">{{'app.support.form.state.error'| translate}}</p>
+      </form>
+    </div>
+  </div>
+  <div class="grecaptcha-wrapper">
+    <re-captcha #captchaRef="reCaptcha" size="invisible" (resolved)="$event && recaptchaHandler($event)"></re-captcha>
+  </div>
+</div>
+
+<app-alert [show]="success" [type]="'success'" [title]="'app.support.form.state.success.title'" [text]="'app.support.form.state.success.text'"></app-alert>

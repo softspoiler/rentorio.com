@@ -1,0 +1,188 @@
+<div class="result-container">
+    <div *ngIf="isFavoriteList then favorite else search" class="result-list">
+    </div>
+</div>
+
+<ng-template #search>
+    <div *ngIf="((search$ | async)?.searchResult?.estates && (search$ | async)?.searchResult?.estates.length) else empty">
+        <div class="col-xs-12 col-sm-6" *ngFor="let estate of (search$ | async)?.searchResult?.estates | paginate: { id:'server', itemsPerPage: 1, currentPage: ((search$ | async)?.searchFilter.pageNumber +1) || 1 , totalItems:(search$ | async)?.searchFilter.totalPages}">
+            <div class="list" (mouseout)="mouseOutEventHandler()" (mouseover)="mouseOverEventHandler({id: estate.id},$event)" >
+                <div class="list-image">
+                    <div *ngIf="estate.isWatched" class="watched">
+                        {{'app.component.searchResult.watched' | translate}}
+                    </div>
+                    <div class="image-container">
+                        <ngx-carousel [inputs]="carouselSetting">
+                            <ngx-item *ngFor="let item of estate.photos" NgxCarouselItem>
+                                <img *ngIf="item else emptyPhoto" class="item-img" [src]="item.imageUrl"  default="../../../../../assets/image/empty-photo.png" alt="">
+                            </ngx-item>
+                            <button NgxCarouselPrev class='leftRs'><img src="../../../../../assets/image/arrow-left.svg"></button>
+                            <button NgxCarouselNext class='rightRs'><img src="../../../../../assets/image/arrow-right.svg"></button>
+                        </ngx-carousel>
+                        <ng-template #emptyPhoto>
+                            <img src="../../../../../assets/image/empty-photo.png" class="item-img">
+                        </ng-template>
+                        <div class="price">
+                            <p>{{estate.pricing.originPrice}}
+                                <span [ngSwitch]="estate.pricing.originCurrencyCode">
+                                <span class="icon-uah" *ngSwitchCase="'UAH'">&#x20B4;</span>
+                                <i *ngSwitchCase="'USD'" class="fa fa-usd" aria-hidden="true"></i>
+                                <i *ngSwitchCase="'EUR'" class="fa fa-eur" aria-hidden="true"></i>
+                                <div class="icon-uah" *ngSwitchDefault>&#x20B4;</div>
+                                </span>
+                            </p>
+                        <!--<span [ngSwitch]="estate.realEstate.depositType">
+                                <ng-template [ngSwitchCase]="'MONTH'">{{'app.component.estate.prices.depositType.first' | translate}}</ng-template>
+                                <ng-template [ngSwitchCase]="'TWO_MONTH'">{{'app.component.estate.prices.depositType.second' | translate}}</ng-template>
+                                <ng-template [ngSwitchCase]="'NEGOTIABLE'">{{'app.component.estate.prices.depositType.third' | translate}}</ng-template>
+                        </span>-->
+                        </div>
+                        <ul class="list-features">
+                            <li *ngIf="estate.features.roomsNumber !== 0 else studio"><img src="../../../../assets/image/estate/room.svg" alt=""> {{'app.component.estate.general.roomsNumber' | translate}} {{estate.features.roomsNumber}}</li>
+                            <li><img src="../../../../assets/image/estate/stairs.svg" alt=""> {{'app.component.estate.general.floor' | translate}} {{estate.features.floor}}</li>
+                            <li><img src="../../../../assets/image/estate/guests_white.svg" alt=""> {{'app.component.estate.estatePreview.allowedHabitants' | translate}} {{estate.features.allowedHabitants}} </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="list-body">
+                    <p *ngIf="estate.features.shortDescription else emptyShortDescription" class="list-short-description">{{estate.features.shortDescription.slice(0,50)}}<span *ngIf="estate.features.shortDescription.length > 50">...</span></p>
+                        <p class="accommodation" [ngSwitch]="estate.accommodation">
+                            <span *ngSwitchCase="'ENTIRE'">{{'app.component.estate.general.accommodation.entire' | translate}}</span>
+                            <span *ngSwitchCase="'private_ROOM'">{{'app.component.estate.general.accommodation.private_room' | translate}}</span>
+                            <span *ngSwitchCase="'SHARED_ROOM'">{{'app.component.estate.general.accommodation.shared_room' | translate}}</span>
+                        </p>
+                    
+                    <div class="address-wrapper">
+                        <p *ngIf="estate.address.addressLine2" (click)="changeAddress(estate.address.addressLine2)" class="address">{{estate.address.addressLine2.slice(0,38)}}<span *ngIf="estate.address.addressLine2.length > 38">...</span></p>
+                    </div>
+                    <div class="list-footer">
+                        <button (click)="addToFavorite(estate.id)" class="favorite"><i *ngIf="!isAddedToFavorite(estate.id); else filledHeart" class="fa fa-heart-o"></i></button>
+                        <ng-template #filledHeart>
+                            <i class="fa fa-heart"></i>
+                        </ng-template>
+                        <a routerLink="/search/details/{{estate.id}}" (click)="markAsWatched(estate.id);sendAction(estate.id)" class="orange-btn">{{'app.component.searchResult.btn.details' | translate}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="((search$ | async)?.searchResult?.estates && (search$ | async)?.searchResult?.estates.length)" class="pagination">
+            <pagination-controls 
+                class="custom-pagination"
+                previousLabel="{{'app.component.searchResult.pagination.previous' | translate}}"
+                nextLabel="{{'app.component.searchResult.pagination.next' | translate}}"
+                id="server"
+                (pageChange)="pageChangeHandler($event)">
+            </pagination-controls>
+        </div>
+    </div>
+
+    <ng-template #empty>
+        <div class="empty">
+            <figure>
+                <i class="fa fa-frown-o fa-3x" aria-hidden="true"></i>
+                <figcaption>{{'app.component.searchResult.emptyResponse.text1' | translate}}</figcaption>
+            </figure>
+            <br>
+            <p>{{'app.component.searchResult.emptyResponse.text2' | translate}}</p>
+            <a class="create-wish-btn" 
+                routerLink="/wish"
+                [queryParams]="{ coords: ((search$ | async)?.searchFilter.latitude && (search$ | async)?.searchFilter.longitude) ? true : false }">
+                {{'app.component.searchResult.emptyResponse.button' | translate}}
+            </a>
+        </div>
+    </ng-template>
+
+</ng-template>
+
+<ng-template #emptyShortDescription>
+        <p>...</p>
+</ng-template>
+
+<ng-template class="list-features" #studio>
+        <li><img src="../../../../assets/image/estate/room.svg" alt=""> {{'app.component.estate.general.roomsNumber.studio' | translate}}</li>
+</ng-template>
+<!-- Favorite -->
+
+<ng-template #favorite>
+    <div class="loading-wrapper">
+        <loading [show]="showFavoriteLoading" [insideOverlay]="true"></loading>
+    </div>
+    <div *ngIf="!showFavoriteLoading">
+        <div *ngIf="favoriteList.length">
+            <div class="col-xs-12 col-sm-6" *ngFor="let estate of favoriteList | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+                <div class="list-wrapper">
+                    <div *ngIf="estate.realEstate.status === 'OFFLINE'" class="offline-overlay">
+                        <p>
+                          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                          {{'app.component.estate.estatePreview.EstateOfflineError'| translate}}
+                        </p>
+                    </div>
+                    <div class="favorite-list">
+                        <i (click)="removeFromFavorite(estate.id)" class="fa fa-times"></i>
+                        <div class="no-left-padding list-image">
+                            <div class="image-container">
+                                <ngx-carousel [inputs]="carouselSetting">
+                                    <ngx-item *ngFor="let item of estate.realEstate.images" NgxCarouselItem>
+                                        <img *ngIf="item else emptyPhoto" class="item-img" [src]="item.imageUrl"  default="../../../../../assets/image/empty-photo.png" alt="">
+                                    </ngx-item>
+                                    <button NgxCarouselPrev class='leftRs'><img src="../../../../../assets/image/arrow-left.svg"></button>
+                                    <button NgxCarouselNext class='rightRs'><img src="../../../../../assets/image/arrow-right.svg"></button>
+                                </ngx-carousel>
+                                <ng-template #emptyPhoto>
+                                    <img src="../../../../../assets/image/empty-photo.png" class="item-img">
+                                </ng-template>
+                                <div class="price">
+                                    <p>{{estate.realEstate.price}}
+                                        <span [ngSwitch]="estate.realEstate.currencyCode">
+                                            <span class="icon-uah" *ngSwitchCase="'UAH'">&#x20B4;</span>
+                                            <i *ngSwitchCase="'USD'" class="fa fa-usd" aria-hidden="true"></i>
+                                            <i *ngSwitchCase="'EUR'" class="fa fa-eur" aria-hidden="true"></i>
+                                            <div class="icon-uah" *ngSwitchDefault>&#x20B4;</div>
+                                        </span>
+                                    </p>
+                                    <!--<span [ngSwitch]="estate.realEstate.depositType">
+                                        <ng-template [ngSwitchCase]="'MONTH'">{{'app.component.estate.prices.depositType.first' | translate}}</ng-template>
+                                        <ng-template [ngSwitchCase]="'TWO_MONTH'">{{'app.component.estate.prices.depositType.second' | translate}}</ng-template>
+                                        <ng-template [ngSwitchCase]="'NEGOTIABLE'">{{'app.component.estate.prices.depositType.third' | translate}}</ng-template>
+                                </span>-->
+                                </div>
+                            </div>
+                            <ul class="list-features">
+                                <li *ngIf="estate.realEstate.roomsNumber !== 0 else studio"><img src="../../../../assets/image/estate/room.svg" alt=""> {{'app.component.estate.general.roomsNumber' | translate}} {{estate.realEstate.roomsNumber}}</li>
+                                <li><img src="../../../../assets/image/estate/stairs.svg" alt=""> {{'app.component.estate.general.floor' | translate}} {{estate.realEstate.floor}}</li>
+                                <li><img src="../../../../assets/image/estate/guests_white.svg" alt=""> {{'app.component.estate.estatePreview.allowedHabitants' | translate}} {{estate.realEstate.allowedHabitants}} </li>
+                            </ul>
+                        </div>
+                        <div class="list-body">
+                            <p *ngIf="estate.realEstate.shortDescription else emptyShortDescription" class="list-short-description">{{estate.realEstate.shortDescription.slice(0,50)}}<span *ngIf="estate.realEstate.shortDescription.length > 50">...</span></p>
+                            <span class="accommodation" [ngSwitch]="estate.realEstate.accommodation">
+                                <span *ngSwitchCase="'ENTIRE'">{{'app.component.estate.general.accommodation.entire' | translate}}</span>
+                                <span *ngSwitchCase="'private_ROOM'">{{'app.component.estate.general.accommodation.private_room' | translate}}</span>
+                                <span *ngSwitchCase="'SHARED_ROOM'">{{'app.component.estate.general.accommodation.shared_room' | translate}}</span>
+                            </span>
+                            <div class="address-wrapper">
+                                <p class="address">{{estate.realEstate.address.addressLine2}}</p>
+                            </div> 
+                            <div class="list-footer">
+                                <a class="orange-btn favorite-detail" routerLink="/search/details/{{estate.realEstate.id}}">{{'app.component.searchResult.btn.details' | translate}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="favoriteList.length" class="pagination">
+                <pagination-controls 
+                    (pageChange)="currentPage = $event;scrollTopAfterFavoritePageChange"
+                    previousLabel="{{'app.component.searchResult.pagination.previous' | translate}}"
+                    nextLabel="{{'app.component.searchResult.pagination.next' | translate}}">
+                </pagination-controls>
+            </div>
+        </div>
+        <div *ngIf="!favoriteList.length" class="empty">
+            <figure>
+                <i class="fa fa-frown-o fa-3x" aria-hidden="true"></i>
+                <figcaption>{{'app.component.favorite.empty' | translate}}</figcaption>
+            </figure>
+        </div>
+    </div>
+</ng-template>

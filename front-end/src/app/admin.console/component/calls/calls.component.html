@@ -1,0 +1,70 @@
+
+    
+    <div class="col-md-3 col-sm-3 col-xs-8">
+      <label for="search">ID</label>
+      <div class="form-group">
+        <input placeholder="ID пользователя" [(ngModel)]="filter.userId" class="form-control" type="number">
+      </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-3 col-xs-8">
+      <label for="search">Номер телефона</label>
+      <div class="form-group">
+        <input placeholder="Номер телефона пользователя" [(ngModel)]="filter.phoneNumber" class="form-control" type="text">
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-8">
+      <label for="search">Продолжительность (секунд)</label>
+      <div class="form-group">
+        <input placeholder="Продолжительность звонка" [(ngModel)]="filter.duration" class="form-control" type="number">
+      </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-3 col-xs-8">
+      <br>
+      <button class="btn btn-default action-btn"(click)="getCalls(1)"><i class="fa fa-search" aria-hidden="true"></i> Поиск</button>
+      <button class="btn btn-default action-btn"(click)="clearFilter()">Очистить фильтр</button>
+      <p class="error" *ngIf="noSuchUserException">Пользователь не найден</p>
+    </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <div *ngIf="updateTable" class="overlay"></div>
+            <thead align="center">
+              <tr>
+                <td rowspan="2">ID звонка</td>
+                <td rowspan="2">Арендатор</td>
+                <td rowspan="2">Орендодатель</td>
+                <td rowspan="2">Жилье</td>
+                <td rowspan="2">Общее количество (с)</td>
+                <td rowspan="2">Продолжительность ответа (с)</td>
+                <td rowspan="2">Аудиозапись</td>
+                <td rowspan="2">Начало</td>
+                <td rowspan="2"></td>
+              </tr>
+            </thead>
+            <tbody *ngIf="calls">
+              <tr *ngFor="let call of calls | paginate: { id:'server', itemsPerPage: 1, currentPage: currentPage, totalItems:totalPages}">
+                <td>{{call.id}}</td>
+                <td><span (click)="searchByPhoneNumber(call.callerId)" class="show-more">{{call.callerId}}</span><br /><small> ({{call.callerMobileOperator}})</small></td>
+                <td><span (click)="searchByPhoneNumber(call.calleeId)" class="show-more">{{call.calleeId}}</span><br /><small> ({{call.calleeMobileOperator}})</small></td>
+                <td><a target="_blank" routerLink="/search/details/{{call.estateId}}">{{call.estateId}}</a></td>
+                <td>{{call.totalSeconds}}</td>
+                <td>{{call.answerSeconds}}</td>
+                <td><i (click)="showPlayer(call.audioRecordLink)" class="fa fa-play play-record-btn"></i></td>
+                <td>{{setupReadableDate(call.startTime)}}</td>
+                <td>
+                  <button (click)="resetActiveCall(call.id)" *ngIf="call.sessionId === ''" class="btn btn-danger">
+                    Сбросить звонок
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <pagination-controls (pageChange)="getCalls($event)" id="server"></pagination-controls>
+        </div>
+
+<app-player></app-player>

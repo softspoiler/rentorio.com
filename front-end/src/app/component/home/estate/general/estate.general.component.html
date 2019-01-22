@@ -1,0 +1,208 @@
+<div class="row">
+<div class="col-xs-12 col-md-9 col-sm-7 ">
+        <div class="panel panel-default box-shadow">
+                <div class="panel-heading">{{'app.component.estate.description.title' | translate}}</div>
+                <div class="common-border panel-body">
+    <form *ngIf="form" [formGroup]="form" (change)="update()">
+        <fieldset>
+            <div formGroupName="phoneType" class="col-xs-12">
+                    <div class="public-phone-number">
+                        <p class="select-label">{{'app.component.estate.general.publicPhone.description' | translate}}</p>
+                        <div class="public-phone-number-input">
+                            <div style="overflow: hidden; height: 100%;">
+                            <span class="phone-sufix">+38</span>
+                            <p-inputMask class="public-mask" mask="(999) 999-99-99" [(ngModel)]="publicPhoneModel" (onComplete)="privatePhoneNumberModel = false;update()" (onBlur)="showSuggestion = false;" (onFocus)="this.showSuggestion = true;" formControlName="publicPhoneNumber" placeholder="(___) ___-__-__"></p-inputMask>
+                        </div>
+                            <div (mousedown)="phoneSuggestionClickHandler()" [ngClass]="{'suggestion-show': (currentUserPhoneNumber && showSuggestion && !publicPhoneModel || publicPhoneModel === '(___) ___-__-__' )}" class="suggestion">
+                                <div class="suggestion-item">
+                                    <span>{{currentUserPhoneNumber}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <p class="wrong-input" *ngIf="form.get('phoneType').hasError('publicPhoneEmpty')">{{'app.component.estate.general.publicPhone.error' | translate}}</p>  
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="col-lg-4">
+                <p class="select-label">{{'app.component.estate.general.type.title' | translate}}</p>
+                <div class="select-wrapper">
+                    <select formControlName="type" [value]="(estate$ | async)?.realEstate?.type || 'default'">
+                        <option value="default" disabled>{{'app.component.estate.general.type.default' | translate}}</option>
+                        <option value="APARTMENT">{{'app.component.estate.general.type.apartment' | translate}}</option>
+                        <option value="HOUSE">{{'app.component.estate.general.type.house' | translate}}</option>
+                        <option value="TOWNHOUSE">{{'app.component.estate.general.type.townhouse' | translate}}</option>
+                        <option value="VILLA">{{'app.component.estate.general.type.villa' | translate}}</option>
+                        <option value="LOFT">{{'app.component.estate.general.type.loft' | translate}}</option>
+                        <option value="DORMITORY">{{'app.component.estate.general.type.dormitory' | translate}}</option>
+                    </select>
+                    <div class="select-arrow">
+                        <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                </div>
+                <p class="wrong-input" *ngIf="form.get('type').hasError('required')">{{'app.component.estate.general.type.error' | translate}}</p>
+            </div>
+            <div class=" col-lg-4 ">
+                <p class="select-label"> {{'app.component.estate.general.accommodation.title' | translate}}</p>
+                <div class="select-wrapper">
+                    <select formControlName="accommodation" [value]="(estate$ | async)?.realEstate?.accommodation || 'default'">
+                        <option value="default" disabled>{{'app.component.estate.general.type.default' | translate}}</option>
+                        <option value="ENTIRE">{{'app.component.estate.general.accommodation.entire' | translate}}</option>
+                        <option value="PRIVATE_ROOM">{{'app.component.estate.general.accommodation.private_room' | translate}}</option>
+                        <option value="SHARED_ROOM">{{'app.component.estate.general.accommodation.shared_room' | translate}}</option>
+                    </select>
+                    <div class="select-arrow">
+                        <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                </div>
+                <p class="wrong-input" *ngIf="form.get('accommodation').hasError('required')">{{'app.component.estate.general.accommodation.error' | translate}}</p>
+            </div>
+            <div class="col-lg-4 ">
+                <p class="select-label">{{'app.component.estate.general.allowedHabitants' | translate}}</p>
+                <div class="select-wrapper">
+                    <select formControlName="allowedHabitants" [value]="(estate$ | async)?.realEstate?.allowedHabitants || 1">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                    </select>
+                    <div class="select-arrow">
+                        <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="col-lg-4 ">
+                <p class="select-label">{{'app.component.estate.general.roomsNumber' | translate}}</p>
+                <div class="select-wrapper">
+                    <select formControlName="roomsNumber" [value]="estate.realEstate.roomsNumber >= 0 ? estate.realEstate.roomsNumber : 1 ">
+                        <option value="0">{{'app.component.estate.general.roomsNumber.studio' | translate}}</option>                
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    <div class="select-arrow">
+                        <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 ">
+                <p class="select-label">{{'app.component.estate.general.bedroomsNumber' | translate}}</p>
+                <div class="select-wrapper">
+                    <select formControlName="bedroomsNumber" [value]="(estate$ | async)?.realEstate?.bedroomsNumber || 1">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    <div class="select-arrow">
+                        <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 ">
+                <p class="select-label">{{'app.component.estate.general.bathroomsNumber' | translate}}</p>
+                <div class="select-wrapper">
+                    <select formControlName="bathroomsNumber" [value]="(estate$ | async)?.realEstate?.bathroomsNumber || 1">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>                          
+                    </select>
+                    <div class="select-arrow">
+                        <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group ">
+            <div class="col-md-4 col-sm-6">
+                <p>{{'app.component.estate.general.totalArea' | translate}}</p>
+                <input type="number" formControlName="totalArea" class="width" min="0" [value]="(estate$ | async)?.realEstate?.totalArea || 0"><span>{{'app.component.estate.general.sq_m' | translate}}</span>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <p>{{'app.component.estate.general.livingArea' | translate}}</p>
+                <input type="number" formControlName="livingArea" class="width" min="0" [value]="(estate$ | async)?.realEstate?.livingArea || 0"><span>{{'app.component.estate.general.sq_m' | translate}}</span>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <p>{{'app.component.estate.general.kitchenArea' | translate}}</p>
+                <input type="number" formControlName="kitchenArea" class="width" min="0" [value]="(estate$ | async)?.realEstate?.kitchenArea || 0"><span>{{'app.component.estate.general.sq_m' | translate}}</span>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <p>{{'app.component.estate.general.floor' | translate}}</p>
+                <input type="number" formControlName="floor" class="width" min="1" max="100" [value]="(estate$ | async)?.realEstate?.floor || 1">
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <p>{{'app.component.estate.general.floors' | translate}}</p>
+                <input type="number" formControlName="floors" class="width" min="1" max="100" [value]="(estate$ | async)?.realEstate?.floors || 1">
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+    <button type="button" [disabled]="!(estate$ | async)?.realEstate?.type || !(estate$ | async)?.realEstate?.accommodation || ((!!(estate$ | async)?.realEstate?.publicPhoneNumber === !!(estate$ | async)?.realEstate?.privatePhoneNumber) && !!(estate$ | async)?.realEstate?.privatePhoneNumber === false)"
+        routerLink="/home/estate/description" class="action-btn pull-right ">{{'app.component.estate.general.next' | translate}}</button>
+
+</div>
+<div class="col-xs-12  col-md-3 col-sm-5">
+    <div class="tips">
+        <div class="tips-inner">
+            <h4 class="text-center">{{'app.component.estate.general.tips.title' | translate}}</h4>
+            <p>{{'app.component.estate.general.tips.text' | translate}}
+                <span class="link" (click)="infoEvent()">{{'app.component.estate.general.tips.link' | translate}}</span>
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+<div class="modal overlay" tabindex="-1" role="dialog" *ngIf="showInfo" (click)="closePopup(); $event.stopPropagation();">
+        <div class="modal-dialog modal-dialog-centered">
+    
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closePopup(); $event.stopPropagation();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-body row">
+                    <!-- <div class="col-sm-2">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </div> -->
+                    <new-estate-popup-ru *ngIf="translate.currentLang === 'ru'"></new-estate-popup-ru>
+                    <new-estate-popup-uk *ngIf="translate.currentLang === 'uk'"></new-estate-popup-uk>
+                    <div class="checkbox">
+                        <label><input name="estateRemember" type="checkbox" (change)="hideInfo($event)" (click)="$event.stopPropagation();">{{'app.component.estate.navigation.modal.remember' | translate}}</label>
+                      </div>
+                    <div class="buttons pull-right">
+                        <button class="colored-btn" (click)="closePopup(); $event.stopPropagation();">{{'app.component.estate.navigation.modal.close' | translate}}</button>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>

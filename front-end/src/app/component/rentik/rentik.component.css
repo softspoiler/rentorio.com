@@ -1,0 +1,134 @@
+.rnt-wrapper{
+    position: fixed;
+    top: 190px;
+    right:0;
+    background: #ffffff;
+    /* max-width: 500px;
+    min-width: 270px; */
+    width: 382px;
+    border-radius: 6px;
+    z-index:1;
+    box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.09);
+    transform:translateX(100%);
+    transition: .3s transform;
+}
+.rnt-wrapper p {
+    font-size: 1.1em;
+}
+.rnt-wrapper-open{
+    transform: translateX(-4%);
+}
+.rentik-img{
+    width: 65px;
+    position: absolute;
+    top: -23px;
+    left: -39px;
+    transform: rotate(-52deg);
+    cursor: pointer;
+    z-index: -1;
+    transition: .3s all;
+}
+.rnt-wrapper-open .rentik-img{
+    top: -57px;
+    left: 11px;
+    transform: rotate(0deg);
+}
+.rnt-inner{
+    background: #ffffff;
+    z-index: 1;
+    padding: 19px;
+    border-radius: 6px;
+}
+.rnt-step-1{
+    padding-bottom: 30px;
+}
+.close-bottom-right{
+    border-radius: 2px;
+    float: right;
+    margin: 7px 0px 10px 0;
+    color: #adadad;
+    cursor: pointer;
+    clear: both;
+}
+.buttons-wrapper{
+    margin-top: 20px;
+}
+.buttons-wrapper span{
+    border-radius: 2px;
+    color: #ffffff;
+    background: #8e84ed;
+    padding: 4px 11px;
+    cursor: pointer;
+    float: left;
+    transition: background .2s; 
+}
+.buttons-wrapper span:hover{
+    background: #a8a0f1;
+}
+.gray-btn{
+    border-radius: 0!important;
+    color:#adadad!important;
+    background: transparent!important;
+}
+.gray-btn:hover{
+    background: transparent!important;
+}
+.buttons-wrapper span:last-child{
+    float:right;
+    margin-left:20px; 
+    margin-bottom:10px;
+}
+.link{
+    color:#03A9F4;
+}
+
+.landlord-1  .link{
+    color: #ffffff;
+    background: #8e84ed;
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    text-decoration: none;
+    transition:background .2s;
+    margin-top:3px;
+}
+.landlord-1 .link:hover{
+    background: #a8a0f1;
+}
+.landlord-1 .confirm{
+    display: inline-block;
+}
+.landlord-1 .close-bottom-right {
+    margin-top: 30px;
+}
+.landlord-1 .margin-bottom-0{
+    margin-bottom:0;
+}
+.landlord-1 .tenants-link {
+    margin-bottom: 7px;
+    margin-top: -3px;
+}
+.create-estate{
+    background: #53C16A!important;
+    margin-bottom:20px;
+}
+.create-estate:hover{
+    background:#6ed483!important;
+}
+@media screen and (max-width:778px){
+    .rnt-wrapper{
+        width: 303px;
+        top: 155px;
+    }
+    .rnt-wrapper-open{
+        transform: translateX(-2%);
+    }
+    .buttons-wrapper span:last-child{
+        margin-left:5px;
+    }
+    .big-text:last-child{
+        float:left!important;
+        margin-left:0!important;
+        margin-top:10px!important;
+    }
+}

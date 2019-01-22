@@ -1,0 +1,65 @@
+<div class="top">
+    <div routerLink="preview" class="pull-right preview">
+        <i class="fa fa-eye" aria-hidden="true"></i>{{'app.component.estate.preview' | translate}}</div>
+    <div *ngIf="isNew" class="col-md-offset-1 col-md-3 col-xs-5 title">{{'app.component.estate.title.new' | translate}}</div>
+    <div *ngIf="!isNew" class="col-md-offset-1 col-md-3 col-xs-5 title">{{'app.component.estate.title.edit' | translate}}</div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-3">
+            <nav class="sidebar">
+                <ul>
+                    <li>
+                        <button routerLink="general" class="btn link" routerLinkActive="active-link">1. {{'app.component.estate.navigation.general' | translate}}</button>
+                    </li>
+                    <li>
+                        <button routerLink="description" class="btn link" routerLinkActive="active-link" [disabled]="!realEstate?.type || !realEstate?.accommodation || !realEstate?.publicPhoneNumber">2. {{'app.component.estate.navigation.description' | translate}}</button>
+                    </li>
+                    <li>
+                        <button routerLink="location" class="btn link" routerLinkActive="active-link" [disabled]="!realEstate?.type || !realEstate?.accommodation || !realEstate?.publicPhoneNumber || !realEstate?.shortDescription ">3. {{'app.component.estate.navigation.location' | translate}}</button>
+                    </li>
+                    <li>
+                        <button routerLink="amenity" class="btn link" routerLinkActive="active-link" [disabled]="!realEstate?.type || !realEstate?.accommodation || !realEstate?.publicPhoneNumber || !realEstate?.shortDescription || !realEstate?.latitude || !realEstate?.longitude">4. {{'app.component.estate.navigation.amenity' | translate}}</button>
+                    </li>
+                    <li>
+                        <button routerLink="photo" class="btn link" routerLinkActive="active-link" [disabled]="!realEstate?.type || !realEstate?.accommodation || !realEstate?.publicPhoneNumber || !realEstate?.shortDescription || !realEstate?.latitude || !realEstate?.longitude">5. {{'app.component.estate.navigation.photo' | translate}}</button>
+                    </li>
+                    <li>
+                        <button routerLink="safety" class="btn link" routerLinkActive="active-link" [disabled]="!realEstate?.type || !realEstate?.accommodation || !realEstate?.publicPhoneNumber || !realEstate?.shortDescription || !realEstate?.latitude || !realEstate?.longitude || !realEstate?.photos?.length || (realEstate?.photos?.length < 2)">6. {{'app.component.estate.navigation.safety' | translate}}</button>
+                    </li>
+                    <li>
+                        <button routerLink="prices" class="btn link" routerLinkActive="active-link" [disabled]="!realEstate?.type || !realEstate?.accommodation || !realEstate?.publicPhoneNumber || !realEstate?.shortDescription || !realEstate?.latitude || !realEstate?.longitude || !realEstate?.photos?.length || (realEstate?.photos?.length < 2)">7. {{'app.component.estate.navigation.prices' | translate}}</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div #outletWrapper *ngIf="showRouteroutlet" class="col-xs-12 col-sm-9">
+            <router-outlet (activate)="activateRoutingHandler(outletWrapper)"></router-outlet>
+        </div>
+    </div>
+</div>
+<!-- <div [ngClass]="{'show-alert': confirmDialog}" class="container-alert">
+    <div class="alert-inner">
+        <h3>{{'app.component.estate.navigation.prompt' | translate}}</h3>
+        <button  class="btn btn-default">{{'app.component.estate.navigation.save' | translate}}</button>
+        <span>
+            <button #close class="btn btn-default">{{'app.component.estate.navigation.close' | translate}}</button>
+        </span>
+    </div>
+</div> -->
+
+<div [ngClass]="{'show-alert':confirmDialog}" class="container-alert">
+        <!-- <i class="fa fa-times" (click)="closeConfirmDialog()"></i> -->
+        <div class="alert-message">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                <span>{{'app.component.estate.navigation.prompt' | translate}}</span>
+            </div> 
+        <div class="alert-bottom">   
+            <span>    
+                <span #close class="remove-no">{{'app.component.estate.navigation.close' | translate}}</span> 
+            </span>
+            <button #save class="default-btn" >{{'app.component.estate.navigation.save' | translate}}</button>
+        </div>
+    </div>
+<app-alert [show]="success" [type]="'success'" [title]="'app.component.estate.navigation.success.title'" [text]="'app.component.estate.navigation.success.text'"></app-alert>
+

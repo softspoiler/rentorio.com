@@ -1,0 +1,247 @@
+<div #filterWrapper class="container-fluid filter-wrapper">
+    <div class="row">
+            <div class="col-md-12 col-lg-4">
+                <div class="search-wrapper">
+                    <search-input (geoLocationChange)="geoLocationChangeHandler()"></search-input>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-lg-2 search-filter">
+                <p>{{'app.component.search.rooms' | translate}}</p>
+                <div class="res-wrapper">
+                    <div exclude=".res-wrapper,.res" attachOutsideOnClick="false" (clickOutside)="onClickedOutside($event)" [ngClass]="{'res-open':(selectId === 1)}" (click)="openCustomSelect($event,1)" class="res">
+                        <span *ngIf="!((search$ | async)?.searchFilter?.multiRoomsNumber) && (search$ | async)?.searchFilter?.roomsNumber && (search$ | async)?.searchFilter?.roomsNumber !== '0'">{{searchFilter.roomsNumber}}</span>
+                        <span *ngIf="!((search$ | async)?.searchFilter?.multiRoomsNumber) && (search$ | async)?.searchFilter?.roomsNumber === '0'">{{'app.component.estate.general.roomsNumber.studio' | translate}}</span>
+                        <span *ngIf="!((search$ | async)?.searchFilter?.roomsNumber) && !((search$ | async)?.searchFilter?.multiRoomsNumber)">{{'app.component.search.roomsAny' | translate}}</span>
+                        <span *ngIf="(search$ | async)?.searchFilter?.multiRoomsNumber">
+                        <span *ngFor="let room of searchFilter.multiRoomsNumber.split(','); last as isLast" [ngSwitch]="room">
+                            <span class="" *ngSwitchCase="0">{{'app.component.estate.general.roomsNumber.studio' | translate}}<span *ngIf="!isLast">,</span></span>
+                        <span *ngSwitchDefault>{{room}}<span *ngIf="!isLast">,</span></span>
+                        </span>
+                        </span>
+                        <img class="res-arrow" src="../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                    <div [ngClass]="{'open-dropdown':selectId === 1}" class="dropdown">
+                        <div class="item rooms-item" (click)="changeRoomsNumber(null,$event)">
+                            <label for="rn-any">
+                                <input type="checkbox" name="_roomsNumber"  id="rn-any">{{'app.component.search.roomsAny' | translate}}
+                            </label>
+                        </div>
+                        <div class="item rooms-item" (click)="changeRoomsNumber(rn0.value,$event);">
+                            <span class="item-active">
+                                <i [ngClass]="(((search$ | async)?.searchFilter?.multiRoomsNumber && (search$ | async)?.searchFilter?.multiRoomsNumber.indexOf('0') !== -1) || (search$ | async)?.searchFilter?.roomsNumber === '0') ?  'fa-check-square' : 'fa-square-o'" class="fa" aria-hidden="true"></i>
+                            </span>
+                            <label for="rn0">
+                                <input type="checkbox" name="_roomsNumber" #rn0  id="rn0" value="0">
+                                {{'app.component.estate.general.roomsNumber.studio' | translate}}
+                            </label>
+                        </div>
+                        <div class="item rooms-item" (click)="changeRoomsNumber(rn1.value,$event)">
+                            <span class="item-active">
+                                <i [ngClass]="(((search$ | async)?.searchFilter?.multiRoomsNumber && (search$ | async)?.searchFilter?.multiRoomsNumber.indexOf('1') !== -1) || (search$ | async)?.searchFilter?.roomsNumber === '1') ?  'fa-check-square' : 'fa-square-o'" class="fa" aria-hidden="true"></i>
+                            </span>
+                            <label for="rn1">
+                                <input type="checkbox" name="_roomsNumber" #rn1  id="rn1" value="1"> 1
+                            </label>
+                        </div>
+                        <div class="item rooms-item" (click)="changeRoomsNumber(rn2.value,$event)">
+                            <span class="item-active">
+                                 <i [ngClass]="(((search$ | async)?.searchFilter?.multiRoomsNumber && (search$ | async)?.searchFilter?.multiRoomsNumber.indexOf('2') !== -1) || (search$ | async)?.searchFilter?.roomsNumber === '2') ?  'fa-check-square' : 'fa-square-o'" class="fa" aria-hidden="true"></i>
+                            </span>
+                            <label for="rn2">
+                                 <input type="checkbox" name="_roomsNumber" #rn2  id="rn2" value="2"> 2
+                            </label>
+                        </div>
+                        <div class="item rooms-item" (click)="changeRoomsNumber(rn3.value,$event)">
+                            <span class="item-active">
+                                 <i [ngClass]="(((search$ | async)?.searchFilter?.multiRoomsNumber && (search$ | async)?.searchFilter?.multiRoomsNumber.indexOf('3') !== -1) || (search$ | async)?.searchFilter?.roomsNumber === '3') ?  'fa-check-square' : 'fa-square-o'" class="fa" aria-hidden="true"></i>
+                            </span>
+                            <label for="rn3">
+                                 <input type="checkbox" name="_roomsNumber" #rn3  id="rn3" value="3"> 3
+                            </label>
+                        </div>
+                        <div class="item rooms-item" (click)="changeRoomsNumber(rn4.value,$event)">
+                            <span class="item-active">
+                                 <i [ngClass]="(((search$ | async)?.searchFilter?.multiRoomsNumber && (search$ | async)?.searchFilter?.multiRoomsNumber.indexOf('4') !== -1) || (search$ | async)?.searchFilter?.roomsNumber === '4') ?  'fa-check-square' : 'fa-square-o'" class="fa" aria-hidden="true"></i>
+                            </span>
+                            <label for="rn4">
+                                <input type="checkbox" name="_roomsNumber" #rn4  id="rn4" value="4"> 4
+                            </label>
+                        </div>
+                        <div class="item rooms-item" (click)="changeRoomsNumber(rn5.value,$event)">
+                            <span class="item-active">
+                                 <i [ngClass]="(((search$ | async)?.searchFilter?.multiRoomsNumber && (search$ | async)?.searchFilter?.multiRoomsNumber.indexOf('5') !== -1) || (search$ | async)?.searchFilter?.roomsNumber === '5') ?  'fa-check-square' : 'fa-square-o'" class="fa" aria-hidden="true"></i>
+                            </span>
+                            <label for="rn5">
+                                <input type="checkbox" name="_roomsNumber" #rn5  id="rn5" value="5"> 5+
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-lg-2 search-filter">
+                <p>{{'app.component.search.totalArea.title' | translate}}<sup>2</sup></p>
+                <div class="res-wrapper">
+                    <div exclude=".res-wrapper,.res" attachOutsideOnClick="false" (clickOutside)="onClickedOutside($event)" [ngClass]="{'res-open':(selectId === 2)}" (click)="openCustomSelect($event,2)" class="res">
+                        <span *ngIf="(search$ | async)?.searchFilter?.totalAreaFrom && (search$ | async)?.searchFilter?.totalAreaTo">
+                    {{'app.component.search.totalArea.from' | translate}} {{searchFilter.totalAreaFrom}} {{'app.component.search.totalArea.to' | translate}} {{searchFilter.totalAreaTo}}
+                </span>
+                        <span *ngIf="(search$ | async)?.searchFilter?.totalAreaFrom && !((search$ | async)?.searchFilter?.totalAreaTo)">
+                    {{'app.component.search.totalArea.from' | translate}} {{searchFilter.totalAreaFrom}}
+                </span>
+                        <span *ngIf="!((search$ | async)?.searchFilter?.totalAreaFrom) && !((search$ | async)?.searchFilter?.totalAreaTo)">
+                    {{'app.component.search.totalArea.any' | translate}}
+                </span>
+                        <img class="res-arrow" src="../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                    <div [ngClass]="{'open-dropdown':selectId === 2}" class="dropdown">
+                        <div class="item" (click)="changeTotalAreaFrom(null,$event); changeTotalAreaTo(null)">
+                            <label for="ar-any">
+                  <input type="radio"  name="totalAreaFrom" id="ar-any">{{'app.component.search.totalArea.any' | translate}}
+                </label>
+                        </div>
+                        <div class="item" (click)="changeTotalAreaFrom(ar2.value,$event)">
+                            <label for="ar1">
+                        <input type="radio"  name="totalAreaFrom" #ar2 value="25" id="ar1">{{'app.component.search.totalArea.from' | translate}} 25
+                     </label>
+                        </div>
+                        <div class="item" (click)="changeTotalAreaFrom(ar3.value,$event)">
+                            <label for="ar2">
+                        <input type="radio"  #ar3 name="totalAreaFrom" value="45" id="ar2">{{'app.component.search.totalArea.from' | translate}} 45
+                    </label>
+                        </div>
+                        <div class="item" (click)="changeTotalAreaFrom(ar4.value,$event)">
+                            <label for="ar3">
+                        <input type="radio"  #ar4 name="totalAreaFrom" value="65" id="ar3">{{'app.component.search.totalArea.from' | translate}} 65
+                    </label>
+                        </div>
+                        <div class="item" (click)="changeTotalAreaFrom(ar5.value,$event)">
+                            <label for="ar4">
+                        <input type="radio"  #ar5 name="totalAreaFrom" value="100" id="ar4">{{'app.component.search.totalArea.from' | translate}} 100
+                    </label>
+                        </div>
+                        <div class="item-choose">
+                            <input type="text"  (change)="changeTotalAreaFrom(ar6.value,$event)" #ar6 placeholder="{{'app.component.search.totalArea.from' | translate}}"
+                                [value]="totalAreaFrom">
+                            <span> - </span>
+                            <input type="text"  (change)="changeTotalAreaTo(ar7.value)" #ar7 placeholder="{{'app.component.search.totalArea.to' | translate}}"
+                                [value]="totalAreaTo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-lg-2 search-filter">
+                <p>{{'app.component.search.prices.title' | translate}}</p>
+                <div class="res-wrapper">
+                    <div exclude=".res-wrapper,.res" attachOutsideOnClick="false" (clickOutside)="onClickedOutside($event)" [ngClass]="{'res-open':(selectId === 3)}" (click)="openCustomSelect($event,3)" class="res">
+                        <span *ngIf="(search$ | async)?.searchFilter?.priceMin && (search$ | async)?.searchFilter?.priceMin">
+                    {{'app.component.search.prices.from' | translate}} {{searchFilter.priceMin}} {{'app.component.search.prices.to' | translate}} {{searchFilter.priceMax}}
+                </span>
+                        <span *ngIf="!((search$ | async)?.searchFilter?.priceMin) && (search$ | async)?.searchFilter?.priceMax">
+                    {{'app.component.search.prices.to' | translate}} {{searchFilter.priceMax}}
+                </span>
+                        <span *ngIf="!((search$ | async)?.searchFilter?.priceMin) && !((search$ | async)?.searchFilter?.priceMax)">
+                   {{'app.component.search.prices.any' | translate}}
+                </span>
+                        <img class="res-arrow" src="../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                    <div [ngClass]="{'open-dropdown':selectId === 3}" class="dropdown">
+                        <div class="item" (click)="changePriceMin(null); changePriceMax(null,$event)">
+                            <label for="p-any">
+                  <input type="radio"  id="p-any" value="0">{{'app.component.search.prices.any' | translate}}
+              </label>
+                        </div>
+                        <div class="item" (click)="changePriceMax(p1.value,$event)">
+                            <label for="p1">
+                  <input type="radio" name="priceMax" #p1  id="p1" value="4000"> {{'app.component.search.prices.to' | translate}} 4 000 
+                  </label>
+                        </div>
+                        <div class="item" (click)="changePriceMax(p2.value,$event)">
+                            <label for="p2">
+                        <input type="radio" name="priceMax" #p2  id="p2" value="6000"> {{'app.component.search.prices.to' | translate}} 6 000
+                    </label>
+                        </div>
+                        <div class="item" (click)="changePriceMax(p3.value,$event)">
+                            <label for="p3">
+                        <input type="radio" name="priceMax" #p3  id="p3" value="8000"> {{'app.component.search.prices.to' | translate}} 8 000
+                    </label>
+                        </div>
+                        <div class="item" (click)="changePriceMax(p4.value,$event)">
+                            <label for="p4">
+                        <input type="radio" name="priceMax" #p4  id="p4" value="10000"> {{'app.component.search.prices.to' | translate}} 10 000
+                    </label>
+                        </div>
+                        <div class="item" (click)="changePriceMax(p5.value,$event)">
+                            <label for="p5">
+                        <input type="radio" name="priceMax" #p5  id="p5" value="12000"> {{'app.component.search.prices.to' | translate}} 12 000
+                    </label>
+                        </div>
+                        <div class="item" (click)="changePriceMax(p6.value,$event)">
+                            <label for="p6">
+                        <input type="radio" name="priceMax" #p6  id="p6" value="14000"> {{'app.component.search.prices.to' | translate}} 14 000
+                    </label>
+                        </div>
+                        <div class="item-choose">
+                            <input type="text"  placeholder="{{'app.component.search.prices.from' | translate}}" #p7 (change)="changePriceMin(p7.value)"
+                                [value]="priceMin">
+                            <span> - </span>
+                            <input type="text"  placeholder="{{'app.component.search.prices.to' | translate}}" #p8 (change)="changePriceMax(p8.value,$event)"
+                                [value]="priceMax">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-6 col-lg-2">
+                <div class="filter-btn-wrp">
+                    <button class="btn default-btn" (click)="clearFilters()">{{'app.component.search.clearFilters' | translate}}</button>
+                    <button class="btn default-btn" (click)="showFiltersModal()">{{'app.component.search.otherFilters' | translate}}</button>
+                </div>
+            </div>
+            <div class="list-none">
+                <div *ngFor="let value of properties" class="inline">
+                    {{'app.component.search.properties.'+value | translate}}
+                    <span class="close" (click)="removeFileterElement(value,properties)"><i class="fa fa-times "> </i></span>
+                </div>
+            </div>
+            <div class="modal" #modal>
+                <div class="modal-inner">
+                    <div class="col-xs-12 filters-category">
+                        <h3>{{'app.component.search.accommodations.title' | translate}}</h3>
+                        <div *ngFor="let accommodation of (search$ | async)?.searchResult?.accommodationFacet" class="checkbox property-item">
+                            <label>
+                                <input type="checkbox" value="accommodation.term" [checked]="checked(accommodation.term, accommodations)" (change)="check(accommodation.term, accommodations); doRequest('normal')">{{'app.component.search.accommodations.'+accommodation.term | translate}} 
+                                <small class="estate-count">{{accommodation.count}}</small>
+                        </label>
+                        </div>
+                    </div>
+                <div class="col-xs-12 filters-category">
+                    <div>
+                        <h3>{{'app.component.search.types.title' | translate}}</h3>
+                        <div *ngFor="let type of (search$ | async)?.searchResult?.estateTypeFacet" class="checkbox property-item">
+                        <label>
+                            <input type="checkbox" value="type.term" [checked]="checked(type.term, estateTypes)" (click)="check(type.term, estateTypes)">
+                            {{'app.component.search.types.'+type.term | translate}} 
+                        </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 filters-category">
+                         <h3>{{'app.component.search.properties.title' | translate}}</h3>
+                        <div *ngFor="let property of (search$ | async)?.searchResult?.propertyFacet" class="checkbox property-item">
+                            <label>
+                            <input type="checkbox" value="property.term " [checked]="checked(property.term, properties)" (click)="check(property.term, properties) ">
+                            {{'app.component.search.properties.'+property.term | translate}} <small class="estate-count">{{property.count}}</small>
+                        </label>
+                        </div>
+                </div>
+                <button class="hide-filters-modal-btn" (click)="hideFiltersModal()"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button class="apply-filters-btn" (click)="applyFilters();hideFiltersModal()">{{'app.component.search.accept' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid search-result-wrapper">
+    <div class="row">
+        <app-search-result (pageChanged)="scrollAfterPageChange();doRequest('normal')" (addressChanged)="addressChangeHandler($event)" [showOverlay]="reload"
+            (geoBoxCoordsChange)="geoBoxChangeHandler()"></app-search-result>
+    </div>
+</div>

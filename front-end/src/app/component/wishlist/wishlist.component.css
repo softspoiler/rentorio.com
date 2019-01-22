@@ -1,0 +1,206 @@
+.sebm-google-map-container {
+    height: 400px;
+}
+.wrapper{
+    margin-top: 50px;
+    display: inline-block;
+    width: 100%;
+    min-height: 200px;
+    background: #fff;
+    padding: 90px 0px 25px 5px;
+    position: relative;
+    border-radius: 3px;
+    box-shadow: 2px 2px 10px #ddd;
+}
+.title{
+    position: absolute;
+    top: -20px;
+    left: 0;
+    padding: 12px 18px;
+    right: 0;
+    background: #8e84ed;
+    color: #fff;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.wish-list-content{
+	display: -ms-flex;
+	display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+}
+.wl-item {
+    position: relative;
+    width:270px;
+    float:left;
+    margin:10px 0px 10px 17px;
+    box-shadow: 2px 2px 10px #71717117;
+    display: -ms-flex;
+	display: -webkit-flex;
+    display: flex;
+}
+.overlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.16);
+    z-index: 5;
+    border-radius: 10px;
+    border-radius: 4px;
+}
+.detele-overlay{
+    z-index: 6;
+}
+.expiration-overlay{
+    background: rgba(243, 243, 243, 0.84);
+}
+.expiration-overlay span {
+    padding: 5px 5px 5px 10px;
+    display: block;
+    background: rgba(165, 165, 165, 0.83);
+    color: #fff;
+}
+.wl-body{
+    position:relative;
+    background: #fff;
+    border: 1px solid #f1f1f1;
+    border-top: none;
+    padding: 15px 15px 45px 15px;
+    border-radius: 4px;
+    box-sizing: content-box;
+    width: 100%;
+}
+.wl-body-empty{
+    text-align: center;
+}
+.wl-body-empty .create-new-btn{
+    display:inline-block;
+    outline: none;
+    border: none;
+    width: 60px;
+    height: 60px;
+    padding-top:15px;
+    text-decoration: none;
+    cursor:pointer;
+    border-radius: 50%;
+    background: #8d83ec;
+    color: #fff;
+    font-size: 1.5em;
+    box-shadow:2px 4px 10px 1px rgba(0, 0, 0, 0.21);
+    margin-bottom: 12px;
+    transition: background .2s;
+}
+.wl-body-empty .create-new-btn:hover{
+    background: #bcaeff;
+}
+.wl-body-empty figure{
+    position: relative;
+    top: 60%;
+    transform: translateY(-50%);
+}
+.wl-body ul {
+    padding: 0;
+    list-style: none;
+}
+.wl-body .wl-btn-remove {
+    outline: none;
+    border: none;
+    padding: 5px 10px;
+    background: #fbfbfb;
+    color: #9a9a9a;
+    transition: background .2s;
+    position: absolute;
+    bottom: 9px;
+    right: 10px;
+    border-radius: 50px;
+    border: 1px solid #e9e9e9;
+    z-index: 5;
+}
+.wl-body .wl-btn-remove:hover {
+    border-color:#f5f5f5;
+}
+.wl-body ul li .val {
+    color:#545454;
+}
+.wl-body .wl-open-map-btn{
+    position: absolute;
+    bottom: 8px;
+    width: 59px;
+    height: 32px;
+    left: 16px;
+    border: 1px solid #e8e8e8;
+    outline: none;
+    padding: 3px 10px;
+    text-align: center;
+    border-radius: 20px;
+    background: #fbfbfb;
+    z-index: 5;
+}
+.wl-body .wl-open-map-btn:hover{
+    border-color:#f5f5f5;
+}
+.wl-body .wl-open-map-btn img {
+    width: 20px;
+}
+.modal{
+    display: none;
+    top:70px;
+    left:0;
+    right:0;
+    background:rgba(0,0,0,.3);
+    z-index: 1001;
+    overflow-y: auto;
+}
+.modal-inner{
+    margin: 40px auto 0;
+    position: relative;
+    background: #fff;
+    text-align: center;
+    padding: 1px;
+    width: 90%;
+    max-width: 650px;
+    font-size: 1.2em;
+}
+.modal-inner .fa-times{
+    background: #8e84ed;
+    position: absolute;
+    right: 10px;
+    top: 11px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 27px;
+    z-index: 3;
+    padding: 5px 10px 6px 10px;
+    border-radius: 3px;
+}
+.show-modal-inner{
+    animation-name: show;
+    animation-duration: .4s;
+    animation-iteration-count: 1;
+}
+.show-modal{
+    display: inline-block;
+    animation-name: fade;
+    animation-duration: .4s;
+    animation-iteration-count: 1;
+}
+@media screen and (max-width:615px){
+    .title{
+        font-size: 17px;
+    }
+    .wl-item{
+        width: 94%;
+        margin: 10px 11px 10px 8px;
+    }
+    .wrapper{
+        display: block;
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .modal-inner{
+        width: 94%;
+    }
+}

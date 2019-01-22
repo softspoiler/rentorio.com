@@ -1,0 +1,15 @@
+.fa-ban{
+    color:#F44336;
+}
+table tbody tr td{
+    vertical-align: middle;
+}
+.fa-times{
+    color: #F44336;
+}
+.fa-ban{
+    width: 18px;
+}
+.table-responsive{
+    width: 100%;
+}

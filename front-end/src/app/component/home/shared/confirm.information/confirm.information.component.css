@@ -1,0 +1,11 @@
+.fa-check-circle{
+    color: #2ac149;
+    position: relative;
+    left: 2px;
+    top: 2px;
+    font-size: 1.2em;
+}
+.confirm-btn{
+    margin-left:8px;
+    cursor: pointer;
+}

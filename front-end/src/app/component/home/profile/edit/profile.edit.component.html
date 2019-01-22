@@ -1,0 +1,157 @@
+<form *ngIf="userProfile" [formGroup]="form" (ngSubmit)="onSubmit()" class="form-horizontal">
+    <div class="panel panel-default">
+        <div class="panel panel-heading">{{'app.component.profile.edit.requiredInfo.header' | translate}}</div>
+        <div class="panel-body">
+            <div class="form-group" [ngClass]="{ 'has-error' : form.get('firstName').invalid && form.get('firstName').dirty }">
+                <label for="firstName" class="col-sm-2 control-label">{{'app.component.profile.edit.requiredInfo.firstName' | translate}}</label>
+                <div class="col-sm-10">
+                    <input formControlName="firstName" maxlength="250" type="text" class="form-control" name="firstName" value={{userProfile.firstName}}>
+                </div>
+                <p class="col-sm-offset-2 col-sm-10 wrong-input" *ngIf="form.get('firstName').hasError('required') ">{{'app.component.profile.edit.requiredInfo.firstNameRequired' | translate}}</p>
+            </div>
+            <div class="col-sm-offset-2 col-sm-10" class="form-group" [ngClass]="{ 'has-error' : form.get('lastName').invalid && form.get('lastName').dirty }">
+                    <label for="lastName" class="col-sm-2 control-label">{{'app.component.profile.edit.requiredInfo.lastName' | translate}}<i class="fa fa-lock" aria-hidden="true"></i></label>
+                    <div class="col-sm-10">
+                        <input formControlName="lastName" maxlength="250" type="text" class="form-control" name="lastName" value={{userProfile.lastName}}>
+                    </div>
+                    <p class="col-sm-offset-2 col-sm-10 wrong-input" *ngIf="form.get('lastName').hasError('required') ">{{'app.component.profile.edit.requiredInfo.lastNameRequired' | translate}}</p>
+            </div>
+            <div class="form-group">
+                <label for="middleName" class="col-sm-2 control-label">{{'app.component.profile.edit.requiredInfo.middleName' | translate}}</label>
+                <div class="col-sm-10">
+                    <input formControlName="middleName" maxlength="250" type="text" class="form-control" name="middleName" value={{userProfile.middleName}}>
+                </div>
+            </div>
+            <p class="col-sm-offset-2 col-sm-10 info-color">{{'app.component.profile.edit.requiredInfo.nameInfo' | translate}}</p>
+            <div class="form-group">
+                <label for="gender" class="col-sm-2 control-label">{{'app.component.profile.edit.requiredInfo.gender.label' | translate}}<i class="fa fa-lock" aria-hidden="true"></i></label>
+                <div class="col-sm-10">
+                    <div class="select-wrapper">
+                        <select formControlName="gender" [value]="userProfile.gender || gender" name="gender">
+                                <option value="gender" disabled >{{'app.component.profile.edit.requiredInfo.gender.selected' | translate}}</option>
+                                <option value="MALE">{{'app.component.profile.edit.requiredInfo.gender.male' | translate}}</option>
+                                <option value="FEMALE">{{'app.component.profile.edit.requiredInfo.gender.female' | translate}}</option>
+                    </select>
+                        <div class="select-arrow">
+                            <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="col-sm-offset-2 col-sm-10 info-color">{{'app.component.profile.edit.requiredInfo.gender.info' | translate}}</p>
+            <div class="form-group">
+                <label for="month" class="col-sm-2 control-label">{{'app.component.profile.edit.requiredInfo.birthDate.label' | translate}}<i class="fa fa-lock" aria-hidden="true"></i></label>
+                <div class="col-sm-10">
+                    <div class="select-wrapper">
+                        <select class="auto-width" name="month" #m (change)="birthday.setUTCMonth(m.value); changeBirthday()" [value]="userProfile.birthday?.getUTCMonth()">
+                                <option  value="0">{{'app.component.profile.edit.requiredInfo.birthDate.month.1' | translate}}</option>
+                                <option  value="1">{{'app.component.profile.edit.requiredInfo.birthDate.month.2' | translate}}</option>
+                                <option  value="2">{{'app.component.profile.edit.requiredInfo.birthDate.month.3' | translate}}</option>
+                                <option  value="3">{{'app.component.profile.edit.requiredInfo.birthDate.month.4' | translate}}</option>
+                                <option  value="4">{{'app.component.profile.edit.requiredInfo.birthDate.month.5' | translate}}</option>
+                                <option  value="5">{{'app.component.profile.edit.requiredInfo.birthDate.month.6' | translate}}</option>
+                                <option  value="6">{{'app.component.profile.edit.requiredInfo.birthDate.month.7' | translate}}</option>
+                                <option  value="7">{{'app.component.profile.edit.requiredInfo.birthDate.month.8' | translate}}</option>
+                                <option  value="8">{{'app.component.profile.edit.requiredInfo.birthDate.month.9' | translate}}</option>
+                                <option  value="9">{{'app.component.profile.edit.requiredInfo.birthDate.month.10' | translate}}</option>
+                                <option  value="10">{{'app.component.profile.edit.requiredInfo.birthDate.month.11' | translate}}</option>
+                                <option  value="11">{{'app.component.profile.edit.requiredInfo.birthDate.month.12' | translate}}</option>
+                    </select>
+                        <div class="select-arrow">
+                            <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="select-wrapper">
+                        <select class="auto-width" #d (change)="birthday.setUTCDate(d.value); changeBirthday()" [value]="userProfile.birthday?.getUTCDate()">
+                                <option *ngFor="let day of days" [value]="day">{{day}}</option>
+                            </select>
+                        <div class="select-arrow">
+                            <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="select-wrapper">
+                        <select class="auto-width" name="year" #y (change)="birthday.setUTCFullYear(y.value); changeBirthday()" [value]="userProfile.birthday?.getUTCFullYear()">
+                                <option *ngFor="let year of years" [value]="year" >{{year}}</option>
+                            </select>
+                        <div class="select-arrow">
+                            <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="col-sm-offset-2 col-sm-10 info-color">{{'app.component.profile.edit.requiredInfo.birthDate.info' | translate}}</p>
+            <div class="form-group" [ngClass]="{ 'has-error' : form.get('email').invalid && submitAttempt || form.get('email').invalid && form.get('email').dirty }">
+                <label for="email" class="col-sm-2 control-label">{{'app.component.profile.edit.requiredInfo.email.label' | translate}}<i class="fa fa-lock" aria-hidden="true"></i></label>
+                <div class="col-sm-10">
+                    <input formControlName="email" maxlength="250" type="text" class="form-control" name="email" >
+                </div>
+
+                <p class="col-sm-offset-2 col-sm-10 wrong-input" *ngIf="form.get('email').hasError('required') && submitAttempt || form.get('email').hasError('required') && form.get('email').dirty">{{'app.component.profile.edit.requiredInfo.email.required' | translate}}</p>
+                <p class="col-sm-offset-2 col-sm-10 wrong-input" *ngIf="form.get('email').hasError('pattern') && submitAttempt || form.get('email').hasError('pattern') && form.get('email').dirty">{{'app.component.profile.edit.requiredInfo.email.pattern' | translate}}</p>
+            </div>
+            <p class="col-sm-offset-2 col-sm-10 info-color">{{'app.component.profile.edit.requiredInfo.email.info' | translate}}</p>
+            <!-- <p class="col-sm-offset-2 col-sm-10"><a href=#>{{'app.component.profile.edit.requiredInfo.email.link' | translate}}</a></p> -->
+            <div>
+                <span class="col-sm-2 control-label">{{'app.component.profile.edit.requiredInfo.phoneNumber.label' | translate}} <i class="fa fa-lock" aria-hidden="true"></i></span>
+                <p class="col-sm-10 number" *ngIf="!userProfile.phoneNumber">{{'app.component.profile.edit.requiredInfo.phoneNumber.default' | translate}}</p>
+                <p class="col-sm-10 number" *ngIf="!!userProfile.phoneNumber">{{userProfile.phoneNumber}}</p>
+
+                <add-number (newPhoneEvent)="updatePhoneEventHandler($event)" class="col-sm-offset-2 col-sm-10"></add-number>
+                <p class="col-sm-offset-2 col-sm-10 info-color">{{'app.component.profile.edit.requiredInfo.phoneNumber.info' | translate}}</p>
+            </div>
+            <!-- <div class="form-group">
+                <label for="lang" class="col-sm-2 control-label">{{'app.component.profile.edit.requiredInfo.lang.label' | translate}}<i class="fa fa-lock" aria-hidden="true"></i></label>
+                <div class="col-sm-10">
+                    <div class="select-wrapper">
+                        <select formControlName="locale" class="form-control" name="lang" [value]="userProfile.locale" #langSelect (change)="translate.use(langSelect.value)">
+                                <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{lang}}</option>
+                            </select>
+                        <div class="select-arrow">
+                            <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="col-sm-offset-2 col-sm-10">{{'app.component.profile.edit.requiredInfo.lang.info' | translate}}</p>
+             -->
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel panel-heading">{{'app.component.profile.edit.additionInfo.header' | translate}}</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="placeOfEducation" class="col-sm-2 control-label">{{'app.component.profile.edit.additionInfo.education' | translate}}</label>
+                <div class="col-sm-10">
+                    <input formControlName="placeOfEducation" maxlength="256" type="text" class="form-control" name="placeOfEducation" value={{userProfile.placeOfEducation}}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="placeOfWork" class="col-sm-2 control-label">{{'app.component.profile.edit.additionInfo.work.label' | translate}}</label>
+                <div class="col-sm-10">
+                    <input formControlName="placeOfWork" maxlength="300" type="text" class="form-control" name="placeOfWork" placeholder="{{'app.component.profile.edit.additionInfo.work.placeholder' | translate}}"
+                        value="userProfile.placeOfWork">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="selfDescription" class="col-sm-2 control-label">{{'app.component.profile.edit.additionInfo.about' | translate}}</label>
+                <div class="col-sm-10">
+                    <textarea formControlName="selfDescription" rows="5" maxlength="1000" type="text" class="form-control" name="selfDescription" value={{userProfile.selfDescription}}></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="has-error" [ngSwitch]="typeOfError">
+            <span *ngSwitchCase="'EmailAlreadyExistError'">{{'app.component.registration.server.error.EmailAlreadyExistError' | translate}}</span>
+            <span *ngSwitchCase="'InvalidEmailFormatError'">{{'app.component.registration.server.error.InvalidEmailFormatError'| translate}}</span>
+            <span *ngSwitchCase="'MandatoryProfileFieldsError'">{{'app.component.registration.server.error.MandatoryRegistrateFieldError'| translate}}</span>
+            <span *ngSwitchDefault></span>
+    </div>
+    <p class="has-error" *ngIf="form.invalid && submitAttempt">{{'app.component.registration.server.error.MandatoryRegistrateFieldError'| translate}}</p>
+    <button class="col-sm-offset-2 col-sm-10" type="submit" class="default-btn">
+        {{'app.component.profile.edit.save' | translate}}
+    <div class="loading-wrapper">
+        <loading [show]="loading"></loading>
+    </div>    
+    </button>
+</form>
+<app-alert [show]="success" [type]="'success'" [textSize]="'1.2em'" [text]="'app.component.profile.edit.saveSuccess'"></app-alert>

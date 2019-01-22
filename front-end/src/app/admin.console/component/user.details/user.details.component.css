@@ -1,0 +1,152 @@
+.details-container{
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 41px;
+    background: #fff;
+    overflow-y: scroll;
+}
+.tabs-item{
+    list-style: none;
+}
+.tabs-item li{
+    display: inline;
+    border: 1px solid #4CAF50;
+    padding: 7px;
+    cursor: pointer;
+}
+.tabs-item li:hover {
+     opacity: .7;
+}
+.active-tab{
+    background: #4CAF50;
+}
+.close-details{
+    color: #5d5d5d;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2em;
+    cursor:pointer
+}
+.containers{
+    min-height: 100px;
+    padding: 28px;
+    margin-top: -5px;
+}
+.chat-message-wrapper{
+    background: #f7f7f7;
+}
+.collocutors ul li{
+    list-style: none;
+    margin-bottom:8px;
+}
+.collocutors-list{
+    background: #ddd;
+    padding: 10px;
+    cursor:pointer;
+}
+.collocutors-list:hover{
+    background:#efeeee;
+}
+.collocutors-list-active{
+    outline: 2px solid #607D8B
+}
+.user-avatar{
+    border-radius: 3px;
+}
+.collocutor-img{
+    border-radius: 50%;
+    width: 35px;
+}
+.chat-message-wrapper{
+    border:1px solid #ddd;
+    min-height: 300px;
+}
+.current-user-message{
+    float:right;
+    clear:both;
+    margin-top: 28px;
+}
+.current-user-message .message-date{
+    position: relative;
+    right:0px;
+    top: -12px;
+    font-size: 0.8em;
+    color: #f5d80c;
+}
+.current-user-message .message{
+    background:rgb(199, 227, 243);
+    padding: 9px 12px 9px 17px;
+    margin-right: 15px;
+    border-radius: 4px;
+    max-width: 300px;
+}
+.another-user-message{
+    clear:both;
+    margin-top: 28px;
+}
+.another-user-message .message-date{
+    position: relative;
+    left: 15px;
+    top: -12px;
+    font-size: 0.8em;
+    color: #f5d80c;
+}
+.another-user-message p{
+    background: rgb(234, 234, 234);
+    padding: 9px 17px 9px 12px;
+    margin-left: 15px;
+    border-radius: 4px;
+    max-width: 300px;
+}
+.chat-created-date{
+    margin-top:12px
+}       
+.media-left img {
+    max-width:243px;
+    cursor:pointer;
+}
+.estate-list .item{
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 44px 0px 44px 24px;
+    margin-bottom:20px;
+}
+.estateId{
+    position: absolute;
+    top: 11px;
+    right: 26px;
+}
+.description{
+    cursor:pointer;
+}
+.status{
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+.play-record-btn{
+    position: relative;
+    max-width: 300px;
+    padding: 9px 47px 9px 17px;
+    margin-right: 15px;
+    top: -3px;
+    background:rgb(199, 227, 243);
+    border-radius: 4px;
+}
+.play-record-btn i {
+    font-size: 1.3em;
+    background: #f7f7f7;
+    border-radius: 50%;
+    padding: 6px 0px 6px 10px;
+    width: 30px;
+    height: 29px;
+    position: absolute;
+    right: 8px;
+    top: 4px;
+    color: #8d83ec;
+    cursor:pointer;
+}

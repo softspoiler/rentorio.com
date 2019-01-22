@@ -1,0 +1,31 @@
+<footer>
+    <div class="container-fluid padding">
+        <div class="row">
+            <div class="col-xs-11 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-2">
+                <div class="main-logo" routerLink="/">
+                   Rentorio
+                </div>
+            </div>
+            <div class="col-xs-11 col-xs-offset-1 col-sm-offset-0 col-sm-push-1 col-sm-4 col-md-push-0 col-md-3">
+                <ul class="links">
+                    <li><a routerLink="/about">{{'app.footer.aboutProject' | translate}}</a></li>
+                    <li><app-support [text]="'app.footer.support'" [defaultText]="true"></app-support></li>
+                    <li><a routerLink="/faq">{{'app.footer.faq' | translate}}</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-11 col-xs-offset-1 col-sm-offset-0 col-sm-push-1 col-sm-4 col-md-push-0 col-md-3">
+                <ul class="links">
+                    <li><a routerLink="/terms">{{'app.footer.terms' | translate}}</a></li>
+                    <li><a routerLink="/policy">{{'app.footer.policy' | translate}}</a></li>
+                    <li><span class="contacts">e-mail: support@rentorio.com</span></li>
+                </ul>
+            </div>
+            <div class="col-xs-5 col-xs-offset-1  col-sm-offset-4 col-sm-4 col-md-offset-0 col-md-push-0 col-md-2">
+                <h5>{{'app.footer.social' | translate}}</h5>
+                <a target="_blank" href="https://www.facebook.com/RentorioUkraine"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            </div> 
+            <div class="col-xs-5 col-xs-offset-1 col-sm-offset-0 col-sm-4 col-md-push-0 col-md-2"><h5>Copyright @ {{year}}<a href="https://rentorio.com"> RENTORIO.com</a></h5></div>
+        </div>
+    </div>
+   
+</footer>

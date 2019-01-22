@@ -1,0 +1,31 @@
+.pl-wrapper{
+    position: fixed;
+    display:none;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background: rgba(0,0,0,.3);
+    z-index: 6;
+}
+.pl-wrapper-show{
+    display: block;
+}
+.pl-inner{
+    padding: 50px 60px;
+    background: #fafafa;
+    position: relative;
+    display: inline-block;
+    left:50%;
+    top:200px;
+    transform:translateX(-50%);
+    border-radius: 4px;
+}
+.pl-inner .fa-times{
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    color: #5a5a5a;
+    font-size: 1.4em;
+    cursor: pointer;
+}

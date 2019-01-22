@@ -1,0 +1,28 @@
+.hidden-container{
+    overflow: hidden;
+    max-height: 0px;
+    transition: max-height .8s ease;
+}
+.open{
+    max-height: 852px;
+}
+.action-btn{
+    outline: none;
+    border:0px;
+   
+    padding: 6px 8px 6px 8px;
+    border-radius: 3px;
+}
+.delete-btn{
+    background: #f44336;
+    color:white;
+}
+.close-btn{
+    background: transparent;
+    border :1px solid #ccc;
+}
+@media screen and (max-width:365px){
+    .close-btn{
+        margin-top: 7px;
+    }
+}

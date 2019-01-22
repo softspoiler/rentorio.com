@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+    <div class="panel panel-heading">{{'app.component.confirmInformation.title' | translate}}</div>
+    <div class="panel-body">
+        <div *ngIf="isEmailConfirmed" class="media">
+            <div class="media-left"><i class="fa fa-check-circle"></i></div>
+            <div class="media-body">
+                <div class="media-heading">{{'app.component.confirmInformation.email.text' | translate}}</div>
+                <p *ngIf="withDescription">{{'app.component.confirmInformation.email.description.after' | translate}}
+                    <strong *ngIf="curentUserProfile"> {{curentUserProfile.email}}</strong> {{'app.component.confirmInformation.email.description.before' | translate}}
+                </p>
+            </div>
+        </div>
+        <div *ngIf="isPhoneConfirmed" class="media">
+            <div class="media-left"><i class="fa fa-check-circle"></i></div>
+            <div class="media-body">
+                <div class="media-heading">{{'app.component.confirmInformation.phone.text' | translate}}</div>
+                <p *ngIf="withDescription">
+                    {{'app.component.confirmInformation.phone.description' | translate}}
+                </p>
+            </div>
+        </div>
+        <p *ngIf="isEmailConfirmed === false && isPhoneConfirmed === false">{{'app.component.confirmInformation.empty' | translate}}</p>
+        <a *ngIf="withLink" class="confirm-btn" (click)="confirm();">{{'app.component.confirmInformation.verification' | translate}}</a>
+    </div>
+</div>

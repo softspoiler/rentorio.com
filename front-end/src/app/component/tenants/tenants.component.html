@@ -1,0 +1,280 @@
+<div class="container">
+    <div class="row">
+      <div  class="wrapper">
+        <h3 class="title">{{'app.component.tenants.title' | translate}}</h3>
+        <div class="col-xs-12 col-sm-4">
+            <form [formGroup]="form">
+
+                <!-- rentFor -->
+                <div class="select-container">
+                    <label class="labels" for="rentFor">{{'app.component.wish.form.gender.label' | translate}}</label>
+                    <div class="select-wrapper">
+                        <select class="auto-width" name="rentFor" formControlName="rentFor" [value]="">
+                            <option  value="">{{'app.component.wish.form.gender.default' | translate}}</option>
+                            <option  value="MAN">{{'app.component.wish.form.gender.option1' | translate}}</option>
+                            <option  value="WOMAN">{{'app.component.wish.form.gender.option2' | translate}}</option>
+                            <option  value="MARRIED_COUPLE">{{'app.component.wish.form.gender.option3' | translate}}</option>
+                            <option  value="FAMILY_WITH_CHILDREN">{{'app.component.wish.form.gender.option4' | translate}}</option>
+                            <option  value="GROUP_OF_PEOPLE">{{'app.component.wish.form.gender.option5' | translate}}</option>
+                        </select>
+                        <div class="select-arrow">
+                            <img src="../../../assets/image/down-arrow.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- accommodation -->
+                <div class="select-container">
+                    <label class="labels" for="accommodation">{{'app.component.estate.general.accommodation.title' | translate}}</label>
+                    <div class="select-wrapper">
+                        <select class="auto-width" name="accommodation" formControlName="accommodation" [value]="">
+                            <option  value="">{{'app.component.wish.form.gender.default' | translate}}</option>
+                            <option  value="ENTIRE">{{'app.component.estate.general.accommodation.entire' | translate}}</option>
+                            <option  value="PRIVATE_ROOM">{{'app.component.estate.general.accommodation.private_room' | translate}}</option>
+                            <option  value="SHARED_ROOM">{{'app.component.estate.general.accommodation.shared_room' | translate}}</option>
+                        </select>
+                        <div class="select-arrow">
+                            <img src="../../../assets/image/down-arrow.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- estateType -->
+                <div class="select-container">
+                    <label class="labels" for="estateType">{{'app.component.estate.general.type.title' | translate}}</label>
+                    <div class="select-wrapper">
+                        <select class="auto-width" name="estateType" formControlName="estateType" [value]="">
+                            <option  value="">{{'app.component.wish.form.gender.default' | translate}}</option>
+                            <option  value="APARTMENT">{{'app.component.estate.general.type.apartment' | translate}}</option>
+                            <option  value="HOUSE">{{'app.component.estate.general.type.house' | translate}}</option>
+                            <option  value="DORMITORY">{{'app.component.estate.general.type.dormitory' | translate}}</option>
+                            <option  value="TOWNHOUSE">{{'app.component.estate.general.type.townhouse' | translate}}</option>
+                            <option  value="VILLA">{{'app.component.estate.general.type.villa' | translate}}</option>
+                            <option  value="LOFT">{{'app.component.estate.general.type.loft' | translate}}</option>
+                        </select>
+                        <div class="select-arrow">
+                            <img src="../../../assets/image/down-arrow.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- roomsNumber -->
+                <!-- <div class="select-container">
+                        <label class="labels" for="roomsNumber">{{'app.component.wish.form.roomsNumber.label' | translate}}</label>
+                        <div class="select-wrapper">
+                            <select (change)="search()" class="auto-width" name="roomsNumber" formControlName="roomsNumber" [value]="">
+                                <option  value="">{{'app.component.wish.form.gender.default' | translate}}</option>
+                                <option  value="0">{{'app.component.wish.form.roomsNumber.studio' | translate}}</option>
+                                <option  value="1">1</option>
+                                <option  value="2">2</option>
+                                <option  value="3">3</option>
+                                <option  value="4">4</option>
+                                <option  value="5">5</option>
+                            </select>
+                            <div class="select-arrow">
+                                <img src="../../../assets/image/down-arrow.svg" alt="">
+                            </div>
+                        </div>
+                    </div> -->
+
+                <!-- Price -->
+                <p>{{'app.component.tenants.price.label' | translate}}</p>
+                <div class="input-group">
+                    <input [(ngModel)]="offeredPrice" (change)="changePrice('offered')" formControlName="offeredPrice" [maxlength]="7" type="tel"  class="form-control" placeholder="{{'app.component.tenants.price.placeholder' | translate}}"/>
+                </div>
+            </form>
+            <div class="search-btn-wrapper">
+                <button class="apply" (click)="search()">{{'app.component.tenants.applyBtn' | translate}}</button>
+                <button class="reset" (click)="resetForm()">{{'app.component.tenants.resetBtn' | translate}}</button>
+            </div>
+        </div>  
+        <div class="col-xs-12 col-sm-8">
+         <div class="map-wrapper">
+          <loading class="loading-map" [show]="loadingMap"></loading>
+          <agm-map
+          (mapReady)="mapReady($event)"
+          (idle)="geoBoxChange()"
+          (boundsChange)="boundsChange($event)" 
+          [streetViewControl]="false" 
+          [latitude]="lat" 
+          [longitude]="long"
+          [zoom]="6">
+          <agm-marker-cluster [maxZoom]="15"  [imagePath]="'../../../../assets/image/maps/'">
+            <agm-marker
+            *ngFor="let wish of wishes;trackBy:trackByFn;index as i" 
+            (markerClick)="onMarkerClick()"
+            [latitude]="wish.latitude"
+            [longitude]="wish.longitude"
+            [iconUrl]="{
+                url: isWishAlreadySanded(wish.id) ? '../../../../assets/image/maps/pin_gray.svg' :'../../../../assets/image/maps/pin_.svg',
+                scaledSize: {width: 72, height: 67},
+                labelOrigin:{x:36,y:31}
+            }"
+            [label]="{
+                text: getMakerLabel(),
+                color:'#ffffff',
+                fontSize:'13px'
+              }"
+            [zIndex]="i">
+            <agm-snazzy-info-window  
+            [latitude]="wish.latitude" 
+            [longitude]="wish.longitude"
+            [closeWhenOthersOpen]="true"
+            [openOnMarkerClick]="true"
+           
+            [placement]="'top'"
+            [wrapperClass]="'snazz-container'"
+            [maxWidth]="'250px'"
+            [maxHeight]="100"
+            [padding]="'0'" 
+            [borderRadius]="'5px'"
+            [backgroundColor]="'#fff'">
+                <ng-template>
+                <div class="offer-window">                       
+                    <ul>
+                        <li>
+                            <b>{{'app.component.tenants.rentFor.label' | translate}}</b>
+                            <span [ngSwitch]="wish.rentFor">
+                                <span *ngSwitchCase="'MAN'">{{'app.component.tenants.rentFor.MAN' | translate}}</span>
+                                <span *ngSwitchCase="'WOMAN'">{{'app.component.tenants.rentFor.WOMAN' | translate}}</span>
+                                <span *ngSwitchCase="'MARRIED_COUPLE'">{{'app.component.tenants.rentFor.MARRIED_COUPLE' | translate}}</span>
+                                <span *ngSwitchCase="'FAMILY_WITH_CHILDREN'">{{'app.component.tenants.rentFor.FAMILY_WITH_CHILDREN' | translate}}</span>
+                                <span *ngSwitchCase="'GROUP_OF_PEOPLE'">{{'app.component.tenants.rentFor.GROUP_OF_PEOPLE' | translate}}</span>
+                            </span>
+                        </li>
+                        <li>
+                            <b>{{'app.component.wishlist.price.label' | translate}}</b>
+                            <span *ngIf="wish.priceMin !== 0 && wish.priceMax !== 999999 else anyF">
+                                <span class="val">{{'app.component.wishlist.price.from' | translate}} {{wish.priceMin}}{{'app.component.wishlist.price.currency' | translate}}</span>
+                                <span class="val">{{'app.component.wishlist.price.to' | translate}} {{wish.priceMax}}{{'app.component.wishlist.price.currency' | translate}}</span>
+                            </span>
+                        </li>
+                        <li>
+                            <b>{{'app.component.wishlist.type' | translate}}</b>
+                            <span *ngIf="wish.estateTypes else anyM">
+                                <span  class="val"*ngFor="let val of wish.estateTypes.split(','); last as isLast">
+                                {{'app.component.estate.general.type.'+val | translate}}<span *ngIf="!isLast">,</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <b>{{'app.component.wishlist.accommodation' | translate}}</b>
+                            <span *ngIf="wish.accommodations else anyM">
+                                <span  class="val"*ngFor="let val of wish.accommodations.split(','); last as isLast">
+                                    {{'app.component.estate.general.accommodation.'+val | translate}}<span *ngIf="!isLast">,</span>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <b>{{'app.component.wishlist.rooms' | translate}}</b>
+                            <span *ngIf="wish.multiRoomsNumber else anyF">
+                                <span *ngFor="let room of wish.multiRoomsNumber.split(','); last as isLast">
+                                  <span *ngIf="room !== '0'">{{room}}<span *ngIf="!isLast">,</span></span>
+                                  <span *ngIf="room === '0'">{{'app.component.wish.form.roomsNumber.studio' | translate}}<span *ngIf="!isLast">,</span></span>
+                                </span>
+                              </span>
+                        </li>
+                    </ul>
+                    <p *ngIf="isWishAlreadySanded(wish.id)" class="color-orange">{{'app.component.tenants.marker.text' | translate}}</p>
+                    <button (click)="showOfferModal(wish.id)" class="button button-blue">{{'app.component.tenants.marker.btn' | translate}}</button>
+                </div>
+                </ng-template>
+            </agm-snazzy-info-window>
+            </agm-marker>
+        </agm-marker-cluster>
+        </agm-map>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+<ng-template #anyF>
+    <span class="val">{{'app.component.wishlist.anyF' | translate}}</span>
+  </ng-template>
+  <ng-template #anyM>
+    <span class="val">{{'app.component.wishlist.anyM' | translate}}</span>
+  </ng-template>
+
+  <div class="modal" #offerModal>
+    <div class="modal-inner">
+      <i (click)="hideOfferModal()" class="fa fa-times"></i>
+      <div [ngSwitch]="status">
+          <div *ngSwitchCase="'unknown'">
+              <div class="text-center">
+                <p>{{'app.component.tenants.status.unknown.text' | translate}}</p>
+                <button routerLink="/registration" class="button button-blue">{{'app.component.tenants.status.unknown.btn' | translate}}</button>
+              </div>
+          </div>
+          <div *ngSwitchCase="'withoutEstate'">
+              <div class="text-center">
+                  <p>{{'app.component.tenants.status.withoutEstate.text' | translate}}</p>
+                  <button (click)="createNewEstate()" class="button button-green">{{'app.component.tenants.status.withoutEstate.btn' | translate}}</button>
+              </div>
+          </div>
+          <div *ngSwitchCase="'unModerated'">
+              <div class="text-center">
+                  <p>{{'app.component.tenants.status.unModerated.text1' | translate}}</p>
+                  <p>{{'app.component.tenants.status.unModerated.text2' | translate}}</p>
+              </div>
+          </div>
+          <div *ngSwitchCase="'offline'">
+                <div class="text-center">
+                    <p>{{'app.component.tenants.status.offline.text1' | translate}}</p>
+                    <p>{{'app.component.tenants.status.offline.text2' | translate}}</p>
+                    <button routerLink="/home/estate/list" class="button button-blue">{{'app.component.tenants.status.offline.btn' | translate}}</button>
+                </div>
+          </div>
+          <div *ngSwitchCase="'list'">
+              <div *ngIf="!estateId">
+                <p>{{'app.component.tenants.status.list.listTitle' | translate}}</p>
+                <div class="list">
+                    <div class="item-wrapper" *ngFor="let estate of estates">
+                        <div (click)="estateClickHandler(estate.id)" class="item" *ngIf="estate.moderated && estate.status === 'ONLINE'">
+                            <!-- <div *ngIf="!estate.moderated || estate.status === 'OFFLINE'" class="overlay">
+                                <span *ngIf="!estate.moderated && estate.status === 'ONLINE'">Житло ще не перевірено модератором</span>
+                                <span *ngIf="estate.status === 'OFFLINE'">Статус житла офлайн</span>
+                            </div> -->
+                            <img class="item-img" [src]="estate.images[0].imageUrl" default="../../../../assets/image/empty-photo.png" alt="estate">
+                            <span>{{estate?.shortDescription}}</span>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div *ngIf="estateId">
+                    <p>{{'app.component.tenants.status.list.offer.title' | translate}}</p>
+                    <label>{{'app.component.tenants.status.list.offer.label' | translate}}</label>
+                    <div class="input-group">
+                        <input  [(ngModel)]="newPrice" (change)="changePrice('new')"  maxlength="7" type="tel"  class="form-control" />
+                    </div>
+                    <button (click)="offerEstateForWish()" class="button button-green offer-btn">{{'app.component.tenants.status.list.offer.btn' | translate}}</button>
+              </div>
+          </div>
+        <div *ngSwitchCase="'success'" class="text-center">
+            <i class="fa fa-check-circle"></i>
+            <p>{{'app.component.tenants.status.list.success' | translate}}</p>
+        </div>
+          <div *ngSwitchDefault class="loading-wrapper">
+            <loading [insideOverlay]="true" [show]="true"></loading>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" #infoModal>
+    <div class="modal-inner">
+      <!-- <i (click)="hideInfoModal()" class="fa fa-times"></i> -->
+      <ul>
+          <li><strong>-</strong> {{'app.component.tenants.infoModal.text' | translate}}</li>
+          <li><strong>-</strong> {{'app.component.tenants.infoModal.text1' | translate}}</li>
+          <li><strong>-</strong> {{'app.component.tenants.infoModal.text2' | translate}}</li>
+          <li><strong>-</strong> {{'app.component.tenants.infoModal.text3' | translate}}</li>
+      </ul>
+      <div class="flex-container">
+        <div class="checkbox">
+            <label><input [(ngModel)]="hideForeverModel" name="hideforever" type="checkbox" value="">{{'app.component.tenants.infoModal.hideForever' | translate}}</label>
+        </div>
+        <button class="ok-button" (click)="hideInfoModal()">Ок</button>
+      </div>
+    </div>
+  </div>
+  

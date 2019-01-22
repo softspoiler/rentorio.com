@@ -1,0 +1,110 @@
+.modal{
+    display: none;
+    top:0;
+    left:0;
+    right:0;
+    background:rgba(0,0,0,.6);
+    overflow-y: auto;
+}
+.modal-inner{
+    margin: 50px auto;
+    max-width: 500px;
+}
+.show-modal-inner{
+    animation-name: show;
+    animation-duration: .4s;
+    animation-iteration-count: 1;
+}
+.show-modal{
+    display: inline-block;
+    animation-name: fade;
+    animation-duration: .4s;
+    animation-iteration-count: 1;
+}
+
+.fa-times{
+    color: #fff;
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+.form-error{
+    color:#d83535;
+}
+.has-error{
+    border: 1px solid #de3535;
+}
+.correct{
+    border: 1px solid #46c028;
+}
+.success{
+    color:#46c028;
+}
+.grecaptcha-wrapper {
+    position: fixed;
+    z-index: 2;
+}
+.support-btn{
+    outline: none;
+    border: none;
+    color: #fff;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background:transparent;
+    z-index: 1;
+    border-top-left-radius: 40px;
+    border-radius: 40px;
+    height: 55px;
+    width: 55px;
+}
+.support-btn img {
+    width: 100%;
+    height: auto;
+}
+.inline-text{
+    color:#337ab7;
+    cursor:pointer;
+}
+.default-inline-text{
+    color:#fff;
+    cursor:pointer;
+}
+.default-inline-text:hover{
+    color:#8d83ec;
+}
+.submit-btn{
+    float: right;
+    display: block;
+    margin: 17px auto 4px auto;
+    padding: 9px 14px 9px 12px;
+    outline: none;
+    border: none;
+    color: #fff;
+    background: #8d83ec;
+    border-radius: 2px;
+    transition: background .2s;
+}
+.submit-btn:hover{
+    background: #bcaeff;
+}
+@keyframes show{
+    0%{
+        
+        transform:scale(0);
+    }
+    100%{
+  
+        transform:scale(1);
+    }
+  }
+  @keyframes fade{
+      0%{
+          
+          opacity:0;
+      }
+      100%{
+    
+          opacity:1;
+      }
+  }

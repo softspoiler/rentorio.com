@@ -1,0 +1,26 @@
+.table-responsive{
+    width: 100%;
+}
+table tbody tr td{
+    vertical-align: middle;
+}
+table{
+    text-align: center;
+}
+.play-record-btn {
+    font-size: 1.3em;
+    background: #efefef;
+    border-radius: 50%;
+    padding: 6px 0px 6px 3px;
+    width: 30px;
+    height: 30px;
+    color: #8d83ec;
+    cursor: pointer;
+}
+.error{
+    color:#f44336;
+}
+.action-btn{
+    margin-bottom: 10px;
+    margin-top: 5px;
+}

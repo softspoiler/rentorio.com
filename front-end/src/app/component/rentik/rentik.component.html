@@ -1,0 +1,67 @@
+<div [ngClass]="{'rnt-wrapper-open':showModal}" class="rnt-wrapper">
+  <div class="rnt-inner">
+    <img (click)="open()" class="rentik-img" src="../../../assets/image/rentik.svg">
+    <div [ngSwitch]="step">
+
+      <div *ngSwitchDefault class="rnt-step-1">
+        <p>{{'app.component.rentik.t-step-1.text-1' | translate}}</p>
+        <p>{{'app.component.rentik.t-step-1.text-2' | translate}}</p>
+        <div class="buttons-wrapper">
+          <span  (click)="step = 'tenant-1';sendUserAction('tenant-step-1')">{{'app.component.rentik.t-step-1.ok' | translate}}</span>
+          <span  (click)="step = 'landlord-1';sendUserAction('landlord-step-1')">{{'app.component.rentik.t-step-1.landlord' | translate}}</span>
+        </div>
+        <span (click)="close();sendUserAction('incognito-close')" class="close-bottom-right">{{'app.component.rentik.t-step-1.no' | translate}}</span>
+      </div>
+
+      <!-- Tenant steps -->
+      <div *ngSwitchCase="'tenant-1'" class="rnt-step-1">
+        <p>{{'app.component.rentik.t-step-2.text-1' | translate}}</p>
+        <p>{{'app.component.rentik.t-step-2.text-2' | translate}}</p>
+        <p>{{'app.component.rentik.t-step-2.text-3' | translate}}</p>
+        <div class="buttons-wrapper">
+          <span class="big-text" (click)="step = 'tenant-2';sendUserAction('tenant-step-2')">{{'app.component.rentik.t-step-2.ok' | translate}}</span>
+          <span class="big-text" (click)="close();sendUserAction('tenant-step-1-close')">{{'app.component.rentik.t-step-2.no' | translate}}</span>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'tenant-2'" class="rnt-step-1">
+        <p>{{'app.component.rentik.t-step-3.text-1' | translate}}</p>
+        <div class="buttons-wrapper">
+          <span (click)="redirectToWishlist()">{{'app.component.rentik.t-step-3.ok' | translate}}</span>
+          <span class="gray-btn" (click)="close();sendUserAction('tenant-step-2-close')">{{'app.component.rentik.t-step-3.no' | translate}}</span>
+        </div>
+      </div>
+      <!-- /Tenant steps -->
+
+      <!-- Landlord steps -->
+      <div class="landlord-1" *ngSwitchCase="'landlord-1'">
+          <div>
+              <p>{{'app.component.rentik.l-step-1.tenants.text' | translate}}</p>
+              <a class="link confirm tenants-link" routerLink="/tenants">{{'app.component.rentik.l-step-1.tenants.btn' | translate}}</a>
+            </div>
+        <div>
+            <p>{{'app.component.rentik.l-step-1.known.text-1' | translate}}</p>
+            <div class="buttons-wrapper">
+                <span class="create-estate" (click)="createNewEstate()">{{'app.component.rentik.l-step-1.known.ok' | translate}}</span>
+                <span class="gray-btn" (click)="close();sendUserAction('landlord-known-close')">{{'app.component.rentik.l-step-1.known.no' | translate}}</span>
+              </div>
+        </div>
+      </div>
+
+      <div class="landlord-1" *ngSwitchCase="'landlord-confirm'">
+          <div class="unknown-landlord-template">
+              <!-- <p>{{'app.component.rentik.l-step-1.unknown.text-1' | translate}}</p> -->
+              <p class="margin-bottom-0">{{'app.component.rentik.l-step-1.unknown.text-2' | translate}}</p>
+              <span *ngIf="!(session$ | async)?.isAuthenticated">
+                <p class="margin-bottom-0">- {{'app.component.rentik.l-step-1.unknown.registration' | translate}}</p>
+                <a class="link" routerLink="/registration">{{'app.component.rentik.l-step-1.unknown.registrationBtn' | translate}}</a>
+              </span>
+              <p class="margin-bottom-0">- {{'app.component.rentik.l-step-1.unknown.confirm' | translate}}</p>
+              <a class="link confirm" routerLink="/home/profile/trust">{{'app.component.rentik.l-step-1.unknown.confirmBtn' | translate}}</a>
+              <span class="close-bottom-right" (click)="close();sendUserAction('landlord-unknown-close')">{{'app.component.rentik.l-step-1.unknown.no' | translate}}</span>
+            </div>
+      </div>
+      <!-- /Landlord steps -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+.container-inner{
+    margin-top:30px;
+}
+ul{
+    padding-left: 0;
+}
+li {
+    list-style: none;
+    outline: none;
+    background: #ffffff;
+    padding: 12px 10px;
+    margin-bottom: 5px;
+    position: relative;
+    margin-left: -105px;
+    max-width: 210px;
+    left: 50%;
+    border: 1px solid #e6e6e6;
+    border-radius: 2px;
+    cursor: pointer;
+}
+li:hover {
+    border-color:#d8d8d8;
+}
+li a {
+    color:#777777;
+    text-decoration: none;
+}
+.active-link>a {
+    color: #ffffff;
+}
+.active-link{
+    background: #8d83ec;
+}
+nav {
+    margin-top:51px;
+    margin-bottom:10px;
+}
+
+@media screen and (max-width: 768px) {
+    nav li {
+        margin-top: 10px;
+        position: relative;
+        left: 50%;
+        margin-left: -105px;
+    }
+}

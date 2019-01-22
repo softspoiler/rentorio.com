@@ -1,0 +1,254 @@
+<div class="text-center bg">
+		
+<div class="container-fluid">
+	<div class="row">
+		<p>
+			{{'app.component.benefits.title'| translate}}</p>
+<div class="options">
+	<h2 (click)="tenant = true;" [class.active]="tenant">{{'app.component.benefits.landlord'| translate}}</h2>
+	<h2 (click)="tenant = false;" [class.active]="!tenant">{{'app.component.benefits.tenant'| translate}}</h2>
+	
+	<div *ngIf="!tenant">
+		<div class="wrapper row">
+
+			<div class="col-sm-6 col-lg-3 text-center">
+					<figure class="icon-lg ">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/intermediaries.svg" alt="">
+					</div>
+					<figcaption >
+						<h3>{{'app.component.benefits.intermediaries.title'| translate}}</h3>
+						<p>{{'app.component.benefits.intermediaries.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/commission.svg" alt="">		
+					</div>
+					<figcaption>
+						<h3>{{'app.component.benefits.commission.title'| translate}}</h3>
+						<p>{{'app.component.benefits.commission.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/relevant.svg" alt="">
+					</div>
+					<figcaption>
+						<h3>{{'app.component.benefits.relevant.title'| translate}}</h3>
+						<p>{{'app.component.benefits.relevant.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+			
+			<div class="col-sm-6 col-lg-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/helper.svg" alt="">
+					</div>
+					<figcaption>
+						<h3>{{'app.component.benefits.helper.title'| translate}}</h3>
+						<p>{{'app.component.benefits.helper.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+			<div class="row">
+			<div class="col-sm-6 col-lg-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/spam.svg" alt="">
+					</div>
+					<figcaption>
+						<h3>{{'app.component.benefits.spam.title'| translate}}</h3>
+						<p>{{'app.component.benefits.spam.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/blackList.svg" alt="">	
+					</div>
+					<figcaption>
+						<h3 class="develop">{{'app.component.benefits.blackList.title'| translate}}</h3>
+						<p>{{'app.component.benefits.blackList.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/contract.svg" alt="">
+					</div>
+					<figcaption>
+						<h3 class="develop">{{'app.component.benefits.contract.title'| translate}}</h3>
+						<p>{{'app.component.benefits.contract.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+		</div>
+		</div>
+
+		<!-- slider for mobile devices -->
+		<div class="mobile-devices-slider">
+			<ngx-carousel [inputs]="carouselSetting">
+				<ngx-item *ngFor="let item of ['intermediaries','commission','relevant','helper','spam','blackList','contract']" NgxCarouselItem>
+					<figure class="icon-lg">
+						<div class="icon-block">
+							<img class="svg-image" src='{{"../../../assets/image/start-page/" + item + ".svg"}}' alt="">
+						</div>
+						<figcaption>
+							<h4 [ngClass]="{'develop': isInDevelopment(item,['blackList','contract'])}" class="develop">
+								{{'app.component.benefits.'+ item + '.title'| translate}}
+							</h4>
+							<p>{{'app.component.benefits.'+ item + '.text'| translate}}</p>
+						</figcaption>
+					</figure>
+				</ngx-item>
+				<button NgxCarouselPrev class='leftRs'><img src="../../../assets/image/arrow-left.svg"></button>
+				<button NgxCarouselNext class='rightRs'><img src="../../../assets/image/arrow-right.svg"></button>
+			</ngx-carousel>
+		</div>
+
+	</div>
+			
+	<div *ngIf="tenant">
+		<div class="wrapper row">	
+			
+			<div class="col-sm-6 col-md-3 text-center">
+					<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/tenantsSearch.svg" alt="">
+					</div>
+					<figcaption >
+						<h3>{{'app.component.benefits.tenantsSearch.title'| translate}}</h3>
+						<p>{{'app.component.benefits.tenantsSearch.text'| translate}}</p>
+						<button routerLink="/tenants" class="new-estate-btn">{{'app.component.benefits.tenantsSearch.btn'| translate}}</button>
+					</figcaption>
+				</figure>
+			</div>
+
+			<div class="col-sm-6 col-md-3 text-center">
+					<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/freeAds.svg" alt="">
+					</div>
+					<figcaption>
+						<h3>{{'app.component.benefits.freeAds.title'| translate}}</h3>
+						<p>{{'app.component.benefits.freeAds.text'| translate}}</p>
+						<button (click)="createNewEstate()" class="new-estate-btn">{{'app.component.benefits.freeAds.action'| translate}}</button>
+					</figcaption>
+				</figure>
+			</div>
+
+			<div class="col-sm-6 col-md-3 text-center">
+					<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/fast.svg" alt="">
+					</div>
+					<figcaption >
+						<h3>{{'app.component.benefits.fast.title'| translate}}</h3>
+						<p>{{'app.component.benefits.fast.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+			
+			<div class="col-sm-6 col-md-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/copyProtection.svg" alt="">
+					</div>
+					<figcaption >
+						<h3>{{'app.component.benefits.copyProtection.title'| translate}}</h3>
+						<p>{{'app.component.benefits.copyProtection.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>	
+			
+			<div class="col-sm-6 col-md-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/security.svg" alt="">
+					</div>
+					<figcaption >
+						<h3>{{'app.component.benefits.security.title'| translate}}</h3>
+						<p>{{'app.component.benefits.security.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+			<div class="row margin-left-right-0">
+			<div class="col-sm-6 col-md-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/spam.svg" alt="">
+					</div>
+					<figcaption>
+						<h3>{{'app.component.benefits.spam.title'| translate}}</h3>
+						<p>{{'app.component.benefits.spam.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+
+			<div class="col-sm-6 col-md-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/blackList.svg" alt="">
+					</div>
+					<figcaption>
+						<h3 class="develop">{{'app.component.benefits.blackList.title'| translate}}</h3>
+						<p>{{'app.component.benefits.blackList.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div>
+
+			<div class="col-sm-6 col-md-3 text-center">
+				<figure class="icon-lg">
+					<div class="icon-block">
+						<img class="svg-image" src="../../../assets/image/start-page/contract.svg" alt="">
+					</div>
+					<figcaption>
+						<h3 class="develop">{{'app.component.benefits.contract.title'| translate}}</h3>
+						<p>{{'app.component.benefits.contract.text'| translate}}</p>
+					</figcaption>
+				</figure>
+			</div> 
+		</div>
+		</div>
+		<!-- slider for mobile devices -->
+		<div class="mobile-devices-slider">
+			<ngx-carousel [inputs]="carouselSetting">
+				<ngx-item *ngFor="let item of ['tenantsSearch','freeAds','fast','copyProtection','security','spam','blackList','contract']" NgxCarouselItem>
+					<figure class="icon-lg">
+						<div class="icon-block">
+							<img class="svg-image" src='{{"../../../assets/image/start-page/" + item + ".svg"}}' alt="">
+						</div>
+						<figcaption>
+							<h4 [ngClass]="{'develop': isInDevelopment(item,['blackList','contract'])}" class="develop">
+								{{'app.component.benefits.'+ item + '.title'| translate}}
+							</h4>
+							<p>{{'app.component.benefits.'+ item + '.text'| translate}}</p>
+							<button (click)="createNewEstate()" *ngIf="item === 'freeAds'" class="new-estate-btn">{{'app.component.benefits.freeAds.action'| translate}}</button>
+							<button *ngIf="item === 'tenantsSearch'" routerLink="/tenants" class="new-estate-btn">{{'app.component.benefits.tenantsSearch.btn'| translate}}</button>
+						</figcaption>
+					</figure>
+				</ngx-item>
+				<button NgxCarouselPrev class='leftRs'><img src="../../../assets/image/arrow-left.svg"></button>
+				<button NgxCarouselNext class='rightRs'><img src="../../../assets/image/arrow-right.svg"></button>
+			</ngx-carousel>
+		</div>
+	
+	</div>
+</div>
+	<p class="develop-title"><span>*</span> — {{'app.component.benefits.inDevelop'| translate}}</p>	
+</div>
+</div>
+</div>
+

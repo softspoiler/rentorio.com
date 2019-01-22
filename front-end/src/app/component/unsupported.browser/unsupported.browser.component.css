@@ -1,0 +1,37 @@
+.container {
+    box-shadow: 1px 1px 10px #ddd;
+    width: 100%;
+}
+
+.list-wrapper {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.content {
+    background: #fff;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+p {
+    color: #7d7d7d;
+}
+
+figure {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 10px 15px 10px 15px;
+    -webkit-transition: background .3s;
+    -o-transition: background .3s;
+    transition: background .3s;
+    border-radius: 3px;
+}
+
+figure:hover {
+    background: #efefef;
+}
+
+figcaption {
+    color: #7d7d7d;
+}

@@ -1,0 +1,148 @@
+.ntf-container{
+    background: #fff;
+    margin: 17px auto;
+}
+.ntf-header{
+    height: 54px;
+    font-size: 1.6em;
+    color: #fffefe;
+    border-bottom: 2px solid #ffffff;
+    background: #747474;
+    padding: 12px 0 0 21px;
+}
+.ntf-inner{
+    max-height: 360px;
+    min-height: 100px;
+    overflow-y: auto;
+    cursor: pointer;
+    font-size: .9em;
+}
+.ntf-item{
+    position: relative;
+    border: 1px solid #f3f3f3;
+    padding: 11px 45px 18px 24px;
+    margin-top: 6px;
+    color: #6d6d6d;
+    background: #fff;
+}
+.ntf-item:last-child{
+    margin-bottom:0px;
+}
+.ntf-item-new {
+    background: #ffffff;
+    color: #3c3c3c;
+    cursor: pointer;
+}
+.ntf-item-viewed{
+    background: #ffffff;
+    color: #808080;
+    cursor: pointer;
+    opacity: .5;
+}
+.ntf-item /deep/ .estate-recommendation{
+    color: #fff;
+    background: #8e84ed;
+    padding: 1px 6px 4px 6px;
+    border-radius: 3px;
+    text-decoration: none;
+}
+.ntf-item /deep/ .estate-recommendation:hover{
+    background: #b1a9fd;
+}
+.ntf-inner .ntf-empty{
+    text-align: center;
+    line-height: 7;
+}
+.ntf-item .fa-times {
+    font-size: 1.4em;
+    color: #747474;
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    font-weight: 100;
+    cursor:pointer;
+}
+.ntf-item-viewed .fa-times{
+    color:black;
+}
+.ntf-empty{
+    text-align: center;
+}
+.modal {
+    display: block;
+}
+
+
+.fa-info-circle {
+    font-size: 48px;
+    color: #f5f188;
+}
+
+.modal-body {
+    position: relative;
+    padding: 0 60px 30px 60px;
+    display: inline-block;
+}
+
+.modal-dialog {
+    width: 850px;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.colored-btn {
+    background: #6c62cc;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    padding: 10px 14px;
+    color: #fff;
+}
+
+button.close {
+    padding: 30px;
+}
+
+.overlay {
+   background: rgba(0, 0, 0, .3);
+}
+.ntf-wrapper::ng-deep a {
+    cursor:pointer;
+}
+button.close {
+    padding: 30px;
+}
+
+.overlay {
+   background: rgba(0, 0, 0, .3);
+   overflow-y: auto;
+}
+
+@media screen and (max-width:900px){
+    .modal-dialog{
+        width: inherit;
+        max-width: 600px;
+    }
+    .modal-content{
+        margin: 0px 15px 0px 15px;
+    }
+}
+@media screen and (max-width:450px){
+    .modal-content{
+        padding: 17px;
+        font-size: .9em;
+    }
+    .modal-body{
+        padding: 17px;
+    }
+    .modal-dialog{
+        left:47%;
+    }
+    button.close{
+        padding: 0px;
+    }
+    .modal-body /deep/ ul{
+        padding-left: 17px;
+    }
+}

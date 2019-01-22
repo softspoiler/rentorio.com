@@ -1,0 +1,156 @@
+<div class="details-container">
+  <i (click)="closeEvent.emit()" class="fa fa-times close-details" aria-hidden="true"></i>
+  <ul class="tabs-item">
+    <li [ngClass]="{'active-tab': tabsNumber === 1}" (click)="tabsNumber = 1">Общая информация</li>
+    <li *ngIf="isExtendedDetails" [ngClass]="{'active-tab': tabsNumber === 2}" (click)="getUserChats(); tabsNumber = 2">Сообщение пользователя</li>
+    <li *ngIf="isExtendedDetails" [ngClass]="{'active-tab': tabsNumber === 3}" (click)="getUserEstates(); tabsNumber = 3">Обьявления пользователя</li>
+  </ul>
+
+  <div [ngSwitch]="tabsNumber">
+    <div class="containers" *ngSwitchCase="1">
+      <div class="row">
+        <div class="col-md-4">
+          <img *ngIf="userAvatar" class="img-responsive user-avatar" [src]="userAvatar.imageUrl || '../../../../assets/image/user/user-circle.png'"
+            alt="">
+        </div>
+        <div class="col-md-8">
+          <div class="table-responsive" *ngIf="userProfile">
+            <table class="table table-condensed table-hover">
+              <tbody>
+                <tr>
+                  <td>Имя</td>
+                  <td *ngIf="userProfile.firstName !== null else empty">{{userProfile.firstName}}</td>
+                </tr>
+                <tr>
+                  <td>Фамилия</td>
+                  <td *ngIf="userProfile.lastName !== null else empty">{{userProfile.lastName}}</td>
+                </tr>
+                <tr>
+                  <td>Отчество</td>
+                  <td *ngIf="userProfile.middleName !== null else empty">{{userProfile.middleName}}</td>
+                </tr>
+                <tr>
+                  <td>Емейл</td>
+                  <td *ngIf="userProfile.email !== null else empty">{{userProfile.email}}</td>
+                </tr>
+                <tr>
+                  <td>Подтверждение емейла</td>
+                  <td><span *ngIf="userProfile.emailConfirmed else notConfirmed">Подтвержден</span></td>
+                </tr>
+                <tr>
+                  <td>Телефон</td>
+                  <td *ngIf="userProfile.phoneNumber !== null else empty">{{userProfile.phoneNumber}}</td>
+                </tr>
+                <tr>
+                  <td>Пол</td>
+                  <td *ngIf="userProfile.gender !== null else empty">{{userProfile.gender}}</td>
+                </tr>
+                <tr>
+                  <td>День рождения</td>
+                  <td *ngIf="userProfile.birthday !== null else empty">{{userProfile.birthday}}</td>
+                </tr>
+                <tr>
+                  <td>Дата регистрации</td>
+                  <td *ngIf="userProfile.registrationDate !== null else empty">{{converTimestampToReadableDate(userProfile.registrationDate)}}</td>
+                </tr>
+                <tr>
+                  <td>Место работы</td>
+                  <td *ngIf="userProfile.placeOfWork !== null else empty">{{userProfile.placeOfWork}}</td>
+                </tr>
+                <tr>
+                  <td>Образования</td>
+                  <td *ngIf="userProfile.placeOfEducation !== null else empty">{{userProfile.placeOfEducation}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="containers" *ngSwitchCase="2">
+      <div class="row">
+        <div class="col-sm-3 collocutors">
+          <ul *ngIf="userChatsCollocutors">
+            <li *ngFor="let item of userChatsCollocutors">
+              <div [ngClass]="{'collocutors-list-active':userChat && item.id === userChat[0].chatId}" (click)="getUserChatReplies(item.id);"
+                class="collocutors-list">
+                <img class="collocutor-img" *ngIf="item.collocutor.avatar !== null else unknowUserPhoto" [src]="item.collocutor.avatar.thumbnailUrl"
+                  alt="user-photo">
+                <span>{{item.collocutor.firstName+' '+ item.collocutor.lastName}}</span>
+                <p class="chat-created-date">{{item.createDate}}</p>
+              </div>
+            </li>
+          </ul>
+          <p *ngIf="userChatsCollocutors && userChatsCollocutors.length === 0">У пользователя нет Сообщений</p>
+        </div>
+        <div class="col-sm-9 chat-message-wrapper">
+          <div *ngIf="userChat" class="chat-message-inner">
+            <div *ngFor="let item of userChat" class="message">
+              <div *ngIf="userId === item.user.id" class="current-user-message">
+                <div *ngIf="item.type === 'CALL' else messageItem">
+                  <p class="play-record-btn" >
+                    Прослушать
+                    <i (click)="showPlayer(item.replyText)" class="fa fa-play"></i>
+                  </p>
+                </div>
+                <span class="message-date">{{converTimestampToReadableDate(item.timestamp)}}</span>
+              </div>
+              <div *ngIf="userId !== item.user.id" class="another-user-message">
+                  <div *ngIf="item.type === 'CALL' else messageItem">
+                    <p class="play-record-btn">
+                      Прослушать
+                      <i (click)="showPlayer(item.replyText)" class="fa fa-play"></i>
+                    </p>
+                  </div>
+                  <span class="message-date">{{converTimestampToReadableDate(item.timestamp)}}</span>
+              </div>
+              <ng-template #messageItem>
+                  <p class="message">{{item.replyText}}</p>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="containers" *ngSwitchCase="3">
+      <div class="row">
+        <div class="col-sm-8 col-sm-push-2">
+          <div *ngIf="userEstates" class="estate-list">
+            <p *ngIf="userEstates.length === 0">У пользователя нет Обьявлений</p>
+            <div class="item" *ngFor="let estate of userEstates">
+              <div  class="media">
+                <div class="media-left">
+                  <span class="estateId">id: {{estate.id}}</span>
+                  <a target="_blank" routerLink="/search/details/{{estate.id}}">
+                    <img [src]="estate.images[0].imageUrl || '../../../../assets/image/empty-photo-small.png'" alt="estate photo">
+                  </a>
+                </div>
+                <div class="media-body">
+                  <div class="media-heading">
+                    <a target="_blank" routerLink="/search/details/{{estate.id}}">
+                      <p class="description">{{estate.shortDescription}}</p><br>
+                    </a>
+                    <span class="status" [ngStyle]="{'color':estate.status === 'ONLINE' ? '#4caf50' :'#000'}">{{estate.status}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #empty>
+  <td>-----</td>
+</ng-template>
+
+<ng-template #notConfirmed>
+  <td>Не подтвержден</td>
+</ng-template>
+
+<ng-template #unknowUserPhoto>
+  <img src="../../../../assets/image/user/user-circle-small.png" alt="">
+</ng-template>
+<app-player></app-player>

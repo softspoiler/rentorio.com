@@ -1,0 +1,65 @@
+.question ol li a {
+    cursor : pointer;
+    font-size:.9em;
+}
+.topArrow{
+    position: fixed;
+    bottom: 100px;
+    left: 4%;
+    font-size: 2em;
+    color: #4d85c3;
+    z-index: 2;
+    cursor: pointer;
+}
+.support-btn{
+    color: #03A9F4;
+    cursor: pointer;
+}
+.container-fluid{
+    background: #fff;
+}
+.lamp{
+    width: 100px;
+    position: relative;
+    float: left;
+    margin-right: 9%;
+    margin-top:-1%;
+    left:2%;
+    animation:flashing 4s infinite;
+}
+.inner-container{
+    background: #fff;
+    padding: 60px 100px;
+    margin: 45px 0px 25px 0px;
+    box-shadow: 0px 0px 5px #f1f0f0;
+}
+.content{
+    font-size: 1.2em;
+}
+.title{
+    font-size: 1.1em;
+}
+@keyframes flashing {
+    0%{
+        filter:grayscale(75%);
+    }
+    50%{
+        filter:grayscale(0%);
+    }
+    100%{
+        filter: grayscale(75%);
+    }
+}
+@media screen and (max-width:768px){
+    .inner-container{
+        padding: 60px 42px;
+    }
+}
+@media screen and (max-width:570px){
+    .lamp{
+        display: none;
+    }
+    .inner-container{
+        padding: 60px 20px;
+    }
+}

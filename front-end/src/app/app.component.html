@@ -1,0 +1,10 @@
+<!--For old browsers -->
+<p class="not-supported-alert " *ngIf="needChangeBrowser"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{'app.home.not.supported.alert.text' | translate}} <a routerLink="/unsupportedbrowser" href="">{{'app.home.not.supported.alert.link' | translate}}</a></p>
+<!--/end -->
+<app-header (logoutEvent)="logoutEventHandler()" (newEstateEvent)="newEstateEventHandler()"></app-header>
+<div class="app-content">
+    <router-outlet></router-outlet>
+<popup></popup>
+<app-global-notifications></app-global-notifications>
+</div>
+<app-footer></app-footer>

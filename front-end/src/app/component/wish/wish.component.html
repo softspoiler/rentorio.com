@@ -1,0 +1,170 @@
+<div class="container">
+  <div class="row">
+    <div *ngIf="!success" class="wrapper">
+      <h3 class="title">{{'app.component.wish.title' | translate}}</h3>
+      <div class="col-xs-12 col-sm-4">
+        <div *ngIf="form">
+          <form  [formGroup]="form">
+
+              <label class="labels" for="gender">{{'app.component.wish.form.gender.label' | translate}}</label>
+              <div class="select-wrapper">
+                  <select class="auto-width" name="gender" formControlName="gender" [value]="">
+                      <option  disabled value="">{{'app.component.wish.form.gender.default' | translate}}</option>
+                      <option  value="MAN">{{'app.component.wish.form.gender.option1' | translate}}</option>
+                      <option  value="WOMAN">{{'app.component.wish.form.gender.option2' | translate}}</option>
+                      <option  value="MARRIED_COUPLE">{{'app.component.wish.form.gender.option3' | translate}}</option>
+                      <option  value="FAMILY_WITH_CHILDREN">{{'app.component.wish.form.gender.option4' | translate}}</option>
+                      <option  value="GROUP_OF_PEOPLE">{{'app.component.wish.form.gender.option5' | translate}}</option>
+                  </select>
+                  <div class="select-arrow">
+                      <img src="../../../assets/image/down-arrow.svg" alt="">
+                  </div>
+              </div>
+              <span class="has-error" *ngIf="form.get('gender').hasError('required') && submitAttempt">{{'app.component.wish.form.required' | translate}}</span>
+
+              <p>{{'app.component.estate.general.accommodation.title' | translate}}</p>
+              <p-selectButton formControlName="accommodationType" class="select-button" [options]="accommodationTypeValue" multiple="multiple">
+                <ng-template let-accommodation pTemplate="item">
+                  <label>{{'app.component.estate.general.accommodation.'+accommodation.label | translate}}</label>
+                </ng-template>
+              </p-selectButton>
+
+              <p>{{'app.component.estate.general.type.title' | translate}}</p>
+              <p-selectButton formControlName="estateType" class="select-button" [options]="estateTypeValue" multiple="multiple">
+                <ng-template let-estateType pTemplate="item">
+                  <label>{{'app.component.estate.general.type.'+estateType.label | translate}}</label>
+                </ng-template>
+              </p-selectButton>
+
+              <p>{{'app.component.wish.form.roomsNumber.label' | translate}}</p>
+              <p-multiSelect *ngIf="lang === 'uk'" class="multi-select" (onChange)="changeRoomsNumber($event)" [(ngModel)]="roomsNumberInput" [maxSelectedLabels]="6" [showHeader]="false" [showToggleAll]="false" [filter]="false" [defaultLabel]="'Кількість кімнат'" [options]="roomsNumberValue" formControlName="roomsNumber"></p-multiSelect>
+              <p-multiSelect *ngIf="lang === 'ru'" class="multi-select" (onChange)="changeRoomsNumber($event)" [(ngModel)]="roomsNumberInput" [maxSelectedLabels]="6" [showHeader]="false" [showToggleAll]="false" [filter]="false" [defaultLabel]="'Количество комнат'" [options]="roomsNumberValue" formControlName="roomsNumber"></p-multiSelect>
+
+              <p>{{'app.component.wish.form.price.label' | translate}}</p>
+              <div class="input-group">
+                  <input formControlName="priceMin" [maxlength]="7" type="tel"  class="form-control" placeholder="{{'app.component.wish.form.price.from' | translate}}"/>
+                  <span class="input-group-addon">-</span>
+                  <input formControlName="priceMax" [maxlength]="7" type="tel"  class="form-control" placeholder="{{'app.component.wish.form.price.to' | translate}}"/>
+              </div>
+              <span class="has-error" *ngIf="(form.get('priceMin').hasError('pattern') || form.get('priceMax').hasError('pattern')) && submitAttempt">{{'app.component.wish.form.price.error' | translate}}</span>
+            
+              <p>{{'app.component.wish.form.date' | translate}}</p>
+              <p-calendar class="calendar" formControlName="date" dateFormat="dd.mm.yy" [minDate]="minDate" readonlyInput="true" [showIcon]="true" [(ngModel)]="dateValue" [locale]="calendarUk"></p-calendar>
+              <span class="has-error" *ngIf="form.get('date').hasError('required') && submitAttempt">{{'app.component.wish.form.required' | translate}}</span>
+              <div *ngIf="!token">
+                <label class="labels" for="messengerType">{{'app.component.wish.form.messenger' | translate}}</label>
+                <div class="select-wrapper">
+                    <select  class="auto-width" name="messengerType" formControlName="messengerType">
+                        <option selected value="VIBER">Viber</option>
+                        <option value="TELEGRAM">Telegram</option>
+                    </select>
+                    <div class="select-arrow">
+                        <img src="../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <div class="col-xs-12 col-sm-8">
+        <p>{{'app.component.wish.map.title' | translate}}</p>
+        <!-- <div class="radius-container">
+          <label class="radio-inline">
+            <input type="radio" [value]="500" [(ngModel)]="radius" name="radius">500м
+          </label>
+          <label class="radio-inline">
+            <input type="radio" [value]="1000" [(ngModel)]="radius" name="radius">1км
+          </label>
+          <label class="radio-inline">
+            <input type="radio" [value]="2000" [(ngModel)]="radius" name="radius">2км
+          </label>
+          <label class="radio-inline">
+            <input type="radio" [value]="3000" [(ngModel)]="radius" name="radius">3км
+          </label>
+        </div> -->
+        <div class="slider-wrapper">
+          <p-slider class="slider" [(ngModel)]="radius" [step]="10" [min]="500" [animate]="true" [animate]="true" [max]="3000" [style]="{'width':'250px'}"></p-slider>
+          <span>{{radius}}м</span>
+        </div>
+        <agm-map
+        (mapClick)="mapClickEventHandler($event)"
+        [streetViewControl]="false" 
+        [latitude]="defaultCoords.lat" 
+        [longitude]="defaultCoords.long"
+        [zoom]="12">
+          <agm-marker 
+          (dragEnd)="markerDragEventHandler($event)"
+          [markerDraggable]='true' 
+          [latitude]="latitudeFormap"
+          [longitude]="longitudeFormap">
+          </agm-marker>
+          <agm-circle 
+          (circleClick)="mapClickEventHandler($event)"
+          [circleDraggable]=false
+          [fillColor]="'green'"
+          [radius]="radius"
+          [latitude]="latitudeFormap"
+          [longitude]="longitudeFormap">
+          </agm-circle>
+      </agm-map>
+      <div class="error-container">
+        <p class="has-error" *ngIf="undefinedCoords">{{'app.component.wish.error.undefinedCoords' | translate}}</p>
+        <div [ngSwitch]="typeOfError">
+          <p class="has-error" *ngSwitchCase="'WishMaximumLimitError'">{{'app.component.wish.error.WishMaximumLimitError' | translate}}</p>
+          <p class="has-error" *ngSwitchCase="'MandatoryWishFieldsError'">{{'app.component.wish.error.MandatoryWishFieldsError' | translate}}</p>
+        </div>
+      </div>
+      <span class="has-error error-mobile-device" *ngIf="form.invalid && submitAttempt">{{'app.component.wish.error.MandatoryWishFieldsError' | translate}}</span>
+      
+      <p class="text-gray">{{'app.component.wish.form.agree.text' | translate}}
+         <a routerLink="/terms">{{'app.component.wish.form.agree.terms' | translate}}</a>
+         {{'app.component.wish.form.agree.and' | translate}}
+         <a routerLink="/policy">{{'app.component.wish.form.agree.policy' | translate}}</a>
+      </p>
+      <div class="action-buttons">
+        <a routerLink="/">{{'app.component.wish.buttons.no' | translate}}</a>
+        <button [disabled]="loading" [ngClass]="{'button-in-loading-action':loading}" (click)="executeRecaptcha()">{{'app.component.wish.buttons.ok' | translate}}
+            <loading [show]="loading"></loading>
+        </button>
+      </div>
+      </div>
+  </div>
+
+  <div *ngIf="success" class="success-wrapper">
+    <div class="success-inner">
+      <img class="rentik" src="../../../assets/image/rentik.svg" alt="">
+      <p>{{'app.component.wish.success.text-1' | translate}}</p>
+      <span *ngIf="!msgLink">
+        <p>{{'app.component.wish.success.text-2' | translate}}</p>
+        <a routerLink="/">{{'app.component.wish.success.no' | translate}}</a>
+        <span (click)="resetFormsFields()" class="new-wish">{{'app.component.wish.success.ok' | translate}}</span>
+      </span>
+    </div>
+    <div class="msg-link-wrapper" *ngIf="msgLink && msgType">
+      <div [ngSwitch]="msgType">
+        <p>{{'app.component.wish.success.msg.text' | translate}}</p>
+        <div *ngSwitchCase="'VIBER'">
+          <a class="msg-link msg-link-viber" [href]="msgLink">
+            <img src="../../../assets/image/viber.png" alt="viber"> 
+            {{'app.component.wish.success.msg.viber' | translate}}
+          </a>
+        </div>
+        <div *ngSwitchCase="'TELEGRAM'">
+          <a class="msg-link msg-link-telegram" [href]="msgLink">
+            <img src="../../../assets/image/telegram.png" alt="telegram"> 
+            {{'app.component.wish.success.msg.telegram' | translate}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="grecaptcha-wrapper">
+  <re-captcha #captchaRef="reCaptcha" size="invisible" (resolved)="$event && recaptchaHandler($event)">
+  </re-captcha>
+</div>
+

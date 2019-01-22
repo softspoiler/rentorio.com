@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="wrapper">
+      <div class="loading-wrapper">
+        <loading [insideOverlay]="true" [show]="confirmSuccess === undefined"></loading>
+      </div>
+      <figure *ngIf="confirmSuccess === true">
+        <i class="fa fa-check-circle"></i>
+        <figcaption>
+          {{'app.account.confirm.accountCancel.success.title' | translate}}
+        </figcaption>
+        <a class="home-link" routerLink="/">{{'app.account.confirm.accountCancel.success.link' | translate}}</a>   
+      </figure>
+      <figure *ngIf="confirmSuccess === false">
+          <i class="fa fa-ban"></i>
+          <figcaption>
+            {{'app.account.confirm.accountCancel.fail.title' | translate}}
+          </figcaption>   
+          <a class="home-link" routerLink="/">{{'app.account.confirm.accountCancel.fail.link' | translate}}</a>
+        </figure>
+    </div>
+  </div>
+</div>

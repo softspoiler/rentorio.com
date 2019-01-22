@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+            <div class="avatar-wrapper">
+                <img [src]="avatar?.imageUrl || '../../../../assets/image/user/user.png'" alt="Photo" class="user-photo">
+                <a class="edit-photo-link" routerLink="/home/profile/photo"><i class="fa fa-camera" aria-hidden="true"></i> {{'app.component.dashboard.link.editPhoto' | translate}}</a>
+            </div>
+            <div class="profile-sub-block panel panel-default">
+                <div class="panel-body text-center">
+                    
+                    <div class="text-items">
+                        <h3>{{currentUser.firstName}}</h3>
+                        <a routerLink="/home/profile/edit">{{'app.component.dashboard.link.profileEdit' | translate}}</a>
+                        <button  class="default-btn" routerLink="/home/view_profile">{{'app.component.dashboard.link.profileView' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            <confirm-information [withLink]="true"></confirm-information>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+            <div class="panel panel-default greeting">
+                <div class="panel panel-heading">{{'app.component.dashboard.title.welcome' | translate}} {{currentUser.firstName}}</div>
+                <div class="panel-body">
+                    <p>{{'app.component.dashboard.suggestion.title' | translate}}</p>
+                    <p class="suggestion-p">{{'app.component.dashboard.suggestion.trust.text' | translate}}</p>
+                    <a class="suggestion-a" routerLink="/home/profile/trust">{{'app.component.dashboard.suggestion.trust.btn' | translate}}</a>
+                    <p class="suggestion-p">{{'app.component.dashboard.suggestion.editProfile.text' | translate}}</p>
+                    <a class="suggestion-a" routerLink="/home/profile">{{'app.component.dashboard.link.profileEdit' | translate}}</a>
+                    <p class="suggestion-p">{{'app.component.dashboard.suggestion.callTime.text' | translate}}</p>
+                    <a class="suggestion-a" routerLink="/home/account/notifications">{{'app.component.dashboard.suggestion.callTime.btn' | translate}}</a>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel panel-heading">{{'app.component.dashboard.title.messages' | translate}}</div>
+                <div class="panel-body no-padding-top notification-wrapper">
+                    <app-notification ></app-notification>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

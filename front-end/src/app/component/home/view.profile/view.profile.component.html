@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div *ngIf="userProfile" class="row">
+        <div  class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+            <img [src]="avatar?.imageUrl || '../../../../assets/image/user/user.png'" alt="Photo" class="img-responsive user-photo">
+            <confirm-information [withLink]="true"></confirm-information>
+            <div *ngIf="userProfile.placeOfEducation || userProfile.placeOfWork" class="panel panel-default">
+                <div class="panel panel-heading">{{'app.component.profile.viewProfile.aboutHeader' | translate}}</div>
+                <div class="panel-body">
+                    <p *ngIf="userProfile.placeOfEducation"><strong>{{'app.component.profile.viewProfile.education' | translate}}</strong></p>
+                    <p>{{userProfile.placeOfEducation}}</p>
+                    <p *ngIf="userProfile.placeOfWork"><strong>{{'app.component.profile.viewProfile.work' | translate}}</strong></p>
+                    <p>{{userProfile.placeOfWork}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+            <h2 *ngIf="userProfile.firstName">{{'app.component.profile.viewProfile.mainHeader' | translate}} <span>{{userProfile.firstName}}</span>!</h2>
+            <h2 *ngIf="!userProfile.firstName">{{'app.component.profile.viewProfile.noName' | translate}} <a routerLink="/home/profile/edit">{{'app.component.profile.viewProfile.fill' | translate}}</a></h2>
+            <h4>{{'app.component.profile.viewProfile.termOnSite' | translate}} {{userProfile.registrationDate | date:'d'}} {{'app.component.profile.viewProfile.months.'+userProfile.registrationDate.getUTCMonth() | translate}} {{userProfile.registrationDate
+                | date:'y'}}
+            </h4>
+            <a *ngIf="userProfile.firstName" routerLink="/home/profile/edit"><i class="fa fa-pencil" aria-hidden="true"></i> {{'app.component.profile.viewProfile.edit' | translate}}</a>
+            <p *ngIf="userProfile.selfDescription" class="well well-lg">{{userProfile.selfDescription}}</p>
+        </div>
+    </div>
+</div>

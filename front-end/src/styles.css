@@ -1,0 +1,137 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/fonts/Roboto/Roboto-Medium.ttf') format('woff');
+}
+@font-face {
+    font-family: 'Raleway-Light';
+    src: url('/assets/fonts/Raleway/Raleway-Light.ttf') format('woff');
+}
+@font-face {
+    font-family: 'Raleway-Medium';
+    src: url('/assets/fonts/Raleway/Raleway-Medium.ttf') format('woff');
+}
+body {
+    margin: 0px;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Style for inputs */
+input,textarea,select{
+    color: #676666;
+    background-color: #fff;
+    background-image: none;
+    -webkit-transition: border-color ease-in-out .15s;
+    -moz-transition: border-color ease-in-out .15s;
+    -ms-transition: border-color ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s;
+    transition: border-color ease-in-out .15s;
+}
+input:focus,textarea:focus{
+    border-color: #66afe9 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+input[type="text"],input[type="password"],input[type="number"],input[type="tel"]{
+    height: 39px;
+    box-shadow: none;
+    font-size: 18px;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    padding: 7px 7px 7px 13px;
+}
+textarea{
+    box-shadow: none;
+    font-size: 17px;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    padding: 7px 7px 7px 13px;
+    width: 100%;
+}
+.select-wrapper{
+    font-size: 18px !important;
+    line-height: 24px !important;
+    color: #676666 !important;
+    position: relative !important;
+    background: #ffffff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 2px !important;
+    display: inline-block !important;
+    overflow: hidden !important;
+}
+.select-arrow{
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    line-height: 0;
+    pointer-events: none;
+}
+.select-arrow > img {
+    height: 16px;
+    width: 16px;
+    display: block;
+}
+.select-label{
+    color: #484848;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+select{
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    /*text-indent: 1px !important;*/
+    text-overflow: '' !important;
+    height: 38px !important;
+    box-shadow: none !important;
+    padding: 7px 7px 7px 13px !important;
+    padding-right: 40px !important;
+    font-size: 17px !important;
+    line-height: 24px !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0px !important;
+    display: block;
+}
+select::-ms-expand {
+    display: none;
+}
+.no-padding{
+    padding: 0px!important;
+}
+.no-right-padding{
+    padding-right: 0;
+}
+.no-left-padding{
+    padding-left: 0;
+}
+.no-padding-top{
+    padding-top:0px!important;
+}
+/* .snazz-container{
+    margin-left: -3px !important;
+    margin-top: -66px !important;
+} */
+.si-content{    
+    max-width: none!important;
+    max-height: none !important;
+}
+.si-pointer-top{
+    border-top-color: #fff !important;
+}
+.si-close-button{
+    z-index: 1 !important;
+}
+.panel{
+    border-radius: 3px!important;
+    border:none !important;
+}
+.panel-heading{
+    border-radius: 0!important;
+    border-top-right-radius: 3px !important;
+    border-top-left-radius: 3px !important;
+    border:none !important;
+    background-color: #8d83ec !important;
+    color:#fff !important;
+    padding: 15px 15px !important;
+    font-size: 1.1em !important;
+}

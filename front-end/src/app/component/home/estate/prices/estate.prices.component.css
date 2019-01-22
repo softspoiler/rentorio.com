@@ -1,0 +1,13 @@
+fieldset {
+    border-top: 0.5px solid #cac7c5;
+    padding: 20px 0;
+}
+
+.bottom-offset {
+    margin-bottom: 30px;
+}
+
+.icon-uah {
+    font-size: 1.2em;
+    font-weight: 600;
+}

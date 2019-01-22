@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <div *ngIf="token">
+        <div class="wrapper wish-list-wrapper">
+          <h3 class="title">{{'app.component.wishlist.title' | translate}}</h3>
+          <loading [insideOverlay]="true" [show]="loading"></loading>
+          <div class="wish-list-content" *ngIf="wishes && !loading">
+            <div *ngFor="let wish of wishes" class="wl-item">
+              <div *ngIf="deleteLoading" class="overlay detele-overlay">
+                <loading [show]="deleteLoading"></loading>
+              </div>
+              <div class="overlay expiration-overlay" *ngIf="wish.expiration < today">
+                <span>{{'app.component.wishlist.expirationMessage' | translate}}</span>
+              </div>
+                <div class="wl-body">
+                  <ul>
+                      <li>
+                        <b>{{'app.component.wishlist.price.label' | translate}}</b>
+                        <span *ngIf="wish.priceMin !== 0 && wish.priceMax !== 999999 else anyF">
+                          <span class="val">{{'app.component.wishlist.price.from' | translate}} {{wish.priceMin}}{{'app.component.wishlist.price.currency' | translate}}</span>
+                          <span class="val">{{'app.component.wishlist.price.to' | translate}} {{wish.priceMax}}{{'app.component.wishlist.price.currency' | translate}}</span>
+                        </span>
+                      </li>
+                      <li>
+                        <b>{{'app.component.wishlist.type' | translate}}</b>
+                        <span *ngIf="wish.estateTypes else anyM">
+                          <span  class="val"*ngFor="let val of wish.estateTypes.split(','); last as isLast">
+                            {{'app.component.estate.general.type.'+val | translate}}<span *ngIf="!isLast">,</span>
+                          </span>
+                        </span>
+                      </li>
+                      <li>
+                        <b>{{'app.component.wishlist.accommodation' | translate}}</b>
+                        <span *ngIf="wish.accommodations else anyM">
+                          <span  class="val"*ngFor="let val of wish.accommodations.split(','); last as isLast">
+                              {{'app.component.estate.general.accommodation.'+val | translate}}<span *ngIf="!isLast">,</span>
+                          </span>
+                        </span>
+                      </li>
+                      <li>
+                        <b>{{'app.component.wishlist.rooms' | translate}}</b>
+                        <span *ngIf="wish.multiRoomsNumber else anyF">
+                          <span *ngFor="let room of wish.multiRoomsNumber.split(','); last as isLast" class="val">
+                            <span *ngIf="room !== '0'">{{room}}<span *ngIf="!isLast">,</span></span>
+                            <span *ngIf="room === '0'">{{'app.component.wish.form.roomsNumber.studio' | translate}}<span *ngIf="!isLast">,</span></span>
+                          </span>
+                        </span>
+                      </li>
+                      <li><b>{{'app.component.wishlist.date' | translate}}</b><span class="val"> {{setupReadableDate(wish.expiration)}}</span></li>
+                    </ul>
+                    <button class="wl-open-map-btn" (click)="showMap({'latitude':wish.latitude,'longitude':wish.longitude,'radius':wish.searchRadius})">
+                        <img src="../../../assets/image/pin.png" alt="map">
+                    </button>
+                    <button (click)="deleteWish(wish.id)" class="wl-btn-remove">{{'app.component.wishlist.removeBtn' | translate}}</button>  
+                </div>
+            </div>
+          <div class="wl-item">
+              <div class="wl-body wl-body-empty">
+                <figure>
+                  <a routerLink="/wish" [queryParams]="{'t':token}" class="create-new-btn">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                  </a>
+                  <figcaption>
+                    {{'app.component.wishlist.createBtn' | translate}}
+                  </figcaption>
+              </figure>
+              </div>
+          </div>
+          </div>
+        </div>
+
+        <ng-template #anyF>
+          <span class="val">{{'app.component.wishlist.anyF' | translate}}</span>
+        </ng-template>
+        <ng-template #anyM>
+          <span class="val">{{'app.component.wishlist.anyM' | translate}}</span>
+        </ng-template>
+        <div class="modal" #mapModal>
+          <div class="modal-inner">
+            <i (click)="hideMap()" class="fa fa-times"></i>
+            <agm-map [streetViewControl]="false" [zoom]="mapProps.zoom" [latitude]="mapProps.latitude" [longitude]="mapProps.longitude">
+                <agm-circle [fillColor]="'green'" [radius]="mapProps.radius" [latitude]="mapProps.latitude" [longitude]="mapProps.longitude"></agm-circle>
+            </agm-map>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

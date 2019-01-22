@@ -1,0 +1,54 @@
+.has-error{
+    color:#F44336;
+}
+.default-btn {
+    outline: none;
+    border: none;
+    padding: 5px 10px 5px 10px;
+    background: #8e84ed;
+    color: #fff;
+    border-radius: 3px;
+    margin-top: 4px;
+}
+.default-btn:hover {
+    background: #a89ffb;
+}
+form{
+  width: 80%;
+  margin-left: 10%;
+}
+.container-alert{
+    position: fixed;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 30px 2px 30px;
+    background: rgba(76, 175, 80, 0.91);
+    border-radius: 3px;
+    color: #fff;
+    font-size: 0.9em;
+    z-index: 10;
+    transition:top .4s;
+}
+.alert-inner .fa-times{
+    color: white;
+    position: fixed;
+    top: 9px;
+    right: 11px;
+    font-size: 1.5em;
+    font-weight: 100;
+    cursor: pointer;
+}
+.show-alert{
+    top:16px;
+}
+.loading-wrapper{
+    position: relative;
+    top: -30px;
+    right: -48px;
+}
+@media screen and (max-width:600px){
+    .container-alert{
+        width:80%;
+    }
+}

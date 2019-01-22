@@ -1,0 +1,16 @@
+<!-- Term of use -->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- <div class="policy-wrapper"> -->
+            <div class="body">
+                <button (click)="back()" class="close">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                <terms-info-ru *ngIf="translate.currentLang === 'ru'"></terms-info-ru>
+                <terms-info-uk *ngIf="translate.currentLang === 'uk'"></terms-info-uk>
+
+            </div>
+        </div>
+    </div>
+</div>

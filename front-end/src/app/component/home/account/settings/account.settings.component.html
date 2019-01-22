@@ -1,0 +1,64 @@
+<div class="panel panel-default">
+    <div class="panel-heading">{{'app.component.setting.title' | translate}}</div>
+    <div class="panel-body">
+        <div [ngClass]="{'open': isOpen}" class="hidden-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="reasons">
+                        <strong>{{'app.component.setting.reasons.text' | translate}}</strong>
+                        <div class="text-muted">
+                            <div class="radio"><label><input (click)="setCancelReason(reason1.value)"  value="SAFETY_CONCERNS" type="radio" #reason1 name="reason"> {{'app.component.setting.reasons.1' | translate}}</label></div>
+                            <div class="radio"><label><input (click)="setCancelReason(reason2.value)"  value="PRIVACY_CONCERNS" type="radio" #reason2 name="reason"> {{'app.component.setting.reasons.2' | translate}}</label></div>
+                            <div class="radio"><label><input (click)="setCancelReason(reason3.value)"  value="DONT_UNDERSTAND_HOW_TO_USE" type="radio" #reason3 name="reason"> {{'app.component.setting.reasons.4' | translate}}</label></div>
+                            <div class="radio"><label><input (click)="setCancelReason(reason4.value)"  value="NOT_USEFUL" type="radio" #reason4 name="reason"> {{'app.component.setting.reasons.3' | translate}}</label></div>
+                            <div class="radio"><label><input (click)="setCancelReason(reason5.value)"  value="OTHER" type="radio" #reason5 name="reason"> {{'app.component.setting.reasons.5' | translate}}</label></div>
+                        </div>
+                    </div>
+                    <br>
+                    <label for="comment">{{'app.component.setting.comment' | translate}}</label>
+                    <textarea #details class="form-control" maxlength="500" rows="5" id="comment"></textarea>
+                    <!-- <div class="questions">
+                        <div class="radio">
+                            <strong>{{'app.component.setting.question.text' | translate}}</strong>
+                            <div class="text-muted">
+                                <label><input type="radio" name="question">{{'app.component.setting.question.true' | translate}}</label>
+                                <label><input type="radio" name="question">{{'app.component.setting.question.false' | translate}}</label>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="effect">
+                        <strong>{{'app.component.setting.effect.text' | translate}}</strong>
+                        <ul class="text-muted">
+                            <li>{{'app.component.setting.effect.1' | translate}}</li>
+                            <li>{{'app.component.setting.effect.2' | translate}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6">
+                    <strong>{{'app.component.setting.alternative.text' | translate}}</strong>
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="media-heading"><a href="">{{'app.component.setting.alternative.first.title' | translate}}</a></div>
+                            <p>{{'app.component.setting.alternative.first.text' | translate}}</p>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="media-heading">
+                                <a href="">{{'app.component.setting.alternative.second.title' | translate}}</a>
+                            </div>
+                            <p>{{'app.component.setting.alternative.second.text.question' | translate}}
+                                <br> {{'app.component.setting.alternative.second.text.answer' | translate}}
+                            </p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <button (click)="deleteAccount(details.value)" class="action-btn delete-btn">{{'app.component.setting.buttons.delete' | translate}}</button>
+        <button *ngIf="isOpen" (click)="close()" class="action-btn close-btn">{{'app.component.setting.buttons.doNotDelete' | translate}}</button>
+    </div>
+</div>
+<app-alert [show]="deleteSuccess" [type]="'success'" [textSize]="'1.2em'" [text]="'app.component.setting.alerts.success'"></app-alert>
+<!-- <app-alert [show]="confirmSuccess" [type]="'success'" [text]="'app.component.setting.alerts.confirmSuccess'"></app-alert>
+<app-alert [show]="confirmFail" [type]="'error'" [text]="'app.component.setting.alerts.confirmFail'"></app-alert> -->

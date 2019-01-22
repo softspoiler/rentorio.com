@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="container-inner">
+        <div class="col-md-offset-1 col-md-2 col-sm-3 col-xs-12">
+            <nav class="sidebar">
+                <ul>
+                    <li routerLink="edit" routerLinkActive="active-link"><a>{{'app.component.profile.navbar.edit' | translate}}</a></li>
+                    <li routerLink="photo" routerLinkActive="active-link"><a>{{'app.component.profile.navbar.photo' | translate}}</a></li>
+                    <li routerLink="trust" routerLinkActive="active-link"><a>{{'app.component.profile.navbar.trust' | translate}}</a></li>
+                </ul>
+            </nav>
+            <button routerLink="/home/view_profile" class="default-btn"> {{'app.component.profile.navbar.view' | translate}}</button>
+        </div>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    </div>
+</div>

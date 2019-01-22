@@ -1,0 +1,38 @@
+<button *ngIf="!hideComplaintBtn && !withoutComplaintBtn" (click)="showComplaintModalWithCheck()" class="complaint-btn"><i class="fa fa-flag" aria-hidden="true"></i> {{'app.complaint.complaintBtn'| translate}}</button>
+<div #modal class="modal">
+    <div *ngIf="!isUnknownUser" class="modal-inner">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{'app.complaint.title'| translate}}
+                <i (click)="hideComplaintModal(); $event.stopPropagation();" class="fa fa-times"></i>
+            </div>
+            <div class="panel-body">
+                <form (ngSubmit)="sendComplaint(message); $event.stopPropagation();">
+                    <div class="radio"><label (click)="setComplaintType(complaint1)"><input #complaint1 name="complaint" value="AGENT" type="radio">{{'app.complaint.complaints.1'| translate}}</label></div>
+                    <div class="radio"><label (click)="setComplaintType(complaint2)"><input #complaint2 name="complaint" value="SPAM" type="radio">{{'app.complaint.complaints.2'| translate}}</label></div>
+                    <div class="radio"><label (click)="setComplaintType(complaint3)"><input #complaint3 name="complaint" value="FRAUD" type="radio">{{'app.complaint.complaints.3'| translate}}</label></div>
+                    <div *ngIf="path === 'estates' else ignoreUser" class="radio"><label (click)="setComplaintType(complaint4)"><input #complaint4 name="complaint" value="CONTENT_MISMATCH" type="radio">{{'app.complaint.complaints.4'| translate}}</label></div>
+                    <ng-template #ignoreUser>
+                        <div class="radio"><label (click)="setComplaintType(complaint5)"><input #complaint5 name="complaint" value="IGNORE_USER" type="radio">{{'app.complaint.complaints.5'| translate}}</label></div>
+                    </ng-template>
+                    <div class="radio"><label (click)="setComplaintType(complaint6)"><input #complaint6 name="complaint" value="OTHER" type="radio">{{'app.complaint.complaints.6'| translate}}</label></div>
+                    <label for="comment">{{'app.complaint.message'| translate}}</label>
+                    <textarea maxlength="1000" #message class="form-control" name="comment" id="" rows="6"></textarea>
+                    <button [disabled]="!complaintType || ((!message || message.value.length < 3) && complaintType === 'OTHER')" type="submit" class="submit-btn">{{'app.complaint.submitBtn'| translate}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isUnknownUser" class="modal-inner">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{'app.complaint.unknownUser.title'| translate}}
+                <i (click)="hideComplaintModal(); $event.stopPropagation();" class="fa fa-times"></i>
+            </div>
+            <div class="panel-body">
+                <button routerLink="/login" class="btn btn-default">{{'app.complaint.unknownUser.login'| translate}}</button>
+                <button routerLink="/registration" class="float-right btn btn-default">{{'app.complaint.unknownUser.registration'| translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-alert [show]="success" [type]="'success'" [title]="'app.complaint.success.title'" [text]="'app.complaint.success.text'"></app-alert>

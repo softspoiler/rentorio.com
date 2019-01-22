@@ -1,0 +1,93 @@
+<div class="modal overlay" data-overlay="true" tabindex="-1" role="dialog" *ngIf="call || calling || error" (click)="overlayClickHandler($event)">
+  <div class="modal-dialog modal-dialog-centered" >
+    
+    <div [ngClass]="{'sr-error-modal' : (error === 'ServerError' || error === 'UnknownError')}" class="modal-content" >
+        <button type="button" class="times" data-dismiss="modal" aria-label="Close" (click)="close()" >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      <div *ngIf="call">
+        <div class="modal-body call-modal-body row ">
+          <div *ngIf="!call.phoneNumber" class="col-sm-2">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
+          </div>
+          <div *ngIf="call.phoneNumber" class="col-sm-2">
+            <a href="tel:{{call.phoneNumber}}">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+            </a>
+            </div>
+          <div *ngIf="!call.phoneNumber else publicPhoneTemplate" class="col-sm-10 call-list">
+            <div>
+              <p>{{'app.component.popup.call' | translate}}</p>
+              <p>{{'app.component.popup.call-0' | translate}}</p>
+              <p>{{'app.component.popup.call-1' | translate}}</p>
+              <p>{{'app.component.popup.call-2' | translate}}</p>
+              <p>{{'app.component.popup.call-3' | translate}}</p>
+              <p>{{'app.component.popup.call-4' | translate}}</p>
+            </div>
+          </div>
+          <div class="buttons pull-right">
+            <button class="text-btn" (click)="close(); $event.stopPropagation();">{{'app.component.popup.close' | translate}}</button>
+            <button *ngIf="!call.phoneNumber" class="colored-btn" (click)="$event.stopPropagation(); toCall(); ">{{'app.component.popup.toCall' | translate}}</button>
+          </div>
+        </div>
+        <ng-template #publicPhoneTemplate>
+          <div class="col-sm-10 call-list">
+            <a class="phone-link" href="tel:{{call.phoneNumber}}">{{call.phoneNumber}}</a>
+            <p>{{'app.component.popup.call-3' | translate}}</p>
+          </div>
+        </ng-template>
+
+      </div>
+      <div *ngIf="calling">
+        <div class="modal-body call-modal-body row">
+          <div class="col-sm-2">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
+          </div>
+          <div class="col-sm-10">
+            <p>{{'app.component.popup.calling' | translate}}</p>
+            <p>{{'app.component.popup.calling-1' | translate}}</p>
+            <p>{{'app.component.popup.calling-2' | translate}}</p>
+          </div>
+          <div class="buttons pull-right">
+            <button class="colored-btn" (click)="close(); $event.stopPropagation();">{{'app.component.popup.close' | translate}}</button>
+          </div>
+        </div>
+      </div>
+
+        <div *ngIf="error">
+      <div  class="modal-body row">
+        <div  class="col-sm-2">
+          <i *ngIf="error !== 'ServerError' && error !== 'UnknownError'" class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+          <i *ngIf="error === 'ServerError' || error === 'UnknownError'" class="fa fa-exclamation-circle" aria-hidden="true"></i>
+        </div>
+        <p  class="col-sm-10" [ngSwitch]="error">
+            
+          <span *ngSwitchCase="'IgnoredByUserError'">{{'app.component.popup.IgnoredByUserError' | translate}}</span>
+          <span *ngSwitchCase="'EstateOfflineError'">{{'app.component.popup.EstateOfflineError' | translate}}</span>
+          <span *ngSwitchCase="'CallerIsAlreadyInCallError'">{{'app.component.popup.CallerIsAlreadyInCallError' | translate}}</span>
+          <span *ngSwitchCase="'CalleeIsAlreadyInCallError'">{{'app.component.popup.CalleeIsAlreadyInCallError' | translate}}</span>
+          <span *ngSwitchCase="'NoFreeCallChannelsError'">{{'app.component.popup.NoFreeCallChannelsError' | translate}}</span>
+          <span *ngSwitchCase="'PhoneCallFailureError'">{{'app.component.popup.PhoneCallFailureError' | translate}}</span>
+          <span *ngSwitchCase="'EmailNotConfirmedError'">
+            {{'app.component.popup.EmailNotConfirmedError' | translate}}
+            <a (click)="close()" routerLink="/home/profile/trust">{{'app.component.popup.confirmEmailLink' | translate}} </a>
+          </span>
+          <span *ngSwitchCase="'PhoneCallFailureError'">{{'app.component.popup.PhoneCallFailureError' | translate}}</span>
+          <span *ngSwitchCase="'PhoneNumberNotConfirmedError'">{{'app.component.popup.PhoneNumberNotConfirmedError' | translate}}</span>
+          <span *ngSwitchCase="'NotAvailableTimeError'">{{'app.component.popup.LandlordNotAvailableNowError' | translate}}</span>
+          <span *ngSwitchCase="'LandlordNotAvailableNowError'">{{'app.component.popup.LandlordNotAvailableNowError' | translate}}</span>
+          <span *ngSwitchCase="'TenantNotAvailableNowError'">{{'app.component.popup.TenantNotAvailableNowError' | translate}}</span>
+          <span *ngSwitchCase="'ServerError'">{{'app.component.popup.ServerError.first' | translate}} <br><br> <p class="support-text">{{'app.component.popup.ServerError.second' | translate}}</p></span>
+          <span *ngSwitchCase="'UnknownError'">{{'app.component.popup.UnknownError.first' | translate}} <br><br> <p class="support-text">{{'app.component.popup.UnknownError.second' | translate}}</p></span>
+          <span *ngSwitchCase="'NeedConfirmError'">{{'app.component.popup.NeedConfirmError' | translate}}
+            <a (click)="close()" routerLink="/home/profile/trust">{{'app.component.popup.linkConfirm' | translate}} </a>
+          </span>
+          <span *ngSwitchDefault></span>
+        </p>
+  <div class="buttons pull-right">
+      <button class="colored-btn" (click)="close(); $event.stopPropagation();">{{'app.component.popup.close' | translate}}</button>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>

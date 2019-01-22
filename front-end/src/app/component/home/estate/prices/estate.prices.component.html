@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-xs-12 col-md-9 col-sm-9">
+            <div class="panel panel-default box-shadow">
+                    <div class="panel-heading">{{'app.component.estate.description.title' | translate}}</div>
+                    <div class="common-border panel-body">
+        <form *ngIf="form" [formGroup]="form" (change)="update()">
+            <h4>{{'app.component.estate.prices.title' | translate}}</h4>
+            <fieldset>
+                <div class="row">
+                    <div class="col-md-6 col-sm-8 col-xs-7 bottom-offset">
+                        <label for="price">{{'app.component.estate.prices.price' | translate}}</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <div [ngSwitch]="realEstate.currency">
+                                    <div class="icon-uah" *ngSwitchCase="'UAH'">&#x20B4;</div>
+                                    <i *ngSwitchCase="'USD'" class="fa fa-usd" aria-hidden="true"></i>
+                                    <i *ngSwitchCase="'EUR'" class="fa fa-eur" aria-hidden="true"></i>
+                                    <div class="icon-uah" *ngSwitchDefault>&#x20B4;</div>
+                                </div>
+                            </div>
+                            <input (change)="changePrice($event)" [(ngModel)]="realEstate.price" formControlName="price" placeholder="0" type="number" minValue="0" maxValue="10" class="form-control"
+                                name="price">
+                        </div>
+                        <p class="wrong-input" *ngIf="form.get('price').hasError('required')">{{'app.component.estate.prices.error' | translate}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-8 col-xs-7 bottom-offset">
+                        <p class="select-label">{{'app.component.estate.prices.depositType.label' | translate}}</p>
+                        <div class="select-wrapper">
+                            <select [value]="realEstate.depositType || 'MONTH' " formControlName="depositType" name="depositType">
+                                <option value="MONTH">{{'app.component.estate.prices.depositType.first' | translate}}</option>
+                                <option value="TWO_MONTH">{{'app.component.estate.prices.depositType.second' | translate}}</option>
+                                <option value="NEGOTIABLE">{{'app.component.estate.prices.depositType.third' | translate}}</option>
+                            </select>
+                            <div class="select-arrow">
+                                <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-8 col-xs-7 bottom-offset">
+                        <p class="select-label">{{'app.component.estate.prices.paymentType.label' | translate}}</p>
+                        <div class="select-wrapper">
+                            <select [value]="realEstate.utilitiesPaymentType || 'SEPARATELY' " formControlName="utilitiesPaymentType" name="utilitiesPaymentType">
+                                <option value="SEPARATELY">{{'app.component.estate.prices.paymentType.first' | translate}}</option>
+                                <option value="ALL_INCLUSIVE">{{'app.component.estate.prices.paymentType.second' | translate}}</option>
+                            </select>
+                            <div class="select-arrow">
+                                <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-8 col-xs-7 ">
+                        <p class="select-label">{{'app.component.estate.prices.currency.label' | translate}}</p>
+                        <div class="select-wrapper">
+                            <select [value]="realEstate.currency || 'UAH' " formControlName="currency" name="currency">
+                                <option value="UAH">{{'app.component.estate.prices.currency.UAH' | translate}}</option>
+                                <option value="USD">{{'app.component.estate.prices.currency.USD' | translate}}</option>
+                                <option value="EUR">{{'app.component.estate.prices.currency.EUR' | translate}}</option>
+                            </select>
+                            <div class="select-arrow">
+                                <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+                    </div></div>
+        <button routerLink="/home/estate/safety" class="action-btn">{{'app.component.estate.location.buttons.back' | translate}}</button>
+        <button type="button" (click)="save()" class="action-btn pull-right">{{'app.component.estate.status.buttons.save' | translate}}</button>
+        <app-alert [show]="success" [type]="'success'" [title]="'app.component.estate.prices.success.title'" [text]="'app.component.estate.prices.success.text'"></app-alert>
+    </div>
+</div>

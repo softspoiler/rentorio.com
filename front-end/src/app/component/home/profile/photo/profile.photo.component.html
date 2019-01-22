@@ -1,0 +1,39 @@
+<div class="panel-default panel">
+    <div class="panel-heading">{{'app.component.photo.title'| translate }}</div>
+    <div class="panel-body no-padding">
+        <div class="photo-section">
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="circle-wrapper">
+                        <img [src]="(session$ | async)?.avatar.imageUrl || '../../../../../assets/image/user/user-circle.png'" />
+                        
+                        <div *ngIf="imageChanged" class="overlay">
+                               
+                        </div>
+                        <div class="loading-wrapper">
+                            <loading [show]="imageChanged" [insideOverlay]="true"></loading>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <p>{{'app.component.photo.description'| translate }}</p>
+                    <button (mouseleave)="deleteAttemptTitle?.style.display = 'none'; deleteAttempt = false"  (click)="delete(deleteAttemptTitle,uploadInput)" class="remove-img-btn" *ngIf="(session$ | async)?.avatar && (session$ | async)?.avatar.imageUrl">
+                        <span class="delete-attempt" #deleteAttemptTitle>
+                            {{'app.component.photo.buttons.delete'| translate }}
+                        </span>
+                            <i class="fa fa-trash-o" aria-hidden="true" ></i>      
+                    </button>
+                </div>
+            </div>
+        </div>
+        <label [ngStyle]="{'border-color': isMouseOver ? '#ddd' : '#ccc' }" class="uploader" (mouseleave)="isMouseOver=false" (mouseover)="isMouseOver=true" (drop)="handleDrop($event)" ondragover="return false;">
+          <div *ngIf="image.progress" class="progress-bar">
+            <div class="progress" [ngStyle]="{'width': image.progress }"></div>
+            </div>
+        </label >
+        <label for="file" class="custom-input">
+                <i class="fa fa-picture-o"></i> {{'app.component.photo.buttons.upload'| translate }}
+        </label>
+        <input #uploadInput type="file" name="file" id="file" (change)="handleInputChange($event)">
+    </div>
+</div>

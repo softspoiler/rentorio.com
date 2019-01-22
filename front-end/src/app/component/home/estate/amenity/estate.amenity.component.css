@@ -1,0 +1,58 @@
+label {
+    font-weight: 400;
+    line-height: 50px;
+}
+input {
+    display: none;
+}
+
+svg {
+    vertical-align: middle;
+    width: 40px;
+    margin-right: 16px;
+    fill: #757c94;
+    height: 40px;
+}
+
+input:checked + svg {
+    fill: #5246dd;
+}
+
+input:checked + svg + span {
+    color: #5246dd;
+}
+
+svg + span {
+    color: #757c94;
+}
+
+legend {
+    border-bottom: 0.5px solid #cac7c5;
+    padding: 10px 0;
+}
+
+input,
+label {
+    cursor: pointer;
+}
+
+label {
+    font-weight: 400;
+}
+
+input {
+    margin: 0 10px 20px 0;
+}
+
+.tips {
+    width: 100%;
+    padding: 14px;
+    background: #fff;
+    border-left: 7px solid #8d83ec;
+    margin-top: 50px;
+    margin-bottom:15px;
+}
+
+.tips-inner {
+    margin: 5px;
+}

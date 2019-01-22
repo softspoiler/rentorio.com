@@ -1,0 +1,6 @@
+<div class="wrapper" *ngIf="notifications && !!notifications.length">
+  <div [@fadeIn] class="ntf-wrapper" *ngFor="let ntf of notifications">
+    <i (click)="closeNotifications(ntf.id)" class="fa fa-times fa-lg" aria-hidden="true"></i>
+    <div class="ntf-inner" [innerHTML]="ntf.message"></div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="container-inner">
+      <div *ngIf="!tokenWasResend else resendMessage">
+        <div class="loading-wrapper">
+          <loading [insideOverlay]="true" [show]="showLoad"></loading>
+        </div>
+        <div class="result-block" *ngIf="success">
+          <figure>
+            <i class="fa fa-check-circle"></i>
+            <figcaption>{{'app.component.confirm.registration.success.text' | translate}}</figcaption>
+            <button routerLink="/login" class="default-btn ">{{'app.component.confirm.registration.success.button' | translate}}</button>
+          </figure>
+        </div>
+        <div class="result-block" *ngIf="fail">
+          <i class="fa fa-ban"></i>
+          <figure>
+            <figcaption class="text-center">{{'app.component.confirm.registration.fail.text' | translate}}</figcaption>
+            <button (click)="resendConfirmEmail()" class="default-btn">
+              {{'app.component.confirm.registration.fail.button' | translate}}
+              <div class="loading-wrapper-btn">
+                <loading [show]="resendLoading"></loading>
+              </div>
+            </button>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #resendMessage>
+  <p class="resend-token-title">{{'app.component.confirm.registration.fail.resendTitle' | translate}}</p>
+</ng-template>

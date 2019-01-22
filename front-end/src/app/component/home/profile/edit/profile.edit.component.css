@@ -1,0 +1,62 @@
+/*refactor common css for forms is needed*/
+.default-btn {
+    outline: none;
+    border: none;
+    display: block;
+    margin-top:8px;
+    padding: 7px 19px 7px 19px;
+    margin-bottom: 17px;
+    background: #53c16a;
+    color: #fff;
+    border-radius: 3px;
+    transition: background .2;
+    position: relative;
+}
+.loading-wrapper{
+    position: relative;
+    top: -30px;
+    right: -57px;
+}
+.default-btn:hover {
+    background: #70da86;
+}
+
+.auto-width {
+    width: auto;
+    display: inline-block;
+}
+
+.fa-lock {
+    color: #ff9800;
+    margin: 0 -20px 0 10px;
+}
+.fa-check{
+    top: 11px;
+    position: relative;
+    left: 10px;
+    font-size: 1.3em;
+    color: #2ac149;
+}
+label {
+    font-weight: normal;
+}
+
+.number {
+    margin-top: 7px;
+    padding-left: 25px;
+}
+
+.has-error {
+    color: #F44336;
+    margin-top:-11px;
+}
+
+.wrong-input {
+    color: orange;
+}
+.info-color{
+    color: #808080;
+}
+textarea{
+    font-size: 18px;
+}

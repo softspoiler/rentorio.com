@@ -1,0 +1,67 @@
+<div class="sign-wrapper">
+  <div class="sign-container">
+    <div class="sign-header">
+      <h3>{{'app.component.login.text.title' | translate}}</h3>
+    </div>
+    <div class="sign-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">{{'app.component.login.email.label' | translate}}</label>
+          <input formControlName="email" autocapitalize="off" maxlength="250" type="text" class="form-control custom-input" name="email" placeholder="{{'app.component.login.email.placeholder' | translate}}">
+          <span class="has-error" *ngIf="form.get('email').hasError('required') && submitAttempt">{{'app.component.login.email.error.required' | translate}}</span>
+          <span class="has-error" *ngIf="form.get('email').hasError('pattern') && submitAttempt && form.get('email').dirty">{{'app.component.login.email.error.wrong.input' | translate}}</span>
+        </div>
+        <div class="form-group">
+          <label for="password">{{'app.component.login.password.label' | translate}}</label>
+          <small class="capslock-message" *ngIf="showCapslockMessage">{{'app.home.capslock.detect.message' | translate}}</small>
+          <input (capslockEvent)="onCapslockHandler($event)" maxlength="250" detectCapslock formControlName="password" type="password"
+            class="form-control custom-input" name="password" placeholder="{{'app.component.login.password.placeholder' | translate}}">
+          <span class="has-error" *ngIf="form.get('password').hasError('required') && submitAttempt">{{'app.component.login.password.error.required' | translate}}</span>
+        </div>
+        <div class="checkbox">
+          <label><input formControlName="rememberMe" name="rememberMe" type="checkbox" value="">{{'app.component.login.rememberMe.text' | translate}}</label>
+          <a type="submit" routerLink="/account/password/recovery" class="forgot-password">{{'app.component.login.buttons.forgot.password' | translate}}</a>
+        </div>
+        <!-- <p class="country-access text-grey">{{'app.home.country.access' | translate}}</p> -->
+        <div class="login-btn-wrapper">
+          <button [disabled]="loading" type="submit" class="sign-btn">{{'app.component.login.buttons.submit' | translate}}
+            <loading [show]="loading"></loading>
+          </button>
+          <div class="social text-grey">
+            <span>{{'app.component.login.text.or' | translate}}</span>
+            <a href="/auth/facebook"><img src="../../../assets/image/social/soc_m_1.png" class="facebook" alt="facebook"></a>
+            <a href="/auth/google"><img src="../../../assets/image/social/soc_m_3.png" class="google" alt="google"></a>
+          </div>
+        </div>
+        <div [ngSwitch]="typeOfError" class="has-error error-container">
+          <span *ngSwitchCase="'BadCredentialsError'">{{'app.component.login.badCredentialsError' | translate}}</span>
+          <span *ngSwitchCase="'PasswordSecurityLockError'">{{'app.component.login.passwordSecurityLockError' | translate}}</span>
+          <span *ngSwitchCase="'InvalidPasswordRetriesLockToken'">{{'app.component.login.invalidPasswordRetriesLockToken' | translate}}</span>
+          <span *ngSwitchCase="'AccountDisabledError'">{{'app.component.login.accountDisabledError' | translate}}</span>
+          <span *ngSwitchCase="'AccountBlockedError'">{{'app.component.login.accountBlockedError' | translate}}</span>
+          <span *ngSwitchCase="'AccountAutoBlockedError'">{{'app.component.login.accountAutoBlockedError' | translate}}</span>
+          <span *ngSwitchDefault></span>
+        </div>
+        <p class="text-grey terms-text">
+            {{'app.component.login.socialTermsText.text' | translate}}
+            <a routerLink="/terms">{{'app.component.login.socialTermsText.terms' | translate}}</a>
+            {{'app.component.login.socialTermsText.and' | translate}}
+            <a routerLink="/policy">{{'app.component.login.socialTermsText.policy' | translate}}</a>
+        </p>
+        <div class="suggest">
+          <p class="text-grey">{{'app.component.login.text.question' | translate}} <a routerLink="/registration">{{'app.component.login.buttons.registration' | translate}}</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- <div class="phone-modal-wrapper" [ngClass]="{'show-phone-modal':showPhoneVerifyModal}">
+  <div class="phone-modal">
+    <i (click)="closePhoneVerifyModal()" class="fa fa-times" aria-hidden="true"></i>
+    <p>{{'app.component.login.phone.modal.text' | translate}}</p>
+    <div *ngIf="showPhoneVerifyModal">
+      <add-number (newPhoneEvent)="closePhoneVerifyModal()" [showOnlyForm]="true"></add-number>
+    </div>
+  </div>
+</div> -->
+<app-alert *ngIf="success" [show]="success" [type]="'success'" [title]="'app.component.login.success.title'" [text]="'app.component.login.success.text'"></app-alert>

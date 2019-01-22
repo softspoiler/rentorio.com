@@ -1,0 +1,36 @@
+<div class="alert-wrapper" [ngClass]="{'show-alert': show ,'hide-alert':!show}" (click)="close()" [ngSwitch]="type">
+  <!-- Success notification -->
+  <div *ngSwitchCase="'success'" class="container-alert success">
+    <div class="timer" [ngClass]="{'start-timer':show}"></div>
+    <div class="alert-inner">
+      <i class="fa fa-check fa-4x icon" aria-hidden="true"></i>
+      <div class="alert-text">
+        <h2>{{title | translate}}</h2>
+        <p [ngStyle]="{'font-size': title ? '1em' : (textSize ||'1.4em')}">{{text | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <!-- Info notification -->
+  <div *ngSwitchCase="'info'" class="container-alert info">
+    <div class="timer" [ngClass]="{'start-timer':show}"></div>
+    <div class="alert-inner">
+      <i class="fa fa-info-circle fa-4x icon" aria-hidden="true"></i>
+      <div class="alert-text">
+        <h2>{{title | translate}}</h2>
+        <p [ngStyle]="{'font-size': title ? '1em' : (textSize ||'1.4em')}">{{text | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <!-- Error notification -->
+  <div *ngSwitchCase="'error'" class="container-alert error">
+    <div class="timer" [ngClass]="{'start-timer':show}"></div>
+    <div class="alert-inner">
+      <i class="fa fa-exclamation fa-4x icon" aria-hidden="true"></i>
+      <div class="alert-text">
+        <h2>{{title | translate}}</h2>
+        <p [ngStyle]="{'font-size': title ? '1em' : (textSize ||'1.4em')}">{{text | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchDefault></div>
+</div>

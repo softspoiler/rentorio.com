@@ -1,0 +1,97 @@
+<div class="sign-wrapper" *ngIf="!successRegistration">
+    <div class="sign-container">
+        <div class="sign-header">
+            <h3>{{'app.component.registration.title' | translate}}</h3>
+        </div>
+        <div class="sign-body">
+            <form [formGroup]="form">
+                <div class="form-group">
+                    <label for="firstName">{{'app.component.registration.firstName.label' | translate}}</label>
+                    <input formControlName="firstName" maxlength="250" type="text" class="form-control custom-input" name="firstName" placeholder="{{'app.component.registration.firstName.placeholder' | translate}}">
+                    <span class="has-error" *ngIf="form.get('firstName').hasError('required') && submitAttempt">{{'app.component.registration.firstName.required' | translate}}</span>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">{{'app.component.registration.lastName.label' | translate}}</label>
+                    <input formControlName="lastName" maxlength="250" type="text" class="form-control custom-input" name="lastName" placeholder="{{'app.component.registration.lastName.placeholder' | translate}}">
+                    <span class="has-error" *ngIf="form.get('lastName').hasError('required') && submitAttempt">{{'app.component.registration.lastName.required' | translate}}</span>
+                </div>
+                <div class="form-group">
+                    <label for="email">{{'app.component.registration.email.label' | translate}}</label>
+                    <input formControlName="email" autocapitalize="off" maxlength="250" type="text" class="form-control custom-input" name="email"
+                        placeholder="{{'app.component.registration.email.placeholder' | translate}}">
+                    <span class="has-error" *ngIf="form.get('email').hasError('required') && submitAttempt">{{'app.component.registration.email.error.required' | translate}}</span>
+                    <div class="wrong-input" *ngIf="form.get('email').hasError('pattern') && submitAttempt && form.get('email').dirty">{{'app.component.registration.email.error.wrong.input' | translate}}</div>
+                </div>
+                <div class="passwordGroup" formGroupName="passwordGroup">
+                    <div class="form-group">
+                        <label for="password">{{'app.component.registration.password.label' | translate}}</label>
+                        <small class="capslock-message" *ngIf="showCapslockMessage">{{'app.home.capslock.detect.message' | translate}}</small>
+                        <input (capslockEvent)="onCapslockHandler($event)" maxlength="250" detectCapslock formControlName="password" type="password"
+                            class="form-control custom-input" name="password" placeholder="{{'app.component.registration.password.placeholder' | translate}}">
+                        <div class="has-error" *ngIf="form.get('passwordGroup').get('password').hasError('required') && submitAttempt">{{'app.component.registration.password.error.required' | translate}}</div>
+                        <div class="has-error" *ngIf="form.get('passwordGroup').get('password').hasError('minlength') && form.get('passwordGroup').get('password').dirty && submitAttempt">{{'app.component.registration.password.error.short' | translate}}</div>
+                        <div class="has-error" *ngIf="form.get('passwordGroup').get('password').hasError('maxlength') && form.get('passwordGroup').get('password').dirty">{{'app.component.registration.password.error.long' | translate}}</div>
+                        <div class="has-error" *ngIf="form.get('passwordGroup').get('password').hasError('pattern') && form.get('passwordGroup').get('password').dirty && submitAttempt">{{'app.component.registration.password.error.pattern' | translate}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">{{'app.component.registration.confirm.password.label' | translate}}</label>
+                        <input (capslockEvent)="onCapslockHandler($event)" maxlength="250" detectCapslock formControlName="confirmPassword" type="password"
+                            class="form-control custom-input" name="confirmPassword" placeholder="{{'app.component.registration.confirm.password.placeholder' | translate}}">
+                        <div class="wrong-input" *ngIf="form.get('passwordGroup').hasError('nomatch') && submitAttempt">{{'app.component.registration.confirm.password.error.unconfirm'| translate}}</div>
+                        <div class="has-error" *ngIf="form.get('passwordGroup').get('confirmPassword').hasError('required') && submitAttempt">{{'app.component.registration.confirm.password.error.required' | translate}}</div>
+                    </div>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input formControlName="agreedTermOfUse" name="agreedTermOfUse" type="checkbox" value="">{{'app.component.registration.term.of.use.text' | translate}}</label>
+                    <a routerLink="/terms">
+                        {{'app.component.registration.term.of.use.terms' | translate}}
+                    </a>
+                    <span>{{'app.component.registration.term.of.use.and' | translate}} </span>
+                    <a routerLink="/policy">{{'app.component.registration.term.of.use.policy' | translate}}</a>
+                    <p class="has-error" *ngIf="form.get('agreedTermOfUse').invalid && submitAttempt">
+                        <span>{{'app.component.registration.term.of.use.error' | translate}}</span>
+                    </p>
+                </div>
+                <button [disabled]="loading" class="sign-btn" (click)="executeRecaptcha()">{{'app.component.registration.submit' | translate}}
+                    <loading [show]="loading"></loading>
+                </button>
+                <div class="has-error error-container" [ngSwitch]="typeOfError">
+                    <span *ngSwitchCase="'EmailAlreadyExistError'">{{'app.component.registration.server.error.EmailAlreadyExistError' | translate}}</span>
+                    <span *ngSwitchCase="'InvalidEmailFormatError'">{{'app.component.registration.server.error.InvalidEmailFormatError'| translate}}</span>
+                    <span *ngSwitchCase="'InvalidPasswordPolicyError'">{{'app.component.registration.server.error.InvalidPasswordPolicyError'| translate}}</span>
+                    <span *ngSwitchCase="'InvalidConfirmPasswordError'">{{'app.component.registration.server.error.InvalidConfirmPasswordError'| translate}}</span>
+                    <span *ngSwitchCase="'NotAgreedTermOfUseError'">{{'app.component.registration.server.error.NotAgreedTermOfUseError'| translate}}</span>
+                    <span *ngSwitchCase="'MandatoryRegistrateFieldError'">{{'app.component.registration.server.error.MandatoryRegistrateFieldError'| translate}}</span>
+                    <span *ngSwitchDefault></span>
+                </div>
+                <div class="suggest">
+                    <p class="have-account text-grey ">{{'app.component.registration.have.account.text' | translate}}
+                        <a routerLink="/login">{{'app.component.registration.have.account.link' | translate}}</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="grecaptcha-wrapper">
+    <re-captcha #captchaRef="reCaptcha" size="invisible" (resolved)="$event && recaptchaHandler($event)">
+    </re-captcha>
+</div>
+<div class="success" *ngIf="successRegistration">
+
+    <div class="row">
+        <div class="col-sm-2">
+            <i class="fa fa-check-circle"></i>
+        </div>
+        <div class="col-sm-10">
+            <h4>{{'app.component.registration.success.title' | translate}} </h4>
+
+            <span>{{'app.component.registration.success.text' | translate}}
+                <span class="email">{{form.value.email}}</span>
+                 {{'app.component.registration.success.text1' | translate}}
+            </span>
+
+        </div>
+    </div>
+</div>

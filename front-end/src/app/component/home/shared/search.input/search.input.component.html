@@ -1,0 +1,14 @@
+<div [ngClass]="{'search-wrapper':!firstRequest}" class="search-container">
+  <input (change)="onChange()" [value]="addressLine || ''" placeholder="{{'app.startPage.input.placeholder' | translate}}" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #searchInput
+    name="address">
+  <button [disabled]="showLoading" (click)="search(searchInput.value)" class="search-btn">
+      <i [ngStyle]="{'opacity' : showLoading ? '0' : '1'}" class="fa fa-search" aria-hidden="true"></i>
+      <div class="loading-wrapper">
+        <loading [show]="showLoading"></loading>
+      </div>
+  </button>
+</div>
+<div class="error-message" [ngSwitch]="errorName">
+  <p *ngSwitchCase = "'geocoder'">{{'app.startPage.input.error.geocoderError' | translate}}</p>
+  <p *ngSwitchCase = "'required'">{{'app.startPage.input.error.required' | translate}}</p>
+</div>

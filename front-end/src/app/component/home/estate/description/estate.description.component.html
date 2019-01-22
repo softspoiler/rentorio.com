@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-xs-12 col-md-9 col-sm-7">
+    <div class="panel panel-default box-shadow">
+      <div class="panel-heading">{{'app.component.estate.description.title' | translate}}</div>
+      <div class="common-border panel-body">
+        <form *ngIf="form" [formGroup]="form" (change)="update()">
+          <div class="form-group">
+            <label for="shortDescription">{{'app.component.estate.description.shortDescription.label' | translate}}</label>
+            <textarea [(ngModel)]="realEstate.shortDescription" formControlName="shortDescription" name="shortDescription" maxlength="100"
+              rows="1" placeholder="{{'app.component.estate.description.shortDescription.placeholder' | translate}}"></textarea>
+            <em class="wrong-input" *ngIf="form.get('shortDescription').hasError('required')">{{'app.component.estate.description.shortDescription.error' | translate}}</em>
+            <span *ngIf="form.get('shortDescription').value" class="counter">{{counter(100,realEstate.shortDescription)}} {{'app.component.estate.description.counter' | translate}}</span>
+          </div>
+          <div class="form-group">
+            <label for="description">{{'app.component.estate.description.description.label' | translate}}</label>
+            <textarea [(ngModel)]="realEstate.description" formControlName="description" name="description" maxlength="1000"
+              rows="6" placeholder="{{'app.component.estate.description.description.placeholder' | translate}}"></textarea>
+            <span *ngIf="form.get('description').value" class="counter">{{counter(1000,realEstate.description)}} {{'app.component.estate.description.counter' | translate}}</span>
+          </div>
+        </form>
+      </div>
+    </div>
+    <button routerLink="/home/estate/general" class="action-btn">{{'app.component.estate.description.buttons.back' | translate}}</button>
+    <button routerLink="/home/estate/location" [disabled]="!realEstate?.type || !realEstate?.accommodation || !realEstate?.shortDescription" class="action-btn next">{{'app.component.estate.description.buttons.next' | translate}}</button>
+  </div>
+</div>

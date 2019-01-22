@@ -1,0 +1,58 @@
+
+
+    <div class="col-xs-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-condensed">
+              <div *ngIf="updateTable" class="overlay"></div>
+              <thead align="center">
+                <tr>
+                  <td class="small-td">ID</td>
+                  <td class="small-td">Тип</td>
+                  <td class="small-td">Дата</td>
+                  <td>Сообщение</td>
+                  <td class="small-td">Изменить</td>
+                  <td class="small-td">Удалить</td>
+                </tr>
+                <tr>
+
+                </tr>
+              </thead>
+              <tbody *ngIf="notifications">
+                <tr *ngFor="let ntf of notifications">
+                  <td align="center">{{ntf.id}}</td>
+                  <td align="center">{{ntf.type}}</td>
+                  <td align="center">{{ntf.returnReadableData()}}</td>
+                  <td>{{ntf.message}}</td>
+                  <td align="center"><i (click)="getNotification(ntf.id)" class="fa fa-edit fa-lg"></i></td>
+                  <td align="center"><i (click)="deleteNotification(ntf.id)" class="fa fa-times fa-lg" aria-hidden="true"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="wrapper" *ngIf="currentNotification">
+          <p-editor [(ngModel)]="currentNotification.message" [style]="{'height':'320px','background':'#d0cfcf'}"></p-editor>
+        <button [disabled]="!currentNotification.message" class="btn btn-default margin-top-bottom-15" (click)="saveNewNotification('PUBLISHED','Публичное')">Сохранить как публичное</button>
+        <button [disabled]="!currentNotification.message" class="btn btn-default margin-top-bottom-15" (click)="saveNewNotification('DRAFT','Черновик')">Сохранить как черновик</button>
+        <button [disabled]="!currentNotification.message" class="btn btn-default margin-top-bottom-15" (click)="saveNewNotification('TEMPLATE','Шаблон')">Сохранить как шаблон</button>
+        <button class="btn btn-danger pull-right margin-top-bottom-15" (click)="resetCurrentNotification()">Отмена</button>              
+      </div>
+      <button *ngIf="!currentNotification" class="btn btn-success margin-top-bottom-15" (click)="createNewNotification('')">Создать Уведомления</button>
+      
+    </div>
+
+
+<ng-template #empty>
+    <td align="center">-----</td>
+</ng-template>
+
+<div *ngIf="currentNotification && !!currentNotification.message">
+  <p class="example-title">Пример Уведомления:</p>
+  <br>
+  <div class="ntf-wrapper">
+    <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+    <div class="ntf-inner" [innerHTML]="sanitizer.bypassSecurityTrustHtml(currentNotification.message)">
+    </div>
+  </div>
+</div>

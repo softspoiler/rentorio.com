@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-xs-12  col-md-9 col-sm-7">
+            <div class="panel panel-default box-shadow">
+                <div class="panel-heading">{{'app.component.estate.location.title' | translate}}</div>
+                <div class="panel-body">
+                    <form *ngIf="form" [formGroup]="form">
+                        <div class="form-group">
+                            <label for="addressLine1">{{'app.component.estate.location.address.label' | translate}}</label>
+                            <input [value]="realEstate.address.addressLine1 || ''" maxlength="256" formControlName="addressLine1" autocorrect="off" autocapitalize="off"
+                                spellcheck="off" type="text" class="form-control" #search name="addres">
+                            <em *ngIf="geocoderHasError">{{'app.component.estate.location.address.error' | translate}}</em>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="city">{{'app.component.estate.location.city.label' | translate}}</label>
+                                    <input [value]="realEstate.address.city || ''" maxlength="128" placeholder="{{'app.component.estate.location.city.placeholder' | translate}}"
+                                        formControlName="city" type="text" class="form-control" name="addres">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="district">{{'app.component.estate.location.district.label' | translate}}</label>
+                                    <input [value]="realEstate.address.district || ''" maxlength="128" placeholder="{{'app.component.estate.location.district.placeholder' | translate}}"
+                                        formControlName="district" type="text" class="form-control" name="district">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    {{realEstate.address.addressLine1}}
+                    <agm-map 
+                    [streetViewControl]="false"
+                    [zoom]="zoom"
+                    [latitude]="mapLatitude || defaultCoord.lat"
+                    [longitude]="mapLongitude || defaultCoord.long"
+                    (mapClick)="markerChangeEventHandler($event)">
+                        <agm-marker 
+                        [markerDraggable]='true'
+                        [latitude]="latitude || defaultCoord.lat"
+                        [longitude]="longitude || defaultCoord.long"
+                        (dragEnd)="markerChangeEventHandler($event)">
+                            <agm-info-window>
+                                <strong>{{'app.component.estate.location.markerTips' | translate}}</strong>
+                            </agm-info-window>
+                        </agm-marker>
+                        <agm-circle 
+                        (circleClick)="markerChangeEventHandler($event)"
+                        [circleDraggable]=false 
+                        [fillColor]="'green'" 
+                        [radius]="150" 
+                        [latitude]="latitude || defaultCoord.lat" 
+                        [longitude]="longitude || defaultCoord.long">
+                        </agm-circle>
+                    </agm-map>
+                    </div>
+            </div>
+                         
+        <button routerLink="/home/estate/amenity" [disabled]="!realEstate?.type || !realEstate?.accommodation  || !realEstate?.shortDescription || !(estate$ | async)?.realEstate?.latitude || !(estate$ | async)?.realEstate?.longitude "
+            class="next action-btn default-btn">{{'app.component.estate.general.next' | translate}}</button>
+        <button routerLink="/home/estate/description" class="action-btn default-btn">{{'app.component.estate.location.buttons.back' | translate}}</button>
+    </div>
+    <div class="col-xs-12  col-md-3 col-sm-5">
+        <div class="tips">
+            <div class="tips-inner">
+                <h4 class="text-center">{{'app.component.estate.location.tips.title' | translate}}</h4>
+                <p>{{'app.component.estate.location.tips.text' | translate}}</p>
+            </div>
+        </div>
+    </div>
+</div>

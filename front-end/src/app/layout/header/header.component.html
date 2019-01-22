@@ -1,0 +1,126 @@
+<header>
+    <div class="wrapper">
+        <div class="pull-right top-menu">
+            <button class="new-estate-m" (click)="newEstate()">{{'app.header.estate.btn'| translate}}</button>
+            <button class="new-estate" (click)="newEstate()">+ {{'app.header.estate.btn'| translate}}</button>
+            <div *ngIf="(session$ | async)?.isAuthenticated " class="messages large">
+                <div (click)="viewNewMessages()">
+                    <span class="badge-pulse messages-count" *ngIf="messagesCount">{{messagesCount}}</span>
+                    <span>{{'app.header.messages'| translate}}</span>
+                </div>
+            </div>
+            <div *ngIf="(session$ | async)?.isAuthenticated" class="notification large">
+                    <span class="btn-name">{{'app.header.notification'| translate}}</span>
+                    <span class="badge-pulse notification-count" *ngIf="(session$ | async)?.notificationsNumber > 0">{{(session$ | async)?.notificationsNumber}}</span>
+                    <div class="notification-component-wrapper">
+                        <app-notification (openModal)="showEstateRecommendationModal()" [isChild]="true"></app-notification>
+                    </div>
+                </div>
+                <div *ngIf="(session$ | async)?.isAuthenticated" class="favorite large">
+                    <div routerLink="/favorite">
+                        <span>{{'app.header.favorite'| translate}}</span>
+                    </div>
+                </div>
+                <div class="login" *ngIf="!(session$ | async)?.isAuthenticated">
+                    <a routerLink="/login">{{'app.header.sign.in' | translate}}</a>
+                </div>
+                <div (click)="showSideNav()" *ngIf="(session$ | async)?.isAuthenticated" class="sandwich-wrapper">
+                    <span class="sandwich">
+                        <span class="sw-top"></span>
+                        <span class="sw-middle"></span>
+                        <span class="sw-bottom"></span>
+                    </span>
+                    <span *ngIf="messagesCount || (session$ | async)?.notificationsNumber > 0" class="pulse">
+                        <span class="pulse-item">
+                            <i class="fa fa-exclamation"></i>
+                        </span>
+                    </span>
+                </div>
+                <div *ngIf="(session$ | async)?.isAuthenticated && showEstateMenu" class="dropdown estate-menu large">
+                        <a routerLink="/home/estate/list">{{'app.header.estate.title'| translate}}</a>
+                </div>
+                <div *ngIf="(session$ | async)?.isAuthenticated" class="dropdown user-menu large">
+                    <div class="user-dropbtn">
+                        <div class="circle-wrapper">
+                            <img [src]="(session$ | async)?.avatar?.thumbnailUrl || './../../assets/image/user/user-circle-small.png'" alt="">
+                        </div>
+                        <span class="user-name">{{(session$ | async)?.currentUser.firstName}}</span>
+                    </div>
+                    <div class="dropdown-content user-dropdown-content">
+                        <a routerLink="home/profile/edit">{{'app.header.profile.menu.view.profile'| translate}}</a>
+                        <a routerLink="home/dashboard">{{'app.header.profile.menu.dashboard'| translate}}</a>
+                        <a href="/logout" (click)="logout()">{{'app.header.profile.menu.logout'| translate}}</a>
+                    </div>
+                </div>
+                <div class="lang-block">
+                    <button *ngFor="let lang of translate.getLangs()" class="lang" (click)="changeLanguage(lang)" [class.active]="lang === translate.currentLang">{{'app.header.lang.' + lang | translate}}</button>
+                </div>
+                <div *ngIf="(session$ | async)?.isAuthenticated" (click)="hideSideNav()" [ngClass]="{'side-nav-bg':sideNav}"></div>
+                <div *ngIf="(session$ | async)?.isAuthenticated" [ngClass]="sideNav ? 'show-side-nav' :'hide-side-nav'" class="side-nav">
+                    <div class="side-nav-header">
+                        <i (click)="hideSideNav()" class="fa fa-arrow-right" aria-hidden="true"></i>
+                        <div class="user">
+                            <div class="circle-wrapper">
+                                <img class="responsive-img" [src]="(session$ | async)?.avatar?.thumbnailUrl || './../../assets/image/user/unknown_white.png'"
+                                    alt="">
+                            </div>
+                            <span>{{(session$ | async)?.currentUser.firstName}}</span>
+                        </div>
+                    </div>
+                    <div class="side-nav-body">
+                        <div (click)="hideSideNav()" class="list-group">
+                            <a routerLink="/home/profile/edit" class="list-group-item">{{'app.header.profile.menu.view.profile'| translate}}</a>
+                            <a *ngIf="!showEstateMenu" routerLink="home/estate" (click)="newEstate()" class="list-group-item first-estate-btn">{{'app.header.estate.title.new'| translate}}</a>
+                            <div *ngIf="showEstateMenu">
+                                <a routerLink="/home/estate/list" class="list-group-item">{{'app.header.estate.menu.manage.estate'| translate}}</a>
+                                <a routerLink="/home/estate/general" class="list-group-item" (click)="newEstate()">{{'app.header.estate.menu.new.estate'| translate}}</a>
+                            </div>
+                            <a class="list-group-item" routerLink="/home/dashboard">{{'app.component.navigationBar.dashboard' | translate}}</a>
+                            <a class="list-group-item" routerLink="/home/account">{{'app.component.navigationBar.account' | translate}}</a>
+                            <a routerLink="/favorite" class="list-group-item">{{'app.header.favorite'| translate}}</a>
+                            <a (click)="viewNewMessages()" class="list-group-item">{{'app.header.messages'| translate}}
+                                <!-- <span class="badge" *ngIf="messagesCount">{{messagesCount}}</span> -->
+                                <span *ngIf="messagesCount" class="badge-pulse">
+                                    {{messagesCount}}
+                                </span>
+                            </a>
+                            <a routerLink="/notifications" class="list-group-item">{{'app.header.notification'| translate}}
+                                <span *ngIf="(session$ | async)?.notificationsNumber > 0" class="badge-pulse">
+                                    {{(session$ | async)?.notificationsNumber}}
+                                </span>
+                            </a>
+                            <a href="/logout" (click)="hideSideNav(); logout()" class="list-group-item">{{'app.header.profile.menu.logout'| translate}}</a>
+                        </div>
+                    </div>
+                </div>
+    
+    
+            </div>
+            <div class="main-logo" routerLink="/">
+                <img src="../../../assets/image/logo.png" alt="logo">
+            </div>
+        </div>
+    
+    </header>
+
+    <div class="modal overlay" tabindex="-1" role="dialog" *ngIf="showInfo" (click)="hideEstateRecommendationModal(); $event.stopPropagation();">
+        <div class="modal-dialog modal-dialog-centered">
+    
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideEstateRecommendationModal(); $event.stopPropagation();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-body row">
+                    <div class="col-sm-2">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </div>
+                    <new-estate-popup-ru *ngIf="translate.currentLang === 'ru'"></new-estate-popup-ru>
+                    <new-estate-popup-uk *ngIf="translate.currentLang === 'uk'"></new-estate-popup-uk>
+                    <div class="buttons pull-right">
+                        <button class="colored-btn" (click)="hideEstateRecommendationModal(); $event.stopPropagation();">{{'app.component.estate.navigation.modal.close' | translate}}</button>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>

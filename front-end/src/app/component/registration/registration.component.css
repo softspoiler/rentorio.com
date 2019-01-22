@@ -1,0 +1,56 @@
+.sign-wrapper {
+    margin-top: 50px;
+}
+
+.have-account {
+    margin-top: -20px;
+}
+input::-webkit-input-placeholder { 
+    opacity: .5;
+  }
+  input::-moz-placeholder { 
+    opacity: .5;
+  }
+  input:-ms-input-placeholder { 
+    opacity: .5;
+  }
+  input:-moz-placeholder { 
+    opacity: .5;
+  }
+
+.success {
+    display: block;
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    padding: 80px;
+    background: #ffffff;
+    border-radius: 4px;
+    -webkit-box-shadow: 5px 3px 15px 0px #b7b7b7;
+    box-shadow: 5px 3px 15px 0px #b7b7b7;   
+}
+
+.email{
+    font-weight: bold;
+    color: #6458d8;
+}
+
+.fa-check-circle {
+    font-size: 55px;
+    margin-bottom: 40px;
+    color: rgb(19, 216, 116);
+}
+
+.form-group{
+    margin-bottom: 12px;
+}
+.grecaptcha-wrapper {
+    position: fixed;
+    z-index: 2;
+}
+.sign-btn{
+    margin-top: 30px;
+    display:block;
+}

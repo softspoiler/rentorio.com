@@ -1,0 +1,93 @@
+.modal{
+    display: none;
+    top:70px;
+    left:0;
+    right:0;
+    background:rgba(0,0,0,.6);
+    z-index: 1001;
+    overflow-y: auto;
+}
+.modal-inner{
+    margin: 50px auto;
+    max-width: 500px;
+}
+.show-modal{
+    display: inline-block;
+    animation-name: show;
+    animation-duration: .5s;
+    animation-iteration-count: 1;
+}
+.show-modal-inner{
+    animation-name: show;
+    animation-duration: .4s;
+    animation-iteration-count: 1;
+}
+.show-modal{
+    display: inline-block;
+    animation-name: fade;
+    animation-duration: .4s;
+    animation-iteration-count: 1;
+}
+
+@keyframes show{
+  0%{
+      
+      transform:scale(0);
+  }
+  100%{
+
+      transform:scale(1);
+  }
+}
+@keyframes fade{
+    0%{
+        
+        opacity:0;
+    }
+    100%{
+  
+        opacity:1;
+    }
+  }
+
+.complaint-btn{
+    background: transparent;
+    outline: none;
+    color: #484848;
+    border: none;
+    padding: 2px 14px 2px 14px;
+    white-space:nowrap;
+}
+.fa-flag{
+    color: #f44336;
+    font-size: 1.2em;
+    padding-right: 3px;
+}
+.fa-times{
+    color: #fff;
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+.submit-btn{
+    float: right;
+    display: block;
+    margin: 17px auto 4px auto;
+    padding: 9px 14px 9px 12px;
+    outline: none;
+    border: none;
+    color: #fff;
+    background: #8d83ec;
+    border-radius: 2px;
+    transition: background .2s;
+}
+.submit-btn:hover{
+    background: #bcaeff;
+}
+.submit-btn:disabled{
+    cursor:default;
+    background: #ddd !important;
+}
+.float-right{
+    float:right;
+}

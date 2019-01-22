@@ -1,0 +1,80 @@
+#phoneForm {
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 20px 50px 10px;
+}
+
+.fa {
+    color: #338ad3;
+    margin: 5px;
+}
+
+.auto-width {
+    width: auto;
+    height: 26px;
+    display: inline-block;
+}
+
+.phone-wrapper {
+    margin-left: 0px;
+    white-space: nowrap;
+}
+.margin-top-15{
+    margin-top:15px;
+}
+.link {
+    border: none;
+    color: #337abd;
+    background: none;
+    cursor: pointer;
+}
+
+.has-error , .wrong-input {
+    color: #F44336;
+}
+
+.orange-btn {
+    outline: none;
+    border: none;
+    height: 27px;
+    padding: 3px 10px 5px 10px;
+    background: #8d83ec;
+    color: #fff;
+    border-radius: 3px;
+    transition: background .2;
+    position: relative;
+}
+.loading-wrapper{
+    position: relative;
+    top: -30px;
+    right: -48px;
+}
+.orange-btn:hover {
+    background: #a7a0ec;
+}
+
+.send-code-btn{
+    margin-top: -4px;
+}
+.select-phone-code{
+    top:14px;
+}
+
+@media screen and (max-width:620px){
+    #phoneForm{
+        padding: 20px 15px 10px;
+    }
+    .phone-number-mask /deep/ input{
+        width: 106px;
+    }
+}
+@media screen and (max-width:368px){
+    #phoneForm{
+        padding: 20px 0px 10px;
+        border-left: none;
+        border-right: none;
+    }
+    .confirm-code-input {
+        width: 140px;
+    }
+}

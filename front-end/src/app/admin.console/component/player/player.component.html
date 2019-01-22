@@ -1,0 +1,10 @@
+<div #plModal [ngStyle]="{'display':showRecordModal ? 'block' : 'none'}" class="pl-wrapper">
+  <div class="pl-inner">
+    <p *ngIf="recordLoading" class="text-center">Loading...</p>
+    <i (click)="audio.pause();showRecordModal = false;recordLoading = false;" class="fa fa-times"></i>
+    <audio [ngStyle]="{'opacity':recordLoading ? '0' : '1'}" #audio controls="controls">
+      <source type="audio/ogg"> Ваш браузер не поддерживает воспроизведение аудио файлов
+        <source type="audio/mp3">
+    </audio>
+  </div>
+</div>

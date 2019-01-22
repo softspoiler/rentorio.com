@@ -1,0 +1,21 @@
+/*Hidden alert for old browsers*/
+
+.not-supported-alert {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    text-align: center;
+    background: #ffffcc;
+    z-index: 3;
+    font-size: 0.9em;
+}
+
+.not-supported-alert i {
+    color: #ffff00
+}
+
+.app-content {
+    min-height: 1000px;
+    background: #f7f7f7;
+    padding: 70px 0px 0px 0px;
+}

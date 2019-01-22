@@ -1,0 +1,36 @@
+.fa-check{
+    color:#53c16a;
+}
+.margin-top-bottom-15{
+    margin-top:15px;
+    margin-bottom:15px;
+}
+.small-td{
+    width: 1px;
+}
+.wrapper{
+    margin-top:15px;
+    margin-bottom: 15px;
+}
+.ntf-wrapper{
+    position: relative;
+    width: 450px;
+    display: inline-block;
+    background: #FFF176;
+    padding: 10px 15px 0px 15px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    border-left: 5px solid #FFD54F;
+}
+.ntf-wrapper .fa-times{
+    font-size: .9em;
+    color: #fff;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.example-title{
+    padding: 15px;
+    display: inline-block;
+    margin: 15px 0px 15px 0px;
+}

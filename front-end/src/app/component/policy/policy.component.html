@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="body">
+            <button (click)="back()" class="close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          <policy-info-ru *ngIf="translate.currentLang === 'ru'"></policy-info-ru>
+          <policy-info-uk *ngIf="translate.currentLang === 'uk'"></policy-info-uk>
+      </div>
+    </div>
+  </div>
+</div>

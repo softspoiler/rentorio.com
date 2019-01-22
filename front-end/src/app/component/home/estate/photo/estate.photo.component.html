@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-xs-12 col-md-9 col-sm-8">
+            <div class="panel panel-default box-shadow">
+                    <div class="panel-heading">{{'app.component.estate.description.title' | translate}}</div>
+                    <div class="common-border panel-body">
+        <form #form>
+            <h3>{{'app.component.estate.photo.title'| translate }}</h3>
+            <p class="wrong-input" *ngIf="realEstate.photos?.length < 2">{{'app.component.estate.photo.error'| translate }}</p>
+            <fieldset>
+                <h4 class="text-muted">{{'app.component.estate.photo.info'| translate }}</h4>
+                <div *ngIf="images.length">
+                    <ul class="row" dnd-sortable-container [sortableData]="images">
+                        <li class="col-xs-12 col-sm-12 col-lg-4 col-md-6" *ngFor="let image of images; let i = index;" dnd-sortable [sortableIndex]="i" (onDropSuccess)="updatePhotosState();">
+                            <!-- <div *ngIf="image.loaded" class="image-loaded-status">OK</div> -->
+                            <div (click)="deleteImage(i)" (mouseleave)="deleteAttempt = false;" *ngIf="image.preview || image.uploadedImg" class="delete-photo">
+                                <span class="delete-attampt" [ngStyle]="{'display': deleteAttempt ? 'inline-block' : 'none'}">{{'app.component.estate.photo.delete_photo'| translate }}</span>
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </div>
+                            <div *ngIf="image.preview || image.uploadedImg" class="view-modal" (click)="modal.classList.add('show-modal'); document.body.style.overflow = 'hidden'; document.body.style.position = 'fixed';">{{'app.component.estate.photo.view_photo'| translate }}</div>
+                            <div class="img-container">
+                                <div [ngClass]="{'image-loaded-status-success':image.loaded}" class="image-loaded-status">
+                                    <i class="fa fa-check-circle"></i>
+                                </div>
+                                <div *ngIf="image.progress && !image.uploadedImg" class="progress-bar">
+                                    <div class="progress" [ngStyle]="{'width': image.progress }"></div>
+                                </div>
+                                <div class="img-cover">
+                                    <img alt="loading..." class="image" [src]="image.uploadedImg?.imageUrl || image.preview" />
+                                </div>
+                            </div>
+                            <div class="modal" #modal (click)="modal.classList.remove('show-modal');  document.body.style.overflow = 'auto'; document.body.style.position = 'static';">
+                                <span class="close" (click)="modal.classList.remove('show-modal');  document.body.style.overflow = 'auto'; document.body.style.position = 'static';">&times;</span>
+                                <img class="modal-content" [src]="image.uploadedImg?.imageUrl || image.preview" />
+                            </div>
+                        </li>
+                        <li class="col-xs-12 col-sm-12 col-lg-4 col-md-6">
+
+                            <input type="file" multiple="multiple" accept="image/gif,image/jpg,image/png,image/jpeg" name="file" id="file-sm" (change)="handleFiles($event)">
+                            <label class="uploader-sm" for="file-sm" [ngStyle]="{'border-color': isMouseOver ? '#ddd' : '#ccc' }" (mouseleave)="isMouseOver=false" (mouseover)="isMouseOver=true" (drop)="handleDrop($event)" ondragover="return false;">
+                                <div class="upload-inner-sm">
+                                <i class="fa fa-picture-o" aria-hidden="true"></i><br/>
+                                <i class="fa fa-cloud-upload"></i> {{'app.component.estate.photo.add_photo'| translate }}
+                                </div>
+                            </label>
+
+                        </li>
+                    </ul>
+
+                </div>
+                <div *ngIf="!images.length">
+                    <label for="file" [ngStyle]="{'border-color': isMouseOver ? '#ddd' : '#ccc' }" class="uploader" (mouseleave)="isMouseOver=false" (mouseover)="isMouseOver=true" (drop)="handleDrop($event)" ondragover="return false;">
+                      <div class="upload-inner">
+                          <i class="fa fa-picture-o" aria-hidden="true"></i><br/>
+                          <i class="fa fa-cloud-upload"></i> {{'app.component.estate.photo.add_photo'| translate }}
+                      </div>
+                </label>
+                    <input type="file" multiple="multiple" accept="image/gif,image/jpg,image/png,image/jpeg" name="file" id="file" (change)="handleFiles($event)">
+                </div>
+            </fieldset>
+        </form>
+        <p class="text-center loading-image-title" *ngIf="!!imageLoading.length">{{'app.component.estate.photo.loading'| translate }}<loading [show]="!!imageLoading.length"></loading></p>
+                </div>
+            </div>
+        <button type="button" routerLink="/home/estate/amenity" [disabled]="!!imageLoading.length" class="action-btn pull-left ">{{'app.component.estate.photo.prev' | translate}}</button>
+        <button type="button" routerLink="/home/estate/safety" [disabled]="!!imageLoading.length || !realEstate?.type || !realEstate?.accommodation || !realEstate?.shortDescription || !realEstate?.latitude || !realEstate?.longitude || !(estate$ | async)?.realEstate?.photos?.length || ((estate$ | async)?.realEstate.photos.length < 2)"
+            class="action-btn pull-right ">{{'app.component.estate.photo.next' | translate}}</button>
+    </div>
+    <div class="col-xs-12  col-md-3 col-sm-5">
+        <div class="tips">
+            <div class="tips-inner">
+                <h4 class="text-center">{{'app.component.estate.photo.tips_title' | translate}}</h4>
+                <p>{{'app.component.estate.photo.tips_text' | translate}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PhotoValidationModal-->
+<div class="modal" #invalidModal>
+    <div class="modal-inner">
+    <i (click)="hideModal(invalidPhotoModal);invalidPhotos = [];" class="fa fa-times hide-modal-btn" aria-hidden="true"></i>
+    <h4 class="invalid-photo-title">{{'app.component.estate.photo.invalidModal.title' | translate}}
+        <br>
+        <small>{{'app.component.estate.photo.invalidModal.text' | translate}}</small>
+    </h4>
+    <div class="col-xs-12 col-sm-12 col-lg-4 col-md-6 invalid-img-wrapper" *ngFor="let photo of invalidPhotos">
+        <img *ngIf="photo.preview else loadingPhoto" class="img-responsive" [src]="photo.preview" alt="invalidPhotos">
+    </div>
+    </div>
+</div>
+<ng-template #loadingPhoto>
+    <div class="loading-wrapper">
+        <loading [show]="true"></loading> 
+    </div>
+</ng-template>

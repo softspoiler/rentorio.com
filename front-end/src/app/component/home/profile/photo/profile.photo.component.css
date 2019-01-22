@@ -1,0 +1,124 @@
+.uploader {
+    background-color: rgba(0, 0, 0, 0.02);
+    height: 300px;
+    border: 2px dashed #ccc;
+    position: relative;
+    width: 100%;
+    margin-bottom: -46px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-input {
+    position: relative;
+    top: -122px;
+    left: 50%;
+    margin-left: -77.5px;
+    border-radius: 3px;
+    background: #8d83ec;
+    color: #ffffff;
+    display: inline-block;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition:background .2s;
+}
+.custom-input:hover{
+    background: #bcaeff;
+}
+.fa-picture-o {
+    color: #ffffff;
+    font-size: 1.5em;
+    margin-right: 3px;
+}
+
+.photo-section {
+    margin-bottom: 30px;
+    padding: 15px;
+}
+
+.circle-wrapper {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    display: block;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto;
+}
+.circle-wrapper img {
+    width: 100%;
+    height: 100%;
+}
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.79);
+}
+.loading-wrapper{
+    position: relative;
+    margin-top: -196px;
+}
+.remove-img-btn {
+    background: #8d83ec;
+    border: 0;
+    outline: none;
+    border-radius: 3px;
+    color: #fff;
+    padding: 5px 19px;
+    transition:background .2s;
+}
+.remove-img-btn:hover{
+    background: #bcaeff;
+}
+.remove-img-btn .fa-trash-o{
+    font-size: 1.3em;
+}
+.progress-bar {
+    clear: both;
+    opacity: 1;
+    -webkit-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+    position: absolute;
+    z-index: 3;
+    width: 60%;
+    height: 10px;
+    bottom: 20px;
+    margin: auto;
+    right: 0;
+    left: 0;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+.progress-bar.loading {
+    opacity: 1.0;
+}
+
+.progress-bar .progress {
+    background-color: #8d83ec;
+    height: 100%;
+    width: 0;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
+}
+
+.delete-attempt {
+    display: none;
+    margin-right: 10px;
+}
+
+.show-delete-attempt {
+    display: inline-block;
+    margin-right: 5px;
+}

@@ -1,0 +1,142 @@
+<div class="col-md-4 col-sm-4 col-xs-12">
+  <div class="radio">
+    <label><input type="radio"  (change)="filter.onLandlords = true; getComplaints(1)"   checked name="tableType">Жалобы на хозяев</label>
+  </div>
+  <div class="radio">
+    <label><input type="radio"  (change)="filter.onLandlords = false; getComplaints(1)"   name="tableType">Жалобы на орендаторов</label>
+  </div>
+</div>
+<div class="col-md-4 col-sm-4 col-xs-12">
+  <div class="form-group">
+    <p>Тип жалобы:</p>
+    <div class="select-wrapper">
+        <select class="form-control" (change)="getComplaints(1)" [(ngModel)]="filter.type" name="complaintType" id="type">
+            <option value="">Все</option>
+            <option value="AGENT">Агент</option>
+            <option value="SPAM">Спам</option>
+            <option value="FRAUD">Мошенничество</option>
+            <option value="IGNORE_USER">Игнорировать пользователя</option>
+            <option value="USER_NOT_RESPONDING">Пользователь не отвечает</option>
+            <option value="OTHER">Другое</option>
+          </select>
+        <div class="select-arrow">
+            <img src="../../../../assets/image/down-arrow.svg" alt="">
+        </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-3 col-sm-4 col-xs-8">
+  <label for="search">Жалоба на (ID):</label>
+  <div class="input-group">
+    <input placeholder="Введите id" [(ngModel)]="filter.userId" class="form-control" id="search" type="number">
+    <div class="input-group-btn">
+      <button class="btn btn-default" *ngIf="filter.userId !== null" (click)="filter.userId = null;getComplaints(1)">
+          <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+      </button>
+      <button (click)="getComplaints(1)" class="btn btn-default">
+          <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  <p *ngIf="noSuchUserException">Такого пользователя нет</p>
+</div>
+
+<div [ngSwitch]="filter.onLandlords">
+  <div *ngSwitchCase="true">
+    <ng-container *ngTemplateOutlet="landlordComplaintsTemplate"></ng-container>
+  </div>
+  <div *ngSwitchCase="false">
+    <ng-container *ngTemplateOutlet="tenantComplaintsTemplate"></ng-container>
+  </div>
+</div>
+<ng-template #landlordComplaintsTemplate>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <div *ngIf="updateTable" class="overlay"></div>
+      <thead align="center">
+        <tr>
+          <td rowspan="2">Жалоба от Орендатора</td>
+          <td colspan="2">Жалоба на</td>
+          <td rowspan="2">Тип</td>
+          <td rowspan="2">Автоблокировка</td>
+          <td rowspan="2">Сообщение</td>
+          <td rowspan="2">Дата</td>
+          <td rowspan="2"></td>
+          <td rowspan="2"></td>
+          <td rowspan="2"></td>
+        </tr>
+        <tr>
+          <td>ID хозяина</td>
+          <td>ID жилья</td>
+        </tr>
+      </thead>
+      <tbody *ngIf="complaints">
+        <tr *ngFor="let item of complaints | paginate: { id:'server', itemsPerPage: 1, currentPage: currentPage, totalItems:totalPages}">
+          <td align="center" class="user-id"><span (click)="userId = item.accuserId;showUserProfile = true">{{item.accuserId}}</span></td>
+          <td align="center" class="user-id"><span (click)="userId = item.accusedId;showUserProfile = true">{{item.accusedId}}</span></td>
+          <td align="center"><a class="user-id" target="_blank" routerLink="/search/details/{{item.estateId}}">{{item.estateId}}</a></td>
+          <td>{{item.type}}</td>
+          <td align="center" *ngIf="item.autoBlocked; else empty"><i class="fa fa-ban fa-lg" aria-hidden="true"></i></td>
+          <td>{{item.message.slice(0,90)}} <span (click)="fullMessage = item.message; showFullMessage = true" class="show-more"
+              *ngIf="item.message.length > 90">Ещё</span></td>
+          <td>{{setupReadableComplaintDate(item.timestamp)}}</td>
+          <td *ngIf="item.autoBlocked else empty"><button class="btn btn-success" (click)="unBlockUser(item.accusedId)">Снять блокировку</button></td>
+          <td *ngIf="!item.archived else empty"><button class="btn btn-danger" (click)="blockUser(item.accusedId,item.accuserId)">Заблокировать</button></td>
+          <td *ngIf="!(item.autoBlocked || item.viewed) else empty"><button class="btn btn-info" (click)="complaintViewed(item.id)">Просмотренно</button></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+</ng-template>
+
+<ng-template #tenantComplaintsTemplate>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <div *ngIf="updateTable" class="overlay"></div>
+      <thead align="center">
+        <tr>
+          <td>Жалоба от Хозяина</td>
+          <td>Жалоба на Арендатора</td>
+          <td>Тип</td>
+          <td>Автоблокировка</td>
+          <td>Сообщение</td>
+          <td>Дата</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody *ngIf="complaints">
+        <tr *ngFor="let item of complaints | paginate: { id:'server', itemsPerPage: 1, currentPage: currentPage, totalItems:totalPages}">
+          <td align="center" class="user-id"><span (click)="userId = item.accuserId;showUserProfile = true">{{item.accuserId}}</span></td>
+          <td align="center" class="user-id"><span (click)="userId = item.accusedId;showUserProfile = true">{{item.accusedId}}</span></td>
+          <td>{{item.type}}</td>
+          <td align="center" *ngIf="item.autoBlocked; else empty"><i class="fa fa-ban fa-lg" aria-hidden="true"></i></td>
+          <td>{{item.message.slice(0,90)}} <span (click)="fullMessage = item.message; showFullMessage = true" class="show-more"
+              *ngIf="item.message.length > 90">Ещё</span></td>
+          <td>{{setupReadableComplaintDate(item.timestamp)}}</td>
+          <td *ngIf="item.autoBlocked else empty"><button class="btn btn-success" (click)="unBlockUser(item.accusedId)">Снять блокировку</button></td>
+          <td *ngIf="!item.archived else empty"><button class="btn btn-danger" (click)="blockUser(item.accusedId,item.accuserId)">Заблокировать</button></td>
+          <td *ngIf="!(item.autoBlocked || item.viewed) else empty"><button class="btn btn-info" (click)="complaintViewed(item.id)">Просмотренно</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>
+
+<div class="pagination">
+  <pagination-controls (pageChange)="getComplaints($event)" id="server"></pagination-controls>
+</div>
+
+<div class="full-message" *ngIf="showFullMessage">
+  <i (click)="showFullMessage = false" class="fa fa-times fa-lg close" aria-hidden="true"></i>
+  <p>{{fullMessage}}</p>
+</div>
+
+<ng-template #empty>
+  <td></td>
+</ng-template>
+
+<div *ngIf="showUserProfile">
+  <app-user-details [isExtendedDetails]="true" (closeEvent)="showUserProfile = false" [userId]='userId'></app-user-details>
+</div>

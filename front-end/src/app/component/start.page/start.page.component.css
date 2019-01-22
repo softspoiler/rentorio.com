@@ -1,0 +1,315 @@
+.wrapper {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #fff;
+    min-height: 600px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    background-image: url('../../../assets/image/home_page_room.jpg');
+}
+.overlay {
+    position: absolute;
+    z-index: 0;
+    background: rgba(128, 128, 128, 0.37);
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.search-box {
+    position: relative;
+    width: 80%;
+    height: auto;
+    top: 197px;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    max-width: 890px;
+    padding: 10px;
+}
+.title {
+    color: #fff;
+    font-size: 3em;
+    padding: 30px;
+    margin-bottom: 10px;
+}
+.search-wrapper {
+    height: 60px;
+    display: block;
+    text-align: initial;
+    max-width: 700px;
+    margin: 0 auto;
+    padding-left:13px;
+}
+.wellcome {
+    padding: 60px 0 80px;
+    background: #fff;
+    color: #757c94;
+}
+.wellcome p {
+    padding: 0px 15px 0px 15px;
+}
+.wellcome h2 {
+    position: relative;
+    color: #7f76d2;
+}
+.wellcome h2:after{
+    content: '';
+    display: block;
+    width: 5%;
+    height: 1px;
+    background: #bcb9ef;
+    position: absolute;
+    top: 53px;
+    left: 47.5%;
+}
+.wellcome h2:before{
+    content: '';
+    display: block;
+    width: 15%;
+    height: 1px;
+    background: #f9c16d;
+    position: absolute;
+    top: 53px;
+    right: 42.5%;
+}
+.wellcome p {
+    max-width: 730px;
+    margin: 70px auto 0;
+    font-size: 1.5em;
+}
+.wellcome p:last-child{
+    margin-top:30px;
+}
+.margin {
+    margin-top: 60px;
+}
+div.title {
+    padding: 10px;
+}
+.last-added-estate-container{
+    padding: 28px 0px 86px 0px;
+    background: #fff;
+}
+.last-added-estates-title{
+    text-align: center;
+    color: #7f76d2;
+}
+.list {
+    position: relative;
+    display: block;
+    background: #fff;
+    margin-bottom: 18px;
+    border-radius: 5px;
+    box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.07);
+    height: 385px;
+    width: 310px;
+    margin: 20px auto;
+    transition: transform .3s;
+}
+.list:hover{
+    transform: translateY(-5px);
+}
+.list-image{
+    position: relative;
+    overflow: hidden;
+    padding-left: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.favorite-list{
+    width:100%;
+    position:relative;
+}
+.list-body{
+    padding: 16px 13px 10px 16px;
+}
+.list-footer {
+    position: absolute;
+    right: 12px;
+    bottom: 20px;
+}
+.orange-btn {
+    outline: none;
+    border: none;
+    color: #fff;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    background: #ff9800;
+    padding: 10px 20px;
+}
+.orange-btn:hover {
+    background: #ffb850;
+}
+.image-container {
+    position: relative;
+    width: 100%;
+}
+.image-container .item-img{
+    display: block;
+    width: 310px;
+    height: 212px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.list-short-description{
+    font-size: 1.2em;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+.list-features{
+    list-style: none;
+    color: #ffffff;
+    padding: 4px 0px 5px 0px;
+    position: absolute;
+    bottom: -10px;
+    font-size: .9em;
+    width: 100%;
+    background: #706e6b42;
+}
+.list-features li{
+    display: inline;
+    white-space: nowrap;
+    margin-left:7px;
+}
+.list-features li:first-child{
+    margin-left: 12px;   
+}
+.list-features li img{
+    width: 25px;
+}
+.list-features li:last-child img{
+    width: 27px;
+}
+.list-description{
+    font-size: 1.1em;
+}
+.accommodation {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;    
+    top: -10px;
+    font-size: 0.8em;
+    color: #666;
+    background: rgba(212, 212, 212, 0.44);
+    padding: 0px 8px 0px 8px;
+}
+.price {
+    position: absolute;
+    border-radius: 30px;
+    top: 15px;
+    left: 15px;
+    color: #ffffff;
+    background: rgba(152, 134, 236, 0.87);
+    padding: 7px 15px 0px 15px;
+    font-size: 1.1em;
+}
+.address-wrapper{
+    margin-top: -8px;
+}
+.address {
+    cursor: pointer;
+    transition: color .1s;
+    display: inline-block;
+    color:#808080;
+}
+.favorite-detail {
+    display: inline-block;
+    min-width: 95px;
+    position: absolute;
+    bottom: -8px;
+    right: 2px;
+}
+.leftRs,.rightRs{
+    position: absolute;
+    outline:none;
+    border: none;
+    background: #f5f5f5;    
+    top:50%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+.leftRs{
+    left:0px;
+    padding-right: 9px;
+}
+.rightRs{
+    right: 0px;
+    padding-left: 9px;
+}
+.leftRs img,.rightRs img {
+    width: 17px;
+    height: 17px;
+}
+
+@media screen and (min-width:1250px){
+    .leftRs{
+        left: -33px;
+    }
+    .rightRs{
+        right: -33px;
+    }
+}
+@media screen and (max-width:768px){
+    .leftRs{
+        left: 20px;
+    }
+    .rightRs{
+        right: 20px;
+    }
+}
+@media screen and (max-width:600px) {
+    .search-box {
+        width:100%;
+        top:122px;
+        font-size: 0.7em;
+    }
+    .wrapper{
+        min-height: 400px;
+    }
+    .search-box{
+        top:72px;
+        font-size: .6em;
+    }
+    .search-box .title p{
+        font-size: .9em;
+    }
+    .wellcome{
+        padding: 30px 0 45px;
+    }
+    .wellcome h2{
+        font-size: 1.5em;
+    }
+    .wellcome h2:before, .wellcome h2:after{
+        display:none;
+    }
+    .wellcome p{
+        font-size: 1.1em;
+        margin: 35px auto 0;
+    }
+    .wellcome p:last-child{
+        margin-top:15px;
+    }
+    .last-added-estate-container{
+        padding: 15px 0px 25px 0px;
+    }
+    .last-added-estates-title{
+        font-size: 1.5em;
+    }
+    .margin{
+        margin-top: 20px;
+    }
+}
+@media screen and (max-width:391px) {
+    .search-box {
+
+        font-size: 0.7em;
+    }
+}

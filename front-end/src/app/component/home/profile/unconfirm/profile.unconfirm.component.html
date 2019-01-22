@@ -1,0 +1,56 @@
+<div *ngIf="!loading">
+<div *ngIf="!isEmailConfirmed || !isPhoneConfirmed" class="panel panel-default">
+    <div class="panel panel-heading">{{'app.component.unconfirm.title' | translate}}</div>
+    <div class="panel-body">
+        <!-- <div *ngIf="loading" class="loading-overlay">
+            <loading [insideOverlay]="true" [show]="loading"></loading>
+        </div> -->
+        <div *ngIf="!loading">
+        <p class="title">{{'app.component.unconfirm.subTitle' | translate}}</p>
+        <div *ngIf="!isEmailConfirmed && emailExist" class="media">
+            <div class="media-left"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+            <div class="media-body">
+                <div class="media-heading">{{'app.component.unconfirm.email.text' | translate}}</div>
+                <p>{{'app.component.unconfirm.email.description.after' | translate}} <strong *ngIf="currentUser">{{this.currentUser.email}}</strong></p>
+                <p>{{'app.component.unconfirm.email.description.before' | translate}} <a class="resend-email" (click)="resendEmailConfirmation()">{{'app.component.unconfirm.email.description.link' | translate}}</a></p>
+            </div>
+        </div>
+        <div *ngIf="!emailExist" class="media">
+            <div class="media-left"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+            <div class="media-body">
+                <div class="media-heading">{{'app.component.unconfirm.email.text' | translate}}</div>
+                <form [formGroup]="form" (ngSubmit)="emailFormOnSubmit()">
+                    <div class="form-group">
+                        <input formControlName="email" autocapitalize="off" maxlength="250" type="text" class="form-control custom-input" name="email" placeholder="{{'app.component.login.email.placeholder' | translate}}">
+                        <span class="has-error" *ngIf="form.get('email').hasError('required') && submitAttempt">{{'app.component.login.email.error.required' | translate}}</span>
+                        <span class="has-error" *ngIf="form.get('email').hasError('pattern') && submitAttempt && form.get('email').dirty">{{'app.component.login.email.error.wrong.input' | translate}}</span>
+                        <div class="has-error" [ngSwitch]="updateEmailTypeOfError">
+                            <span *ngSwitchCase="'EmailAlreadyExistError'">{{'app.component.registration.server.error.EmailAlreadyExistError' | translate}}</span>
+                            <span *ngSwitchCase="'InvalidEmailFormatError'">{{'app.component.registration.server.error.InvalidEmailFormatError'| translate}}</span>
+                            <span *ngSwitchDefault></span>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            {{'app.component.unconfirm.email.saveBtn' | translate}}
+                            <div class="loading-wrapper">
+                                <loading [show]="emailUpdateLoading"></loading>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div *ngIf="!isPhoneConfirmed" class="media">
+            <div class="media-left"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+            <div class="media-body">
+                <div class="media-heading">{{'app.component.unconfirm.phone.text' | translate}}</div>
+                <p>{{'app.component.unconfirm.phone.description.after' | translate}}</p>
+                <p>{{'app.component.unconfirm.phone.description.before' | translate}}</p>
+                <add-number (newPhoneEvent)="updatePhoneEventHandler()"></add-number>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+<app-alert [show]="showAlert" [type]="'success'" [title]="'app.component.unconfirm.alert.title'" [text]="'app.component.unconfirm.alert.text'"></app-alert>

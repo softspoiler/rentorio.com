@@ -1,0 +1,81 @@
+<div class="col-md-6 col-sm-6 col-xs-12">
+  <span>Пользователи:</span><br>
+  <label class="checkbox-inline" (change)="check('anonymous')"><input type="checkbox">Анонимные</label>
+  <label class="checkbox-inline" (change)="check('registered')"><input type="checkbox">Зарегистрироваые</label>
+  <label class="checkbox-inline" (change)="check('archived')"><input type="checkbox">Архивированные</label>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+  <p>Тип сообщения:</p>
+      <div class="select-wrapper">
+          <select class="form-control" name="type" (change)="getMessages(1)" [(ngModel)]="filter.type">
+              <option value="">Все</option>
+              <option value="PROBLEM">Проблемы</option>
+              <option value="QUESTION">Вопросы</option>
+              <option value="LACK_OF_FUNCTIONALITY">Отсутствие функционала</option>
+              <option value="OTHER">Другое</option>
+          </select>
+          <div class="select-arrow">
+              <img src="../../../../assets/image/down-arrow.svg" alt="">
+          </div>
+      </div>
+</div>
+<div class="col-xs-12">
+  <div class="table-responsive">
+    <table class="table table-bordered table-condensed">
+      <div *ngIf="updateTable" class="overlay"></div>
+      <thead>
+        <tr>
+          <td colspan="2">Аноним</td>
+          <td>Зарегистрирован</td>
+          <td rowspan="2">Тип сообщения</td>
+          <td rowspan="2">Сообщение</td>
+          <td rowspan="2">Дата</td>
+          <td rowspan="2" colspan="2"></td>
+        </tr>
+        <tr>
+          <td>ФИО</td>
+          <td>Email</td>
+          <td>ID</td>
+        </tr>
+      </thead>
+      <tbody *ngIf="messages">
+        <tr *ngFor="let item of messages | paginate: {  id:'server', itemsPerPage: 1, currentPage: currentPage, totalItems:totalPages }">
+          <td *ngIf="item.who !== null; else empty">{{item.who}}</td>
+          <td *ngIf="item.email !== null; else empty">{{item.email}}</td>
+          <td *ngIf="item.userId !== null; else empty"><span (click)="id = item.userId;showUserProfile = true" class="user-id">{{item.userId}}</span></td>
+          <td *ngIf="item.type; else empty">
+            <div [ngSwitch]="item.type">
+              <div *ngSwitchCase="'PROBLEM'">Проблемы</div>
+              <div *ngSwitchCase="'QUESTION'">Вопросы</div>
+              <div *ngSwitchCase="'LACK_OF_FUNCTIONALITY'">Отсутствие функционала</div>
+              <div *ngSwitchCase="'OTHER'">Другое</div>
+            </div>
+          </td>
+          <td class="message" *ngIf="item.message; else empty">{{item.message.slice(0,150)}}<span (click)="fullMessage = item.message; showFullMessage = true" class="show-more"
+              *ngIf="item.message.length > 150">Ещё</span></td>
+          <td>{{setupReadableMessageDate(item.timestamp)}}</td>
+          <td><i (click)="archiveMessage(item.id)" class="fa fa-folder-open-o fa-lg" aria-hidden="true"></i></td>
+          <td><i (click)="deleteMessage(item.id)" class="fa fa-times fa-lg" aria-hidden="true"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="pagination">
+  <pagination-controls id="server" (pageChange)="getMessages($event)"></pagination-controls>
+</div>
+
+<ng-template #empty>
+  <td>-----</td>
+</ng-template>
+
+<div class="full-message" *ngIf="showFullMessage">
+  <i (click)="showFullMessage = false" class="fa fa-times fa-lg close" aria-hidden="true"></i>
+  <p>{{fullMessage}}</p>
+</div>
+
+<div *ngIf="showUserProfile">
+  <app-user-details (closeEvent)="showUserProfile = false" [userId]='id'></app-user-details>
+</div>

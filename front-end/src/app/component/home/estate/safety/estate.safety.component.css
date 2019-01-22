@@ -1,0 +1,52 @@
+legend {
+    border-bottom: 0.5px solid #cac7c5;
+    padding: 10px;
+}
+input {
+    display: none;
+}
+
+svg {
+    vertical-align: middle;
+    width: 40px;
+    margin-right: 16px;
+    height: 40px;
+    
+}
+
+label {
+    margin-left: 30px;
+}
+
+input:checked + svg {
+    fill: #5246dd;
+}
+input:checked + svg + span {
+    color: #5246dd;
+}
+
+svg {
+    fill: #757c94;
+}
+svg + span {
+    color: #757c94;
+}
+
+
+input,
+label {
+    cursor: pointer;
+}
+
+input {
+    margin: 0 10px 20px 0;
+}
+
+h3 {
+    margin: 10px 0 20px 0;
+}
+
+label,
+h3 {
+    font-weight: 400;
+}

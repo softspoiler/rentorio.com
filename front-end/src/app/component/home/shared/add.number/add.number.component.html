@@ -1,0 +1,68 @@
+<div *ngIf="profile">
+    <p (click)="showForm=true" *ngIf="!showOnlyForm && !showForm && !profile.phoneNumber" class="link">{{'app.component.profile.addNumber.add' | translate}} <i class="fa fa-level-down"></i></p>
+    <p (click)="showForm=true" *ngIf="!showOnlyForm && !showForm && profile.phoneNumber" class="link"> {{'app.component.profile.addNumber.change' | translate}} <i class="fa fa-refresh"></i> </p>
+    <div id="phoneForm"  [formGroup]="phoneForm" *ngIf="showForm || showOnlyForm">
+        <p (click)="typeOfError = null; showForm=false; showCode=false; phoneForm.reset({phoneCode: '050', num: '', smsCode: ''})"
+            class="pull-right link" *ngIf="showForm && !showOnlyForm">{{'app.component.profile.addNumber.hide' | translate}} <i class="fa fa-level-up"></i></p>
+        <div *ngIf="!showCode">
+            <!-- <p>{{'app.component.profile.addNumber.selectCountry' | translate}}   </p>
+                <div class="select-wrapper">
+                    <select>
+                        <option value="ua">UA</option>
+                    </select>
+                    <div class="select-arrow">
+                        <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                    </div>
+                </div> -->
+            <p>{{'app.component.profile.addNumber.titleNumber' | translate}}</p>
+            <div [ngClass]="{ 'has-error' : phoneForm.get('num').invalid && phoneForm.get('num').dirty }">
+                <div class="phone-wrapper" (click)="typeOfError = null;">
+                    <span>+38 </span>
+                    <div class="select-wrapper select-phone-code">
+                        <select formControlName="phoneCode" class="auto-width">
+                    <option *ngFor="let code of codes" [value]="code" >({{code}})</option>
+                </select>
+                        <div class="select-arrow">
+                            <img src="../../../../../assets/image/down-arrow.svg" alt="">
+                        </div>
+                    </div>
+                    <p-inputMask class="phone-number-mask" formControlName="num" mask="999-99-99" placeholder="999-99-99" unmask="true"></p-inputMask>
+
+                    <div class="wrong-input" *ngIf="!phoneForm.value.num && phoneForm.get('num').dirty">{{'app.component.profile.addNumber.errorRequired' | translate}}</div>
+                    <div class="wrong-input" *ngIf="typeOfError === 'PhoneNumberAlreadyExistError'">{{'app.component.profile.addNumber.errorNumberAlreadyExist' | translate}}</div>
+                    <div class="wrong-input" *ngIf="typeOfError === 'SmsVerifyCodeAttemptLimitError'">{{'app.component.profile.addNumber.errorAttempt' | translate}}</div>
+                    <div class="wrong-input" *ngIf="phoneForm.get('num').hasError('pattern') && phoneForm.get('num').dirty">{{'app.component.profile.addNumber.errorPattern' | translate}}</div>
+                </div>
+                <button type="button" (click)="verify()" class="btn orange-btn margin-top-15">{{'app.component.profile.addNumber.verify' | translate}}
+                    <div class="loading-wrapper">
+                        <loading [show]="veryfyLoad"></loading>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div *ngIf="showCode">
+            <div>
+                <div>{{'app.component.profile.addNumber.answer' | translate}} <strong>{{this.phoneNumber}}</strong></div>
+                <div>{{'app.component.profile.addNumber.titleCode' | translate}}</div>
+            </div>
+            <div>
+                <input type="text" formControlName="smsCode" (input)="smsCode=$event.target.value" class="form-control auto-width confirm-code-input">
+                <button class="btn orange-btn send-code-btn" (click)="check()" type="button">
+                    {{'app.component.profile.addNumber.sendCode' | translate}}
+                    <div class="loading-wrapper">
+                        <loading [show]="checkLoad"></loading>
+                    </div>
+                </button>
+                <div class="wrong-input" *ngIf="checkError">{{'app.component.profile.addNumber.checkError' | translate}}</div>
+            </div>
+            <div>
+                <button type="button" [ngStyle]="{'color': !allowResendSms ? '#a5a5a5' : '#337abd' }" [disabled]="!allowResendSms" (click)="phoneForm.reset({phoneCode: '050', num: '', smsCode: ''}); showCode=false" class="link">
+                    {{'app.component.profile.addNumber.sendAgain' | translate}}
+                    <span *ngIf="!allowResendSms"> {{'app.component.profile.addNumber.countDownText' | translate}}</span>
+                    <span *ngIf="!allowResendSms" class="link">{{countDown | async}}с</span>
+                </button>
+                
+            </div>
+        </div>
+    </div>
+</div>

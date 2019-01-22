@@ -1,0 +1,38 @@
+.wrapper{
+    max-width: 600px;
+    margin: 60px auto;
+    background: #fff;
+    min-height: 400px;
+    padding: 40px;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 0px 0px 10px #eaeaea;
+}
+.loading-wrapper{
+    position: relative;
+    top: 39px;
+}
+figure{
+    font-size: 1.2em;
+    transform: translateY(50px);
+}
+.home-link{
+    position: relative;
+    top: 12px;
+}
+.fa-check-circle,.fa-ban{
+    margin-bottom: 20px;
+    font-size: 3em;
+}
+.fa-check-circle{
+    color: #53c16a;
+}
+.fa-ban{
+    color: #F44336;
+}
+@media screen and (max-width:625px){
+  .wrapper{
+    margin:60px 10px;
+    padding:15px;
+  }
+}

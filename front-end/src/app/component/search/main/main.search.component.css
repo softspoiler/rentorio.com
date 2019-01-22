@@ -1,0 +1,258 @@
+.filter-wrapper{
+    background: #ffffff;
+    padding: 30px 15px 30px 10px;
+    margin-bottom: 20px;
+}
+.modal {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+}
+.modal-inner{
+    background: #fff;
+    margin: 50px auto;
+    width: 50%;
+    height: auto;
+    position: relative;
+    overflow-y: hidden;
+    padding-top: 60px;
+    border-radius: 4px;
+}
+.show-modal-inner{
+    animation-name: show;
+    animation-duration: .4s;
+    animation-iteration-count: 1;
+}
+.show-modal{
+    display: block;
+    animation-name: fade;
+    animation-duration: .4s;
+    animation-iteration-count: 1;
+}
+.property-item{
+    display:inline-block;
+    margin-left:9px;
+    border: 1px solid #ddd;
+}
+.property-item label{
+    vertical-align: middle;
+    padding: 8px 10px 8px 20px;
+}
+.property-item label input{
+    margin-left: -16px;
+}
+.property-item .estate-count{
+    color:#b8b8b8;
+}
+.item {
+    transition: background .1s;
+    position: relative;
+    cursor:pointer;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+.rooms-item{
+    padding-left: 27px;
+}
+.rooms-item:first-child{
+    padding-left: 8px;
+}
+.item:hover{
+    background: #f6f3f3;
+}
+.item-active .fa-square-o{
+    color: #9b9b9b;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    font-size: 1.3em;
+}
+.item-active .fa-check-square{
+    color: #9886ec;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    font-size: 1.2em;
+}
+.item input {
+    display: none;
+}
+.item-choose{
+    padding: 6px 0px 6px 0px;
+    text-align: center;
+}
+.item-choose input{
+    width: 44%;
+}
+.item label{
+    font-weight: 400;
+}
+.dropdown {
+    display: none;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top:0;
+    position:absolute;
+    width: 100%;
+    z-index: 3;
+}
+
+.search-filter{
+    margin-bottom: 20px;
+}
+.open-dropdown {
+    display: block;
+}
+
+.default-btn {
+    outline: none;
+    border: none;
+    height: 30px;
+    padding: 5px 10px 5px 10px;
+    background: #9886ec;
+    color: #fff;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.default-btn:hover {
+    background: #bcaeff;
+}
+.filters-category{
+    padding-left: 30px;
+}
+.apply-filters-btn{
+    position: relative;
+    height: 58px;
+    bottom: -1px;
+    width: 100%;
+    font-size: 1.6em;
+    border: none;
+    color: #fff;
+    background: #9886ec;
+    outline: none;
+    margin-top: 23px;
+    transition: .2s background;
+}
+.hide-filters-modal-btn{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    outline: none;
+    border: none;
+    color: #ffffff;
+    background: #9886ec;
+    font-size: 1.6em;
+    width: 39px;
+    height: 37px;
+    border-radius: 4px;
+    transition: .2s background;
+}
+.apply-filters-btn:hover,.hide-filters-modal-btn:hover{
+    background: #bcaeff;
+}
+.res-wrapper{
+    width: 100%;
+    position:relative;
+    color: #333;
+    font-weight: 400;
+}
+.res {
+    background: #fff;
+    padding: 10px;
+    width: 100%;
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}
+.res:hover{
+    cursor:pointer;
+}
+.res-open{
+    background: #f9f9f9;
+}
+.res-arrow{
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    right: 16px;
+    top: 14px;
+}
+.close{
+    float:none;
+}
+.close i{
+    font-size:0.8em;
+}
+.list-none{
+    list-style: none;
+    float:left;
+    width: 100%; 
+    padding-left: 20px;
+}
+.list-none div {
+    display: inline-block;
+    margin-right: 11px;
+    margin-top: 12px;
+    background: #cfcfcf;
+    padding: 5px 10px 8px 10px;
+    border-radius: 30px;
+    color: #fff;
+}
+
+.search-wrapper{
+    height: 42px;
+    padding-right: 82px;
+    top: 31px;
+    max-width: 450px;
+    margin-top: 30px;
+    margin-bottom:24px;
+}
+@media screen and (max-width:1200px){
+    .filter-btn-wrp{
+        margin-top:15px;
+    }
+}
+@media screen and (max-width:991px){
+    .search-wrapper{
+        top:-12px;
+    }
+   .res-wrapper{
+        width: 200px;
+    }
+}
+@media screen and (max-width:768px){
+    .filter-wrapper{
+        padding-left: 30px;
+    }
+    .modal-inner{
+        width: 95%;
+    }
+    .hide-filters-modal-btn{
+        right:25px;
+    }
+}
+@keyframes show{
+    0%{
+        
+        transform:scale(0);
+    }
+    100%{
+  
+        transform:scale(1);
+    }
+  }
+  @keyframes fade{
+      0%{
+          
+          opacity:0;
+      }
+      100%{
+    
+          opacity:1;
+      }
+  }

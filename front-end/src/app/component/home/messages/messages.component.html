@@ -1,0 +1,187 @@
+
+<div class="container-fluid">
+        <div class="back-to-list" [ngClass]="{'showChatsBtn': !showChatsList && chats?.length}" (click)="showChatsList = true;" >
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </div>
+    <div class="col-lg-offset-1 col-lg-10 col-md-12 chat">
+            <div class="row">
+        <div class="col-xs-5 col-md-4 chats no-padding"  [ngClass]="{'show': showChatsList}">
+            
+            <div class="chat-header dropdown">
+                <span>{{'app.component.messages.show' | translate}}</span>
+                <span class="select" *ngIf="!filterNewMessages">{{'app.component.messages.all' | translate}}</span>
+                <span class="select" *ngIf="filterNewMessages">{{'app.component.messages.new' | translate}}</span>
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <div class="dropdown-menu chats-drop">
+                    <div (click)="showAllChats()">{{'app.component.messages.all' | translate}} </div>
+                    <div (click)="showChatsWithNewMessages()">{{'app.component.messages.new' | translate}} ({{newMessagesCount || 0}})</div>
+                </div>
+            </div>
+            <div class="chats-list">
+                <div [ngClass]="{'show':loadList}" class="overlay"></div>
+                <loading class="chats-loading" [show]="loadList"></loading>
+                <ul>
+                    <li *ngFor="let chat of chats" [ngClass]="{'active': chat.id === currentChat?.id, 'closed': chat.isClosed}" (click)="switchChat(chat)">
+                        <div class="chats-list-item" (mouseleave)="deleteAttampt.style.display = 'none'; delete.style.display = 'inline-block';">
+                            <div class="pull-right" *ngIf="chat.id !== currentChat?.id">
+                                <div *ngIf="checkDay(chat.createDate)" class="chat-date">{{'app.component.messages.today' | translate}}</div>
+                                <div *ngIf="!checkDay(chat.createDate) && checkYear(chat.createDate)" class="chat-date">{{chat.createDate | date:'d'}} {{'app.component.messages.months.'+chat.createDate.getUTCMonth() | translate}}</div>
+                                <div *ngIf="!checkDay(chat.createDate) && !checkYear(chat.createDate)" class="chat-date">{{chat.createDate | date:'d'}} {{'app.component.messages.months.'+chat.createDate.getUTCMonth() | translate}} {{chat.createDate | date:'y'}} </div>
+                            </div>
+                            
+                            <img [src]="setAvatar(chat) || '../../../../../assets/image/user/user-circle.png'" />
+                            <div class="chat-user">
+                            <span class="user">{{setUser(chat)}}</span>
+                            </div>
+                            <div #delete class="delete-chat pull-right">
+                                <i *ngIf="chat.id === currentChat?.id" (click)=" $event.stopPropagation(); deleteAttampt.style.display = 'inline-block'; delete.style.display = 'none';" class="fa fa-trash-o" aria-hidden="true"></i>
+                            </div>
+                            <loading class="btn-loading" [show]="chat.btnLoading"></loading>
+                            <div class="delete-attampt" #deleteAttampt>{{'app.component.messages.deleteAttampt' | translate}} {{setUser(chat)}} .
+                                <span class="accept-delete" (click)="deleteChat(chat.id); $event.stopPropagation(); delete.style.display = 'inline-block'; deleteAttampt.style.display = 'none';">{{'app.component.messages.acceptDelete' | translate}}</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-xs-7 col-md-8 messages no-padding" [ngClass]="{'show': !showChatsList}" >
+                
+            <div [ngClass]="{'show':loadMessages}" class="overlay"></div>
+            <loading class="messages-loading" [show]="loadMessages"></loading>
+            <p *ngIf="!chats?.length && filterNewMessages && !firstLoad" class="text-center">
+                {{'app.component.messages.emptyNew' | translate}}
+            </p>
+            <p *ngIf="!chats?.length && !filterNewMessages && !firstLoad" class="text-center">
+                {{'app.component.messages.emptyAll' | translate}}
+            </p>
+            <div *ngIf="messages && chats && chats.length">
+                <div class="messages-header">
+                    <div class="dropdown text-center menu" (mouseover)="messagesDropdownMenu.style.display = 'block';" (mouseleave)="messagesDropdownMenu.style.display = 'none'; delete.style.display = 'inline-block';  deleteAttampt.style.display = 'none';">
+                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                        <div class="dropdown-menu" #messagesDropdownMenu>
+                            <div (click)="complaintHandler()">
+                                <i class="fa fa-flag" aria-hidden="true"></i>
+                                <span>{{'app.component.messages.spam' | translate}}</span>
+                            </div>
+                            <div #delete (click)="delete.style.display = 'none'; deleteAttampt.style.display = 'inline-block';">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                <span>{{'app.component.messages.delete' | translate}}</span>
+                            </div>
+                            <div #deleteAttampt class="delete-attampt">{{'app.component.messages.deleteAttampt' | translate}}
+                                <span>{{chatUser?.firstName}} <span *ngIf="chatUser.middleName">{{chatUser?.middleName}} </span></span>.
+                                <span class="accept-delete" (click)="deleteChat(currentChat.id); messagesDropdownMenu.style.display = 'none'; delete.style.display = 'inline-block'; deleteAttampt.style.display = 'none';">{{'app.component.messages.acceptDelete' | translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="currentChat && currentUser && (currentChat?.collocutor?.id === currentUser.id)" class="select" (click)="showTenantProfile(chatUser.id)">
+                        <img [src]="chatUser?.avatar?.thumbnailUrl || '../../../../../assets/image/user/user-circle.png'" />
+                        <span class="user"> {{setUser(currentChat)}}</span>
+                    </div>
+                    <div *ngIf="currentChat && currentUser && (currentChat?.collocutor?.id === currentUser.id)" class="estateDetails" > 
+                        <span>{{'app.component.messages.estateDetails' | translate}} 
+                            <strong *ngIf="estateDetails?.shortDescription"> &#171;{{estateDetails.shortDescription}}&#187;,<br/> 
+                            <span *ngIf="estateDetails?.address"> &#171;{{estateDetails.address}}&#187;</span> 
+                            </strong>
+                            <span *ngIf="!estateDetails?.address" >{{'app.component.messages.notFoundEstateException' | translate}}</span>
+                        </span>
+                    </div>
+                    <div *ngIf="currentChat && currentUser && (currentChat.creator.id === currentUser.id)" class="">
+                        <img  class="pull-left" [src]="chatUser?.avatar?.thumbnailUrl || '../../../../../assets/image/user/user-circle.png'" />
+                        <div  class="pull-left">
+                        <span class="user"> {{setUser(currentChat)}}</span><br/>
+                        <a target="_blank" routerLink="{{'/search/details/' + currentChat.estateId }}">{{'app.component.messages.openEstate' | translate}}</a>
+                    </div>
+                </div>
+                
+                    
+                    <app-complaint *ngIf="currentChat?.collocutor.id === currentUser.id" [withoutComplaintBtn]="true" [id]="chatUser.id" [path]="'users'"></app-complaint>
+                    <app-complaint *ngIf="currentChat?.creator.id === currentUser.id" [withoutComplaintBtn]="true" [id]="currentChat.estateId" [path]="'estates'" [landlordId]="currentChat.collocutor.id"></app-complaint>
+                </div>
+                <div *ngIf="showProfileDetails && tenantProfile" class="show-profile-details">
+                    <span class="close" (click)="showProfileDetails = false;">&times;</span>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-offset-1 col-md-3">
+                            <img [src]="tenantProfile?.avatar?.imageUrl || '../../../../../assets/image/user/user-circle.png'">
+                        </div>
+                        <div class="col-sm-8">
+                            <h2> <span *ngIf="tenantProfile?.firstName">{{tenantProfile.firstName}}</span><span *ngIf="tenantProfile?.middleName">{{tenantProfile.middleName}}</span>
+                                <span *ngIf="tenantProfile?.lastName">{{tenantProfile.lastName}}</span>
+                            </h2>
+                            <div>{{'app.component.messages.tenantProfile.termOnSite' | translate}} {{tenantProfile.registrationDate | date:'d'}} {{'app.component.messages.months.'+tenantProfile.registrationDate.getUTCMonth() | translate}} {{tenantProfile.registrationDate
+                                | date:'y'}}</div>
+                            <p class="has-error" *ngIf="typeOfError === 'IgnoredByUserError'">
+                                <em>{{'app.component.messages.tenantProfile.IgnoredByUserError'| translate}}</em>
+                            </p>
+                            <app-complaint [id]="tenantProfile.id" [path]="'users'"></app-complaint>
+                            <div *ngIf="tenantProfile.selfDescription" class="well well-lg well-style">{{tenantProfile.selfDescription}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-10">
+                            <confirm-information [forAnotherUser]="true" [withLink]="false" [isPhoneConfirmed]="tenantProfile.phoneConfirmed" [isEmailConfirmed]="tenantProfile.emailConfirmed"></confirm-information>
+                        </div>
+                        <div class="col-md-offset-1 col-md-10">
+                            <div *ngIf="tenantProfile.placeOfEducation || tenantProfile.placeOfWork" class="panel panel-default">
+                                <div class="panel panel-heading default-bg-color">{{'app.component.messages.tenantProfile.aboutHeader' | translate}}</div>
+                                <div class="panel-body">
+                                    <div *ngIf="tenantProfile.placeOfEducation"><strong>{{'app.component.messages.tenantProfile.education' | translate}}</strong>: {{tenantProfile.placeOfEducation}}</div>
+                                    <div *ngIf="tenantProfile.placeOfWork"><strong>{{'app.component.messages.tenantProfile.work' | translate}}</strong>: {{tenantProfile.placeOfWork}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="messages-scroll-block" #scrollBlock [scrollTop]="scrollBlock.scrollHeight">
+    
+                    <div *ngFor="let message of messages; let i = index;" class="message">
+                        <div *ngIf="showDate(i) && checkDay(message.timestamp)" class="message-date text-center">{{'app.component.messages.today' | translate}}</div>
+                        <div *ngIf="showDate(i) && !(checkDay(message.timestamp)) && checkYear(message.timestamp)" class="message-date text-center">{{message.timestamp | date:'d'}} {{'app.component.messages.months.'+message.timestamp.getMonth() | translate}}</div>
+                        <div *ngIf="showDate(i) && !(checkDay(message.timestamp)) && !(checkYear(message.timestamp))" class="message-date text-center">{{message.timestamp | date:'d'}} {{'app.component.messages.months.'+message.timestamp.getMonth() | translate}} {{message.timestamp | date:'y'}} </div>
+                        <div class="message-container" [ngClass]="{'current-user-message': message.user.id === currentUser.id}">
+                            <div *ngIf="message.type === 'MESSAGE'" class="message-text" [ngClass]="{'current-user-message-bg': message.user.id === currentUser.id}">{{message.replyText}}</div>
+                            <div *ngIf="message.type === 'CALL' && message.user.id === currentUser.id" >
+                                <div class="message-text current-user-message-bg">
+                                    {{'app.component.messages.you-call' | translate}}
+                                    <span class="play-record-btn" (click)="showRecordModal = true; showPlayer(message.replyText);">
+                                        {{'app.component.messages.listenRecord' | translate}}
+                                        <i class="fa fa-play"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div *ngIf="message.type === 'CALL' && message.user.id !== currentUser.id" class="message-text" >
+                                {{'app.component.messages.call-to-you' | translate}}
+                                <span class="play-record-btn" (click)="showRecordModal = true; showPlayer(message.replyText);">
+                                    {{'app.component.messages.listenRecord' | translate}}
+                                    <i class="fa fa-play"></i>
+                                </span>
+                            </div>
+                            <div class="message-time">{{message.timestamp | date:'H' }}:{{message.timestamp | date:'mm' }}</div>
+                        </div>
+                    </div>
+                    <div #plModal [ngStyle]="{'display':showRecordModal ? 'block' : 'none'}" class="pl-wrapper">
+                        <div class="pl-inner">
+                            <div class="record-loading-wrapper">
+                                <loading [show]="recordLoading" [insideOverlay]="true"></loading>
+                            </div>
+                            <i (click)="audio.pause();showRecordModal = false;recordLoading = false;" class="fa fa-times"></i>
+                            <audio [ngStyle]="{'opacity':recordLoading ? '0' : '1'}" #audio controls="controls">
+                                <source type="audio/ogg">
+                                {{'app.component.messages.audioUnsupportMessage' | translate}}
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="send-message">
+                    <div *ngIf="currentChat?.closed"> {{'app.component.messages.closed' | translate}}</div>
+                    <textarea *ngIf="!currentChat?.closed" [(ngModel)]="newMessage" maxlength="500" class="form-control" placeholder="{{'app.component.messages.placeholder' | translate}}"></textarea>
+                    <span *ngIf="newMessage" class="counter">{{counter(500,newMessage)}} {{'app.component.messages.counter' | translate}}</span>
+                    <div class="error"  *ngIf="typeOfError === 'NotFoundEstateError'"> {{'app.component.messages.estateNotFound' | translate}}</div>
+                    <button *ngIf="currentChat?.closed" class="orange-btn" (click)="deleteChat(currentChat.id)">{{'app.component.messages.deleteClosedChat' | translate}}</button>
+                    <button *ngIf="!currentChat?.closed" class="send-btn" [disabled]="!newMessage || !chatUser || !currentChat || chatUser.id === currentUser.id" (click)="sendMessage(currentChat, currentChat.estateId, newMessage)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                </div>
+        </div>
+    </div>
+    </div>
+    </div>

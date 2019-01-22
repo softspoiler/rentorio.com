@@ -1,0 +1,109 @@
+<div #resultWrapper class="result-wrapper no-left-padding no-right-padding">
+  <div class="result-header">
+    <div class="dropdown">
+      <div class="dropbtn">
+        <span>{{'app.component.searchResult.sorting.btn' | translate}}</span>
+        <img class="dropdown-arrow" src="../../../../assets/image/down-arrow.svg" alt="">
+      </div>
+      <div class="dropdown-content">
+        <p (click)="setSorting('PRICE_ASC')">{{'app.component.searchResult.sorting.1' | translate}}</p>
+        <p (click)="setSorting('PRICE_DESC')">{{'app.component.searchResult.sorting.2' | translate}}</p>
+        <p (click)="setSorting('LAST_UPDATE')">{{'app.component.searchResult.sorting.3' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <div [ngClass]="{'show':showOverlay}" class="overlay">
+        <loading [show]="showOverlay" [insideOverlay]="true"></loading>
+  </div>
+  <app-result-list (addressChanged)="addressChangedHandler($event)" (pageChanged)="pageChangedHandler()" (listMouseover)="listMouseOverHandler($event.id)"></app-result-list>
+</div>
+
+<!-- Map -->
+<div [ngStyle]="mapBottom && {'top':mapTopOffset}" [ngClass]="{'map-bottom':mapBottom}" class="map-wrapper">
+  <div [ngClass]="{'fixed-map':(mapFixed && !mapBottom && _window.innerWidth > 991)}" class="no-padding">
+    <div [ngClass]="{'show':(showMap && toggled)}" class="map-inner">
+      <div class="geo-box">
+        <div class="checkbox">
+          <label>
+            <input [checked]="(search$ | async)?.searchType === 1" (click)="changeSearchType()" type="checkbox" >
+            {{'app.component.searchResult.map.searchType' | translate}}
+          </label>
+        </div>
+      </div>
+      <agm-map #agmMap 
+          [ngStyle]="{'height':(showMap && toggled) ? _window.innerHeight -70 + 'px' : _window.innerHeight - 70 + 'px'}"
+          (idle)="geoBoxChange()"
+          [streetViewControl]="false"
+          (boundsChange)="boundsChange($event)" 
+          [zoom]="14" 
+          [latitude]="(markerCoords && markerCoords.latitude) || searchFilter.getParamValue('latitude')"
+          [longitude]="(markerCoords && markerCoords.longitude) || searchFilter.getParamValue('longitude')">
+          <agm-marker 
+              *ngFor="let geo of (search$ | async)?.searchResult?.estates;trackBy:trackByFunc" 
+              [iconUrl]="{
+                  url:id === geo.id ? '../../../../../assets/image/maps/pin.svg' : '../../../../../assets/image/maps/pin_.svg',
+                  size: {width: 100, height: 80},
+                  scaledSize: {width: 60, height: 54},
+                  labelOrigin:{x:30,y:24}
+              }"
+              [label]="{
+                text: setupMarkerLabel(geo.pricing.originPrice,geo.pricing.originCurrencyCode),
+                color:'#ffffff',
+                fontSize:'12px'
+              }"
+              [zIndex]="i"
+              [latitude]="geo.geoPoint.lat" 
+              [longitude]="geo.geoPoint.lon">
+              <agm-snazzy-info-window  
+                  [latitude]="geo.geoPoint.lat" 
+                  [longitude]="geo.geoPoint.lon"
+                  [closeWhenOthersOpen]="true"
+                  [openOnMarkerClick]="true"
+                  [placement]="'top'"
+                  [wrapperClass]="'snazz-container'"
+                  [maxWidth]="'250px'"
+                  [padding]="'0'" 
+                  [borderRadius]="'5px'"
+                  [pointer]="false"
+                  
+                  [backgroundColor]="'#fff'">
+                  
+                  <ng-template>
+                    <div class="i-window-inner">
+                    <!--<img *ngIf="geo.photos[0] else emptyPhoto" [src]="geo.photos[0].thumbnailUrl" default="../../../../../assets/image/empty-photo-small.png"
+                      class="img-map">-->
+                      <ngx-carousel [inputs]="carouselSetting">
+                        <ngx-item *ngFor="let item of geo.photos" NgxCarouselItem>
+                            <img *ngIf="item else emptyPhoto" class="item-img" [src]="item.imageUrl"  default="../../../../../assets/image/empty-photo-small.png" alt="">
+                        </ngx-item>
+                        <button NgxCarouselPrev class='leftRs'><img src="../../../../../assets/image/arrow-left.svg"></button>
+                        <button NgxCarouselNext class='rightRs'><img src="../../../../../assets/image/arrow-right.svg"></button>
+                    </ngx-carousel>    
+                       
+                    <ng-template #emptyPhoto>
+                      <img src="../../../../../assets/image/empty-photo-small.png" class="img-map">
+                    </ng-template>
+                    <div class="agm-info-title">{{geo.pricing.originPrice}}
+                      <span [ngSwitch]="geo.pricing.originCurrencyCode">
+                      <span class="icon-uah" *ngSwitchCase="'UAH'">&#x20B4;</span>
+                      <i *ngSwitchCase="'USD'" class="fa fa-usd" aria-hidden="true"></i>
+                      <i *ngSwitchCase="'EUR'" class="fa fa-eur" aria-hidden="true"></i>
+                      <div class="icon-uah" *ngSwitchDefault>&#x20B4;</div>
+                      </span>
+                    </div>
+                    <div class="i-window-bottom">
+                      <a routerLink="/search/details/{{geo.id}}">{{geo.address.addressLine2}}</a>
+                      <p>{{geo.features.shortDescription}}</p>
+                    </div>
+                    </div>
+                  </ng-template>
+              </agm-snazzy-info-window>
+          </agm-marker>
+      </agm-map>
+    </div>
+  </div>
+</div>
+<div class="menu" (click)="toggleMap()">
+  <button *ngIf="!showMap"><i class="fa fa-map-o" aria-hidden="true"></i> {{'app.component.searchResult.map.menu.show' | translate}}</button>
+  <button *ngIf="showMap"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{'app.component.searchResult.map.menu.hide' | translate}}</button>
+</div>

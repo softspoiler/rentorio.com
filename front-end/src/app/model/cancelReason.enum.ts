@@ -1,0 +1,7 @@
+export enum cancelReason {
+    SAFETY_CONCERNS,
+    PRIVACY_CONCERNS,
+    DONT_UNDERSTAND_HOW_TO_USE,
+    NOT_USEFUL,
+    OTHER
+}

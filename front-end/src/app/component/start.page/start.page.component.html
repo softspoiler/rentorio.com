@@ -1,0 +1,69 @@
+<div class="wrapper">
+    <div class="overlay">     
+    </div>
+    <div class="search-box">
+        <div class="title">
+            <p>{{'app.startPage.title.first'| translate}} <br> {{'app.startPage.title.second'| translate}}</p>
+        </div>
+        <div class="search-wrapper">
+             <search-input [firstRequest]="true"></search-input>
+        </div>
+    </div>
+</div>
+<div class="wellcome text-center">
+<h2>{{'app.startPage.greeting.title' | translate}}</h2> 
+<p>{{'app.startPage.greeting.text' | translate}}<br/></p>
+</div>
+<app-support></app-support>
+<app-benefits> </app-benefits>
+<div class="last-added-estate-container">
+    <h2 class="last-added-estates-title">{{'app.startPage.lastAddedTitle' | translate}}</h2> 
+    <div class="container margin">
+        <div *ngIf="estates" class="row">
+          <ngx-carousel [inputs]="carouselSetting">
+            <ngx-item *ngFor="let estate of estates.estates" NgxCarouselItem>
+                <div class="list">
+                  <div class="image-container">
+                    <img class="item-img" [src]="estate.photos[0].imageUrl" default="../../../assets/image/empty-photo.png" alt="">
+                    <div class="price">
+                      <p>{{estate.pricing.originPrice}}
+                          <span [ngSwitch]="estate.pricing.originCurrencyCode">
+                          <span class="icon-uah" *ngSwitchCase="'UAH'">&#x20B4;</span>
+                          <i *ngSwitchCase="'USD'" class="fa fa-usd" aria-hidden="true"></i>
+                          <i *ngSwitchCase="'EUR'" class="fa fa-eur" aria-hidden="true"></i>
+                          <div class="icon-uah" *ngSwitchDefault>&#x20B4;</div>
+                          </span>
+                      </p>
+                    </div>
+                    <ul class="list-features">
+                      <li><img src="../../../assets/image/estate/room.svg" alt=""><span *ngIf="estate.features.roomsNumber !== 0 else studio">{{'app.component.estate.general.roomsNumber' | translate}} {{estate.features.roomsNumber}}</span></li>
+                      <li><img src="../../../assets/image/estate/stairs.svg" alt=""> {{'app.component.estate.general.floor' | translate}} {{estate.features.floor}}  </li>
+                      <li><img src="../../../assets/image/estate/guests_white.svg" alt=""> {{'app.component.estate.estatePreview.allowedHabitants' | translate}} {{estate.features.allowedHabitants}} </li>
+                      <ng-template #studio>
+                        <span>{{'app.component.estate.general.roomsNumber.studio' | translate}}</span>
+                      </ng-template>
+                    </ul>
+                  </div>
+                  <div class="list-body">
+                    <p *ngIf="estate.features.shortDescription else emptyShortDescription" class="list-short-description">{{estate.features.shortDescription.slice(0,50)}}<span *ngIf="estate.features.shortDescription.length > 50">...</span></p>
+                    <p class="accommodation" [ngSwitch]="estate.accommodation">
+                        <span *ngSwitchCase="'ENTIRE'">{{'app.component.estate.general.accommodation.entire' | translate}}</span>
+                        <span *ngSwitchCase="'private_ROOM'">{{'app.component.estate.general.accommodation.private_room' | translate}}</span>
+                        <span *ngSwitchCase="'SHARED_ROOM'">{{'app.component.estate.general.accommodation.shared_room' | translate}}</span>
+                    </p>
+                    <div class="address-wrapper">
+                        <p *ngIf="estate.address.addressLine2" class="address">{{estate.address.addressLine2.slice(0,38)}}<span *ngIf="estate.address.addressLine2.length > 38">...</span></p>
+                    </div>
+                    <div class="list-footer">
+                        <a routerLink="/search/details/{{estate.id}}" (click)="sendAction(estate.id)"  class="orange-btn">{{'app.component.searchResult.btn.details' | translate}}</a>
+                    </div>
+                  </div>
+                </div>
+            </ngx-item>
+            <button NgxCarouselPrev class='leftRs'><img src="../../../assets/image/arrow-left.svg"></button>
+            <button NgxCarouselNext class='rightRs'><img src="../../../assets/image/arrow-right.svg"></button>
+        </ngx-carousel>
+        </div>  
+    </div>
+    </div>
+    <app-rentik></app-rentik>
